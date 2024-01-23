@@ -1,0 +1,88 @@
+
+app/ApolloClient.tsx [+] 
+app/(checkout)/cart/page.tsx [17ms]
+.env [+]
+app/(checkout)/layout.tsx [17ms]
+app/(checkout)/checkout/page.tsx [18ms]
+app/profile/change-password/page.tsx [6ms]
+app/profile/layout.tsx 
+app/profile/page.tsx [7ms]
+app/profile/wishlist/page.tsx [6ms]
+app/profile/orders/page.tsx [7ms]
+
+components/cart-product-card/cart-product-card.tsx [5ms]
+components/category-card/category-card.tsx [5ms]
+components/cart/cart-item.tsx 
+components/cart/cart-trigger.tsx 
+components/cart/cart.tsx 
+components/cart/delete-item-button.tsx [8ms]
+components/contact-information/contact-information-form.tsx 
+components/contact-information/contact-information.tsx 
+components/contact-information/index.ts [7ms]
+components/counter/counter.tsx 
+components/counter/index.ts [8ms]
+components/display/display.tsx [8ms]
+components/gallery/gallery.tsx 
+components/gallery/index.tsx [6ms]
+components/heading/heading.tsx [6ms]
+components/layouts/checkout-header.tsx 
+components/layouts/checkout-layout.tsx [6ms]
+components/main-banner/main-banner.tsx [5ms]
+components/map/map.tsx [6ms]
+components/order-summary/index.ts 
+components/order-summary/order-summary.tsx [5ms]
+components/product-accordion/index.ts 
+components/product-accordion/product-accordion.tsx [4ms]
+components/price/index.ts 
+components/price/price.tsx [6ms]
+components/profile-form/profile-form.tsx [4ms]
+components/recommended-products/index.ts 
+components/recommended-products/recommended-products.tsx [4ms]
+components/purchase-card/index.ts 
+components/purchase-card/purchase-card.tsx [6ms]
+components/side-nav/side-nav.tsx [6ms]
+components/ui/accordion.tsx 
+components/ui/card.tsx 
+components/ui/carousel.tsx 
+components/ui/form.tsx 
+components/ui/image.tsx 
+components/ui/label.tsx 
+components/ui/textarea.tsx [8ms]
+
+lib/constants.ts 
+lib/mongol.ts [7ms]
+
+sdk/fetch/products.ts [6ms]
+sdk/graphql/index.ts [6ms]
+sdk/graphql/products/index.ts 
+sdk/graphql/products/mutations.ts 
+sdk/graphql/products/queries.ts [10ms]
+sdk/hooks/index.ts [7ms]
+
+//changed
+
+app/category/page.tsx
+app/globals.css
+app/page.tsx
+app/product/[slug]/page.tsx
+
+components/bottom-nav.tsx
+components/breadcrumb.tsx
+components/category-page-content.tsx
+components/category-tree-item.tsx
+components/category-tree.tsx
+components/layouts/index.tsx
+components/product-card.tsx
+components/productPagination.tsx
+components/ui/pagination.tsx
+components/ui/sheet.tsx
+
+lib/utils.ts
+
+mocks/footerData.tsx
+next.config.js
+package.json
+store/index.tsx
+tailwind.config.ts
+types/product.types.ts
+types/products.types.ts
