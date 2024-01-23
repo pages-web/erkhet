@@ -16,7 +16,7 @@ export interface BreadcrumbsProps {
 
 export function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
   return (
-    <div className="container py-4">
+    <div className="py-4">
       <nav
         data-testid="breadcrumbs"
         className="inline-flex font-normal font-body typography-text-sm"
@@ -42,7 +42,7 @@ export function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
           </li>
           {breadcrumbs.map(({ name, link }) => (
             <li
-              className="peer hidden sm:flex peer-[:nth-of-type(even)]:before:content-['/'] peer-[:nth-of-type(even)]:before:px-2 peer-[:nth-of-type(even)]:before:leading-5 last-of-type:flex last-of-type:before:font-normal last-of-type:before:text-neutral-500 text-neutral-500 last-of-type:text-neutral-900 last-of-type:font-medium"
+              className="peer hidden sm:flex peer-[:nth-of-type(even)]:before:text-sm peer-[:nth-of-type(even)]:before:content-['/'] peer-[:nth-of-type(even)]:before:px-2 peer-[:nth-of-type(even)]:before:leading-6 last-of-type:flex last-of-type:before:font-normal last-of-type:before:text-neutral-500 text-neutral-500 last-of-type:text-neutral-900 last-of-type:font-medium"
               key={name}
             >
               <Button

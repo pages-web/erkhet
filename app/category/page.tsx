@@ -1,15 +1,14 @@
-import { Breadcrumb, Breadcrumbs } from '@/components/breadcrumb';
 import CategoryPageContent from '@/components/category-page-content';
 import CategoryTree from '@/components/category-tree';
+import { BreadcrumbsLayout } from '../breadcrumbs-layout';
 
 const Category = () => {
-  const breadcrumbs: Breadcrumb[] = [
+  const breadcrumbs = [
     { name: 'Home', link: '/' },
     { name: 'All Products', link: '/category' },
   ];
   return (
-    <>
-      <Breadcrumbs breadcrumbs={breadcrumbs} />
+    <BreadcrumbsLayout breadcrumbs={breadcrumbs}>
       <CategoryPageContent
         title="Products"
         products={[]}
@@ -20,7 +19,7 @@ const Category = () => {
           </>
         }
       />
-    </>
+    </BreadcrumbsLayout>
   );
 };
 
