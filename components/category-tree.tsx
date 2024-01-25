@@ -1,6 +1,11 @@
+import { ICategory } from '@/types/product.types';
 import { CategoryTreeItem } from './category-tree-item';
 
-const CategoryTree = () => {
+const CategoryTree = ({
+  categories,
+}: {
+  categories: (ICategory & { parent?: true })[];
+}) => {
   return (
     <div>
       <span
@@ -9,11 +14,9 @@ const CategoryTree = () => {
       >
         Category
       </span>
-      <CategoryTreeItem href={'/'} name="New" count={68} />
-      <CategoryTreeItem href={'/'} name="Man" count={29} />
-      <CategoryTreeItem href={'/'} name="Woman" count={65} />
-      <CategoryTreeItem href={'/'} name="Accessories" count={30} />
-      <CategoryTreeItem href={'/'} name="Sale" count={45} />
+      {categories.map((cat) => (
+        <CategoryTreeItem {...cat} key={cat._id} />
+      ))}
     </div>
   );
 };

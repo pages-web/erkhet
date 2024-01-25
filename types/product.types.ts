@@ -40,4 +40,6 @@ export interface ICategory {
   name: string;
   isRoot: boolean;
   order: string;
+  parentId: string;
+  code: string;
 }

@@ -7,6 +7,7 @@ import BottomNav from '../bottom-nav';
 import ScrollToTop from '../scroll-to-top';
 import Footer from '../footer/footer';
 import Link from 'next/link';
+import CartTrigger from '../cart/cart-trigger';
 
 const DefaultLayout = ({ children }: React.PropsWithChildren) => {
   return (
@@ -24,13 +25,7 @@ const DefaultLayout = ({ children }: React.PropsWithChildren) => {
         </Button>
         <Search className="hidden md:block flex-1" />
         <nav className="hidden md:flex md:flex-row md:flex-nowrap gap-2">
-          <Button
-            size="icon"
-            variant={'ghost'}
-            className="hover:bg-white/10 hover:text-white"
-          >
-            <ShoppingCartIcon className="h-5 w-5" />
-          </Button>
+          <CartTrigger />
           <Button
             size="icon"
             variant={'ghost'}

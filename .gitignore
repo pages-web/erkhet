@@ -105,3 +105,6 @@ dist
 .cache
 
 # Docus
+
+#max
+.DS_Store

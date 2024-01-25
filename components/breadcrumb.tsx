@@ -1,13 +1,13 @@
 'use client';
 
-import Link from 'next/link';
+import Link, { LinkProps } from 'next/link';
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import { MoreHorizontalIcon } from 'lucide-react';
 import { Button } from './ui/button';
 
 export type Breadcrumb = {
   name: string;
-  link: string;
+  link: LinkProps['href'];
 };
 
 export interface BreadcrumbsProps {

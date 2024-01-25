@@ -66,16 +66,16 @@ app/globals.css
 app/page.tsx
 app/product/[slug]/page.tsx
 
-components/bottom-nav.tsx
-components/breadcrumb.tsx
-components/category-page-content.tsx
-components/category-tree-item.tsx
-components/category-tree.tsx
-components/layouts/index.tsx
-components/product-card.tsx
-components/productPagination.tsx
-components/ui/pagination.tsx
-components/ui/sheet.tsx
+components/bottom-nav.tsx [+]
+components/breadcrumb.tsx [+]
+components/category-page-content.tsx [+] 
+components/category-tree-item.tsx [+]
+components/category-tree.tsx [+]
+components/layouts/index.tsx [+]
+components/product-card.tsx [+]
+components/productPagination.tsx [+]
+components/ui/pagination.tsx [+]
+components/ui/sheet.tsx [+]
 
 lib/utils.ts
 

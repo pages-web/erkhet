@@ -16,11 +16,13 @@ export interface Group {
   title: string;
 }
 
+export type IAttachment = { url?: string } | null;
+
 export interface IProduct extends IProductBase {
   categoryId?: string | null;
   type?: string | null;
   description?: string | null;
-  attachment?: { url?: string } | null;
+  attachment?: IAttachment;
   remainder?: number;
   code?: string;
   manufacturedDate?: string;
@@ -30,7 +32,7 @@ export interface IProduct extends IProductBase {
 }
 
 export interface IProductDetail extends IProduct {
-  attachmentMore?: { url: string }[];
+  attachmentMore?: IAttachment[];
 }
 
 export interface IUseProducts {
