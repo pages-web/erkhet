@@ -1,4 +1,4 @@
-import { getClient } from '@/app/ApolloClient';
+import { getClient } from '@/sdk/ssClient';
 import type { QueryOptions } from '@apollo/client';
 import { queries } from '../graphql/products';
 import { ICategory } from '@/types/product.types';

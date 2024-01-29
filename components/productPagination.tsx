@@ -19,10 +19,28 @@ const ProductPagination = ({
   totalProducts: number;
 }) => {
   if (totalProducts <= PER_PAGE) return null;
-  const totalPage = Math.ceil(totalProducts / PER_PAGE);
-  const pages = Array.from({ length: totalPage }, (_, i) => i + 1);
+  const totalPages = Math.ceil(totalProducts / PER_PAGE);
 
-  const activePageNumber = parseInt(searchParams.page?.toString() || '1');
+  const currentPage = parseInt(searchParams.page?.toString() || '1');
+  const displayPages = 2;
+
+  const getPageNumbers = () => {
+    const pageNumbers = [];
+
+    for (let i = 1; i <= totalPages; i++) {
+      if (
+        i === 1 ||
+        i === totalPages ||
+        (i >= currentPage - displayPages && i <= currentPage + displayPages)
+      ) {
+        pageNumbers.push(i);
+      } else if (pageNumbers[pageNumbers.length - 1] !== '...') {
+        pageNumbers.push('...');
+      }
+    }
+
+    return pageNumbers;
+  };
 
   return (
     <>
@@ -34,23 +52,30 @@ const ProductPagination = ({
               pathname: '/category',
               query: {
                 ...searchParams,
-                page: activePageNumber === 1 ? 1 : activePageNumber - 1,
+                page: currentPage === 1 ? 1 : currentPage - 1,
               },
             }}
           />
 
           <div className="flex items-center gap-1">
-            {pages.map((page) => (
-              <PaginationLink
-                href={{
-                  pathname: '/category',
-                  query: { ...searchParams, page },
-                }}
-                isActive={activePageNumber === page}
-              >
-                {page}
-              </PaginationLink>
-            ))}
+            {getPageNumbers().map((page, i) =>
+              page === '...' ? (
+                <PaginationItem key={i}>
+                  <PaginationEllipsis />
+                </PaginationItem>
+              ) : (
+                <PaginationLink
+                  href={{
+                    pathname: '/category',
+                    query: { ...searchParams, page },
+                  }}
+                  isActive={currentPage === page}
+                  key={i}
+                >
+                  {page}
+                </PaginationLink>
+              )
+            )}
           </div>
 
           <PaginationNext
@@ -58,10 +83,7 @@ const ProductPagination = ({
               pathname: '/category',
               query: {
                 ...searchParams,
-                page:
-                  activePageNumber === totalPage
-                    ? totalPage
-                    : activePageNumber + 1,
+                page: currentPage === totalPages ? totalPages : currentPage + 1,
               },
             }}
           />

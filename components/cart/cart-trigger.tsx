@@ -6,8 +6,9 @@ import { useState } from 'react';
 import { Button } from '../ui/button';
 import { ShoppingCartIcon } from 'lucide-react';
 import dynamic from 'next/dynamic';
+import { LoadingOverlay } from '../ui/loading';
 
-const Cart = dynamic(() => import('./cart'));
+const Cart = dynamic(() => import('./cart'), { loading: LoadingOverlay });
 
 const CartTrigger = () => {
   const [openSheet, setOpenSheet] = useState(false);
@@ -22,7 +23,7 @@ const CartTrigger = () => {
           showSheet(true);
         }}
       >
-        <ShoppingCartIcon className='h-5 w-5'/>
+        <ShoppingCartIcon className="h-5 w-5" />
       </Button>
       {openSheet && <Cart />}
     </>

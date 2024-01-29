@@ -5,6 +5,8 @@ import { cn } from '@/lib/utils';
 import { NavbarTop } from '@/components/navbar-top';
 import DefaultLayout from '@/components/layouts';
 import Providers from '@/store';
+import CurrentOrder from '@/containers/currentOrder';
+import { Toaster } from '@/components/ui/sonner';
 
 export const fontSans = FontSans({
   subsets: ['latin'],
@@ -27,7 +29,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
       >
         <Providers>
           <DefaultLayout>{children}</DefaultLayout>
+          <CurrentOrder />
         </Providers>
+        <Toaster />
       </body>
     </html>
   );

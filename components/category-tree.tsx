@@ -10,7 +10,6 @@ const CategoryTree = ({
     <div>
       <span
         className="block py-2 px-4 mb-4 bg-neutral-100 typography-headline-6 font-bold text-neutral-900 uppercase tracking-widest md:rounded-md"
-        data-testid="category-tree"
       >
         Category
       </span>

@@ -8,4 +8,5 @@ export interface Customer {
   primaryEmail?: string;
   lastName?: string;
   email?: string;
+  erxesCustomerId?: string;
 }

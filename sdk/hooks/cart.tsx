@@ -1,8 +1,8 @@
-import { customerAtom } from '@/store/user';
+import { currentUserAtom } from '@/store/user.store';
 import { useAtomValue } from 'jotai';
 
 export const useAddToCart = () => {
-  const user = useAtomValue(customerAtom);
+  const user = useAtomValue(currentUserAtom);
 
   
 };
