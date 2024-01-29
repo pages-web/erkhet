@@ -20,6 +20,7 @@ import { useRegister } from '@/sdk/hooks/auth';
 import { toast } from 'sonner';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { InfoIcon } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 const formSchema = z.object({
   firstName: z.string().min(1, { message: 'First name is required' }),
@@ -29,10 +30,17 @@ const formSchema = z.object({
     .string()
     .regex(/[0-9]{6,}$/, 'invalid')
     .min(1, { message: 'Phone is required' }),
-  password: z.string().min(1, { message: 'Password is required' }),
+  password: z
+    .string()
+    .regex(
+      /^(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
+      'Password must contain at least one lowercase letter, one uppercase letter, and be at least 8 characters long.'
+    )
+    .min(1, { message: 'Password is required' }),
 });
 
 const RegisterForm = () => {
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -49,17 +57,20 @@ const RegisterForm = () => {
     register({
       variables: { ...values, clientPortalId },
       onCompleted(data) {
-        toast('Success');
+        toast.success('Congratulations, You registered successfully', {
+          description: 'Таны имэйл рүү баталгаажуулах холбоос илгээлээ.',
+        });
+        router.push('/login');
       },
       onError(error) {
-        toast(error.message);
+        toast.error(error.message);
       },
     });
   }
   return (
     <Form {...form}>
       <form
-        className="grid md:grid-cols-2 gap-y-6 gap-x-3 relative"
+        className="md:grid grid-cols-2 space-y-4 md:space-y-0 gap-y-6 gap-x-3 relative"
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormField

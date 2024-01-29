@@ -10,7 +10,14 @@ import AddToCart from './AddToCart.client';
 import Link from 'next/link';
 import { Button } from '../ui/button';
 
-const PurchaseCard = ({ name, unitPrice }: IProductDetail) => {
+const PurchaseCard = ({
+  name,
+  unitPrice,
+  _id,
+  remainder,
+  attachment,
+}: IProductDetail) => {
+  const product = { name, unitPrice, _id, remainder, attachment };
   return (
     <Card className="md:sticky md:top-20 ">
       <CardHeader>
@@ -39,7 +46,7 @@ const PurchaseCard = ({ name, unitPrice }: IProductDetail) => {
       </CardHeader>
       <CardContent>
         <Separator />
-        <AddToCart />
+        <AddToCart {...product} />
         <Separator />
       </CardContent>
       <CardFooter className="flex-col justify-start items-start">

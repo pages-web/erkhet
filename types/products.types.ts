@@ -1,9 +1,4 @@
-export interface IProductBase {
-  _id: string;
-  name: string;
-  unitPrice: number;
-  isPackage?: boolean;
-}
+import { IProduct } from './product.types';
 
 export interface CustomField {
   field: string;
@@ -18,21 +13,9 @@ export interface Group {
 
 export type IAttachment = { url?: string } | null;
 
-export interface IProduct extends IProductBase {
-  categoryId?: string | null;
-  type?: string | null;
-  description?: string | null;
-  attachment?: IAttachment;
-  remainder?: number;
-  code?: string;
-  manufacturedDate?: string;
-  hasSimilarity?: boolean;
-  customFieldsData?: CustomField[];
-  category?: ICategory;
-}
-
 export interface IProductDetail extends IProduct {
   attachmentMore?: IAttachment[];
+  category?: ICategory;
 }
 
 export interface IUseProducts {

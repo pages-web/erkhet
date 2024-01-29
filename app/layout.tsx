@@ -31,7 +31,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <DefaultLayout>{children}</DefaultLayout>
           <CurrentOrder />
         </Providers>
-        <Toaster />
+        <Toaster richColors closeButton />
       </body>
     </html>
   );

@@ -3,7 +3,7 @@
 import useCurrentOrder from '@/sdk/queries/order';
 
 const CurrentOrder = () => {
-  useCurrentOrder();
+  const { currentOrder } = useCurrentOrder();
   return null;
 };
 

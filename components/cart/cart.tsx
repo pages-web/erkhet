@@ -1,4 +1,4 @@
-import { useAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 import {
   Sheet,
   SheetClose,
@@ -10,13 +10,15 @@ import { cartSheetAtom } from '@/store';
 import { Button } from '../ui/button';
 import { XIcon } from 'lucide-react';
 import Link from 'next/link';
-import Image from '../ui/image';
+
 import Price from '../price/price';
-import { Counter, CounterButton, CounterInput } from '../counter/counter';
-import { Input } from '../ui/input';
+import { cartAtom, cartItemAtomAtoms } from '@/store/cart.store';
+import CartItem from './cart-item';
 
 const Cart = () => {
   const [openSheet, setOpenSheet] = useAtom(cartSheetAtom);
+  const cart = useAtomValue(cartItemAtomAtoms);
+
   return (
     <Sheet open={openSheet} onOpenChange={(op) => setOpenSheet(op)}>
       <SheetContent className="flex flex-col">
@@ -30,45 +32,13 @@ const Cart = () => {
           </SheetClose>
         </SheetHeader>
         <div className="flex-1">
-          <li className="flex w-full flex-col border-b border-neutral-300">
-            <div className="relative flex w-full flex-row justify-between px-1 py-4">
-              <div className="absolute z-40 -mt-2 ml-[55px]">
-                <Button size="sm" className="h-5 px-1 rounded-full">
-                  <XIcon className="h-3 w-3" />
-                </Button>
-              </div>
-              <Link
-                href="/"
-                onClick={() => setOpenSheet(false)}
-                className="z-30 flex flex-row space-x-4"
-              >
-                <div className="relative h-16 w-16 cursor-pointer overflow-hidden rounded-md border border-neutral-300 bg-neutral-300 dark:bg-neutral-900 dark:hover:bg-neutral-800">
-                  <Image
-                    className="h-full w-full object-cover"
-                    width={64}
-                    height={64}
-                    alt={''}
-                    src={''}
-                  />
-                </div>
-
-                <div className="flex flex-1 flex-col text-sm">
-                  <span className="leading-tight">Mornig crgz afds</span>
-                </div>
-              </Link>
-              <div className="flex h-16 flex-col justify-between">
-                <Price
-                  className="flex justify-end space-y-2 text-right text-sm"
-                  amount={'300'}
-                />
-                <Counter size="sm">
-                  <CounterButton minus />
-                  <CounterInput />
-                  <CounterButton />
-                </Counter>
-              </div>
-            </div>
-          </li>
+          {cart.map((cartItemAtom) => (
+            <CartItem
+              key={`${cartItemAtom}`}
+              cartItemAtom={cartItemAtom}
+              setOpenSheet={setOpenSheet}
+            />
+          ))}
         </div>
         <div className="text-sm text-neutral-500 dark:text-neutral-400">
           <div className="mb-3 flex items-center justify-between border-b border-neutral-200 pb-1">

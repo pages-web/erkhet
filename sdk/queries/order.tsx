@@ -3,6 +3,7 @@ import { queries } from '../graphql/order';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { currentUserAtom } from '@/store/user.store';
 import { activeOrderAtom } from '@/store/order.store';
+import { defaultOrderItem } from '../../store/order.store';
 
 const useCurrentOrder = () => {
   const { erxesCustomerId } = useAtomValue(currentUserAtom) || {};
@@ -19,7 +20,7 @@ const useCurrentOrder = () => {
     skip: !erxesCustomerId,
     onCompleted({ fullOrders }) {
       const currentOrder = fullOrders[0];
-      setCurrentAtom(currentOrder || null);
+      setCurrentAtom(currentOrder || defaultOrderItem);
     },
   });
 

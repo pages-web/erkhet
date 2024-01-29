@@ -15,13 +15,15 @@ const ProductAccordion = ({
   _id: string;
 }) => {
   return (
-    <Accordion type="multiple" collapsible >
+    <Accordion type="multiple">
       {!!description && (
         <AccordionItem value="item-1">
           <AccordionTrigger className="text-xl font-semibold">
             Product Details
           </AccordionTrigger>
-          <AccordionContent>{description}</AccordionContent>
+          <AccordionContent>
+            <div dangerouslySetInnerHTML={{ __html: description }} />
+          </AccordionContent>
         </AccordionItem>
       )}
       <AccordionItem value="item-2">

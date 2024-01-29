@@ -6,11 +6,11 @@ import { PropsWithChildren } from 'react';
 const Login = () => {
   return (
     <>
-      <div className="text-2xl font-semibold mx-auto relative md:mt-20">
+      <div className="text-lg md:text-2xl font-semibold mx-auto relative md:mt-20">
         Тавтай морил
       </div>
-      <div className="mb-auto mx-auto mt-8 w-full sm:max-w-md">
-        <div className="border rounded-xl w-full max-w-md py-10 px-8 sm:px-10 bg-white relative">
+      <div className="mb-auto mx-auto mt-4 md:mt-8 w-full sm:max-w-md">
+        <div className="md:border md:rounded-xl w-full sm:py-10 px-3 sm:px-10 space-y-5 bg-white">
           <LoginForm />
         </div>
       </div>

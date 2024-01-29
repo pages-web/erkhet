@@ -18,6 +18,7 @@ import { Password } from '@/components/ui/password';
 import Link from 'next/link';
 import { useLogin } from '@/sdk/hooks/auth';
 import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 const formSchema = z.object({
   login: z
@@ -35,16 +36,11 @@ const LoginForm = () => {
       password: '',
     },
   });
+
   const { login, loading, clientPortalId } = useLogin();
   function onSubmit(values: z.infer<typeof formSchema>) {
     login({
       variables: { ...values, clientPortalId },
-      onCompleted(data) {
-        toast('Success');
-      },
-      onError(error) {
-        toast(error.message);
-      },
     });
   }
 
