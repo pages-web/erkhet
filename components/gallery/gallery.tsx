@@ -7,7 +7,7 @@ import {
   CarouselContent,
   CarouselItem,
 } from '../ui/carousel';
-import { useCallback, useEffect, useState } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { IAttachment } from '@/types/products.types';
 
@@ -41,7 +41,7 @@ const Gallery = ({ attachments = [] }: { attachments: IAttachment[] }) => {
   return (
     <div className="flex flex-row-reverse gap-6 justify-stretch">
       <Carousel className="flex-1" setApi={(ap) => setApi(ap)}>
-        <CarouselContent className='ml-0'>
+        <CarouselContent className="ml-0">
           {attachments.map((attachment) => (
             <CarouselItem className="relative aspect-square pl-0">
               <Image
@@ -87,4 +87,4 @@ const Gallery = ({ attachments = [] }: { attachments: IAttachment[] }) => {
   );
 };
 
-export default Gallery;
+export default memo(Gallery);

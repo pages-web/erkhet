@@ -3,7 +3,7 @@ import { IProduct } from '@/types/product.types';
 import { atom } from 'jotai';
 import { currentUserAtom } from './user.store';
 import { itemsAtom } from './order.store';
-import { splitAtom } from 'jotai/utils';
+import { splitAtom, atomWithStorage } from 'jotai/utils';
 
 interface IUpdateItem {
   _id: string;
@@ -50,13 +50,20 @@ export const addToCart = (
   return [cartItem, ...cart];
 };
 
-export const localCartAtom = atom<OrderItem[]>([]);
+export const localCartAtom = atomWithStorage<OrderItem[]>('localCart', []);
 
 export const cartAtom = atom((get) =>
   get(currentUserAtom) ? get(itemsAtom) : get(localCartAtom)
 );
 
 export const cartLengthAtom = atom((get) => get(cartAtom).length);
+
+export const cartTotalAtom = atom<number>((get) =>
+  (get(cartAtom) || []).reduce(
+    (total, item) => total + (item?.count || 0) * (item.unitPrice || 0),
+    0
+  )
+);
 
 export const cartItemAtomAtoms = splitAtom(cartAtom);
 

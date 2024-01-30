@@ -12,8 +12,9 @@ import { XIcon } from 'lucide-react';
 import Link from 'next/link';
 
 import Price from '../price/price';
-import { cartAtom, cartItemAtomAtoms } from '@/store/cart.store';
+import { cartItemAtomAtoms } from '@/store/cart.store';
 import CartItem from './cart-item';
+import CartTotal from './cart-total';
 
 const Cart = () => {
   const [openSheet, setOpenSheet] = useAtom(cartSheetAtom);
@@ -41,25 +42,16 @@ const Cart = () => {
           ))}
         </div>
         <div className="text-sm text-neutral-500 dark:text-neutral-400">
-          <div className="mb-3 flex items-center justify-between border-b border-neutral-200 pb-1">
-            <p>Taxes</p>
-            <Price
-              className="text-right text-base text-black dark:text-white"
-              amount={'10000'}
-            />
-          </div>
           <div className="mb-3 flex items-center justify-between border-b border-neutral-200 pb-1 pt-1">
             <p>Shipping</p>
             <p className="text-right">Calculated at checkout</p>
           </div>
           <div className="flex items-center justify-between border-b border-neutral-200 pb-1 pt-1">
             <p>Total</p>
-            <Price
-              className="text-right text-base text-black dark:text-white"
-              amount={'15000'}
-            />
+            <CartTotal />
           </div>
         </div>
+
         <Button size="lg" asChild onClick={() => setOpenSheet(false)}>
           <Link href={'/cart'}>Proceed to Checkout</Link>
         </Button>

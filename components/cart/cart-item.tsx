@@ -1,12 +1,11 @@
-import { XIcon } from 'lucide-react';
-import { Button } from '../ui/button';
 import Link from 'next/link';
 import Image from '../ui/image';
 import { type Atom, useAtomValue, useSetAtom } from 'jotai';
 import { OrderItem } from '@/types/order.types';
-import Price from '../price/price';
-import { Counter, CounterButton, CounterInput } from '../counter/counter';
-import { updateCartAtom } from '@/store/cart.store';
+import { selectAtom } from 'jotai/utils';
+import CartItemDelete from './cart-item-delete';
+import CartItemCounter from './cart-item-counter';
+import { useCallback, useMemo } from 'react';
 
 const CartItem = ({
   cartItemAtom,
@@ -16,18 +15,12 @@ const CartItem = ({
   setOpenSheet: (open: boolean) => void;
 }) => {
   const { _id, productName, unitPrice, count } = useAtomValue(cartItemAtom);
-  const changeCartItem = useSetAtom(updateCartAtom);
+
   return (
     <li className="flex w-full flex-col border-b border-neutral-300">
       <div className="relative flex w-full flex-row justify-between px-1 py-4">
         <div className="absolute z-40 -mt-2 ml-[55px]">
-          <Button
-            size="sm"
-            className="h-5 px-1 rounded-full"
-            onClick={() => changeCartItem({ _id, count: 0 })}
-          >
-            <XIcon className="h-3 w-3" />
-          </Button>
+          <CartItemDelete _id={_id} />
         </div>
         <Link
           href="/"
@@ -48,22 +41,7 @@ const CartItem = ({
             <span className="leading-tight">{productName}</span>
           </div>
         </Link>
-        <div className="flex h-16 flex-col justify-between">
-          <Price
-            className="flex justify-end space-y-2 text-right text-sm"
-            amount={unitPrice + ''}
-          />
-          <Counter size="sm">
-            <CounterButton
-              minus
-              onClick={() => changeCartItem({ _id, count: count - 1 })}
-            />
-            <CounterInput value={count} />
-            <CounterButton
-              onClick={() => changeCartItem({ _id, count: count + 1 })}
-            />
-          </Counter>
-        </div>
+        <CartItemCounter unitPrice={unitPrice} _id={_id} count={count} />
       </div>
     </li>
   );
