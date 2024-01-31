@@ -1,5 +1,6 @@
 import CartCount from '../cart/cart-count';
 import CartTotal from '../cart/cart-total';
+import Price from '../price/price';
 import {
   Card,
   CardContent,
@@ -21,10 +22,14 @@ const OrderSummary = ({
           (Items: <CartCount />)
         </div>
       </CardHeader>
-      <CardContent className='py-0 md:py-0'>
+      <CardContent className="py-0 md:py-0 space-y-2">
         <div className="flex justify-between items-start">
           <span>Items subtotal</span>
           <CartTotal />
+        </div>
+        <div className="flex justify-between items-start">
+          <span>Shipping</span>
+          <Price amount='4000'/>
         </div>
       </CardContent>
       <CardFooter className="flex-col gap-4">
