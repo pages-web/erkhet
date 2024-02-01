@@ -38,12 +38,6 @@ export const currentOrder = gql`
       registerNumber
       totalAmount
       mobileAmount
-      paidAmounts {
-        _id
-        type
-        amount
-        info
-      }
       items {
         ${orderItemFields}
       }
@@ -185,7 +179,7 @@ const queries = {
   fullOrders,
   orderDetail,
   invoices,
-  addresses,
+  addresses
 };
 
 export default queries;

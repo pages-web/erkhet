@@ -112,10 +112,10 @@ export interface IOrder extends IOrderCommon {
   cashAmount?: number;
   mobileAmount?: number;
   directDiscount?: number;
-  printedEbarimt?: boolean;
+  registerNumber?: string;
+  deliveryInfo?: object;
   number?: string;
   status?: IOrderStatus;
-  paidAmounts?: IPaidAmount[];
   customer?: Customer;
   items: OrderItem[];
   putResponses: IPutResponse[];

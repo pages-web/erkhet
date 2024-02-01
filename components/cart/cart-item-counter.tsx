@@ -7,7 +7,7 @@ import { memo } from 'react';
 const CartItemCounter = ({
   unitPrice,
   _id,
-  count,
+  count
 }: {
   _id: string;
   unitPrice: number;
@@ -26,7 +26,10 @@ const CartItemCounter = ({
           minus
           onClick={() => changeCartItem({ _id, count: count - 1 })}
         />
-        <CounterInput value={count} />
+        <CounterInput
+          value={count}
+          onChange={e => changeCartItem({ _id, count: Number(e.target.value) })}
+        />
         <CounterButton
           onClick={() => changeCartItem({ _id, count: count + 1 })}
         />

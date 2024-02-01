@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
-const addEditParamDefs = `$items: [OrderItemInput], $totalAmount: Float!, $type: String!, $customerId: String, $slotCode: String, $registerNumber: String, $billType: String, $origin: String, $deliveryInfo: JSON, $description: String, $branchId: String, $buttonType: String`;
-const addEditParams = `items: $items, totalAmount: $totalAmount, type: $type, customerId: $customerId, slotCode: $slotCode, registerNumber: $registerNumber, billType: $billType, origin: $origin, description: $description, deliveryInfo: $deliveryInfo, branchId: $branchId,  buttonType: $buttonType`;
+const addEditParamDefs = `$items: [OrderItemInput], $totalAmount: Float!, $type: String!, $customerId: String, $registerNumber: String, $billType: String, $origin: String, $deliveryInfo: JSON, $description: String, $branchId: String`;
+const addEditParams = `items: $items, totalAmount: $totalAmount, type: $type, customerId: $customerId, registerNumber: $registerNumber, billType: $billType, origin: $origin, description: $description, deliveryInfo: $deliveryInfo, branchId: $branchId`;
 
 const ordersAdd = gql`
   mutation ordersAdd(${addEditParamDefs}) {
@@ -116,17 +116,38 @@ const ordersSettlePayment = gql`
   }
 `;
 
+const ordersChange = gql`
+  mutation OrdersChange(
+    $_id: String!
+    $dueDate: Date
+    $branchId: String
+    $deliveryInfo: JSON
+    $description: String
+  ) {
+    ordersChange(
+      _id: $_id
+      dueDate: $dueDate
+      branchId: $branchId
+      deliveryInfo: $deliveryInfo
+      description: $description
+    ) {
+      _id
+    }
+  }
+`;
+
 const mutations = {
   ordersAdd,
   ordersEdit,
+  ordersCancel,
+  ordersChange,
   ordersAddPayment,
   ordersMakePayment,
   orderChangeStatus,
   orderItemChangeStatus,
   generateInvoiceUrl,
-  ordersCancel,
   afterFormSubmit,
-  ordersSettlePayment,
+  ordersSettlePayment
 };
 
 export default mutations;

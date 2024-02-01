@@ -2,8 +2,20 @@ import { IProduct } from '@/types/product.types';
 import Link from 'next/link';
 import Image from '../ui/image';
 import { TagIcon } from 'lucide-react';
+import { Button } from '../ui/button';
+import { useAtomValue, useSetAtom, type Atom } from 'jotai';
+import { OrderItem } from '@/types/order.types';
+import Price from '../price/price';
+import { Counter, CounterButton, CounterInput } from '../counter/counter';
+import { updateCartAtom } from '@/store/cart.store';
 
-const CartProductCard = ({ _id }: IProduct) => {
+const CartProductCard = ({
+  cartItemAtom
+}: {
+  cartItemAtom: Atom<OrderItem>;
+}) => {
+  const { _id, productName, unitPrice, count } = useAtomValue(cartItemAtom);
+  const changeCartItem = useSetAtom(updateCartAtom);
   return (
     <div className="relative flex first:border-t border-b-[1px] border-neutral-200 hover:shadow-lg min-w-[320px] p-4 last:mb-0">
       <div className="relative overflow-hidden rounded-md w-[100px] sm:w-[176px]">
@@ -15,9 +27,41 @@ const CartProductCard = ({ _id }: IProduct) => {
           Sale
         </div>
       </div>
-      <div className="flex flex-col pl-4 min-w-[180px] flex-1"></div>
+      <div className="flex flex-col pl-4 min-w-[180px] flex-1 ">
+        <Button className="text-lg justify-start px-0" asChild variant="link">
+          <Link href={`/product/${_id}`}>{productName}</Link>
+        </Button>
+        <div className="items-start sm:items-center sm:mt-auto flex flex-col sm:flex-row sm:justify-between sm:w-full sm:gap-2">
+          <Counter>
+            <CounterButton
+              minus
+              onClick={() => changeCartItem({ _id, count: count - 1 })}
+            />
+            <CounterInput
+              value={count}
+              onChange={e =>
+                changeCartItem({ _id, count: Number(e.target.value) })
+              }
+            />
+            <CounterButton
+              onClick={() => changeCartItem({ _id, count: count + 1 })}
+            />
+          </Counter>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-destructive hover:bg-destructive/10 hover:text-destructive"
+            onClick={() => changeCartItem({ _id, count: 0 })}
+          >
+            Remove
+          </Button>
+          <span className="font-bold sm:ml-auto sm:order-1 text-sm sm:text-lg">
+            <Price amount={unitPrice + ''} />
+          </span>
+        </div>
+      </div>
     </div>
   );
-};   
+};
 
 export default CartProductCard;

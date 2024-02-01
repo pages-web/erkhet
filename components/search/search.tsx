@@ -22,14 +22,11 @@ export default function Search({ className }: { className?: string }) {
       newParams.delete('q');
     }
 
-    router.push(createUrl('/search', newParams));
+    router.push(createUrl('/category', newParams));
   }
 
   return (
-    <form
-      onSubmit={onSubmit}
-      className={cn('relative w-full', className)}
-    >
+    <form onSubmit={onSubmit} className={cn('relative w-full', className)}>
       <Input
         key={searchParams?.get('q')}
         type="text"

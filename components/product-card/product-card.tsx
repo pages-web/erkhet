@@ -1,17 +1,16 @@
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
-import Image from './ui/image';
-import { Button } from './ui/button';
+import Image from '../ui/image';
+import { Button } from '../ui/button';
 import { ShoppingCartIcon } from 'lucide-react';
-import { IProduct } from '../types/product.types';
+import { IProduct } from '../../types/product.types';
+import ProductCardAdd from './product-card-add';
 
 const ProductCard = ({
   className,
-  name,
-  attachment,
-  unitPrice,
-  _id,
+  ...product
 }: IProduct & { className?: string }) => {
+  const { name, attachment, unitPrice, _id } = product;
   return (
     <div
       className={cn(
@@ -43,9 +42,7 @@ const ProductCard = ({
         >
           {(unitPrice || '').toLocaleString()} ₮
         </span>
-        <Button size="sm" className="font-bold">
-          <ShoppingCartIcon className="h-4 w-4 mr-1" strokeWidth={2.5} /> Add
-        </Button>
+        <ProductCardAdd {...product} />
       </div>
     </div>
   );

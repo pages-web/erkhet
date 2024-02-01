@@ -1,16 +1,16 @@
-import ProductCard from '../product-card';
+import ProductCard from '../product-card/product-card';
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselPrevious,
-  CarouselNext,
+  CarouselNext
 } from '../ui/carousel';
 
 const RecommendedProducts = () => {
   return (
     <Carousel opts={{ containScroll: 'keepSnaps', dragFree: true }}>
-      <CarouselContent >
+      <CarouselContent>
         <CarouselItem className="basis-[200px]">
           <ProductCard />
         </CarouselItem>

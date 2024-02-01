@@ -7,10 +7,11 @@ import DefaultLayout from '@/components/layouts';
 import Providers from '@/store';
 import CurrentOrder from '@/containers/currentOrder';
 import { Toaster } from '@/components/ui/sonner';
+import OrderCRUD from '@/containers/order-crud';
 
 export const fontSans = FontSans({
   subsets: ['latin'],
-  variable: '--font-sans',
+  variable: '--font-sans'
 });
 
 interface RootLayoutProps {
@@ -30,6 +31,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <Providers>
           <DefaultLayout>{children}</DefaultLayout>
           <CurrentOrder />
+          <OrderCRUD />
         </Providers>
         <Toaster richColors closeButton />
       </body>

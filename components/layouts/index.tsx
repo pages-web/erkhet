@@ -25,7 +25,7 @@ const DefaultLayout = ({ children }: React.PropsWithChildren) => {
           </Link>
         </Button>
         <Search className="hidden md:block flex-1" />
-        <nav className="hidden md:flex md:flex-row md:flex-nowrap gap-2">
+        <nav className="hidden md:flex md:flex-row md:flex-nowrap gap-4">
           <CartTrigger />
           <CurrentUser />
         </nav>

@@ -16,10 +16,10 @@ type GetCategories = (params?: CommonParams) => Promise<{
   error_msg: string | undefined;
 }>;
 
-export const getCategories: GetCategories = async (params) => {
+export const getCategories: GetCategories = async params => {
   const { data, error } = await getClient().query({
     query: queries.productCategories,
-    variables: params?.variables,
+    variables: params?.variables
   });
   const { poscProductCategories: categories } = data || {};
   return { categories, error_msg: error?.message };
@@ -31,21 +31,21 @@ type GetProducts = (params?: CommonParams) => Promise<{
   error_msg: string | undefined;
 }>;
 
-export const GetProducts: GetProducts = async (params) => {
+export const getProducts: GetProducts = async params => {
   const { perPage, page, ...variables } = params?.variables || {};
   const { data, error } = await getClient().query({
     query: queries.products,
-    variables: params?.variables,
+    variables: params?.variables
   });
   const count = await getClient().query({
     query: queries.productsCount,
-    variables: variables,
+    variables: variables
   });
   const { poscProducts: products } = data || {};
   return {
     products,
     count: count?.data?.poscProductsTotalCount,
-    error_msg: error?.message,
+    error_msg: error?.message
   };
 };
 
@@ -54,10 +54,10 @@ type GetProductDetail = (params?: CommonParams) => Promise<{
   error_msg: string | undefined;
 }>;
 
-export const getProductDetail: GetProductDetail = async (params) => {
+export const getProductDetail: GetProductDetail = async params => {
   const { data, error } = await getClient().query({
     query: queries.productDetail,
-    variables: params?.variables,
+    variables: params?.variables
   });
   const { poscProductDetail: product } = data || {};
   return { product, error_msg: error?.message };
@@ -68,16 +68,16 @@ type GetBreadcrumbs = (order: string, categories: ICategory[]) => Breadcrumb[];
 export const getBreadcrumbs: GetBreadcrumbs = (order, categories) => {
   return order
     .split('/')
-    .map((code) => {
-      const cat = categories.find((c) => c.code === code);
+    .map(code => {
+      const cat = categories.find(c => c.code === code);
       if (!cat) return null;
       return {
         name: cat?.name,
         link: {
           pathname: '/category',
-          query: { order: cat?.order },
-        } as LinkProps['href'],
+          query: { order: cat?.order }
+        } as LinkProps['href']
       };
     })
-    .filter((cat) => cat !== null) as Breadcrumb[];
+    .filter(cat => cat !== null) as Breadcrumb[];
 };

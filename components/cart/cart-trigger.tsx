@@ -35,7 +35,7 @@ const CartTrigger = () => {
         <ShoppingCartIcon className="h-5 w-5" />
         <Badge
           variant="outline"
-          className="absolute right-0 top-0 bg-white p-0 h-[14px] min-w-[14px] rounded-lg justify-center text-xs leading-none"
+          className="absolute right-0 top-0 bg-white p-0 h-4 min-w-4 rounded-lg justify-center text-xs text-center leading-none"
         >
           <CartCount />
         </Badge>
