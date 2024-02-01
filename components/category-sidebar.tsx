@@ -2,9 +2,10 @@
 
 import { useMediaQuery } from '@/hooks/use-media-query';
 import dynamic from 'next/dynamic';
+import { Suspense } from 'react';
 
 const Mobile = dynamic(() => import('./category-sidebar-mobile'), {
-  loading: () => <div className="md:w-[303px]"></div>,
+  loading: () => <div className="md:w-[303px]"></div>
 });
 
 const CategorySidebar = ({ children }: React.PropsWithChildren) => {
@@ -19,9 +20,13 @@ const CategorySidebar = ({ children }: React.PropsWithChildren) => {
 
   return (
     <div className="md:w-[303px]">
-      <Mobile>
-        <div className="grid grid-rows-category-sidebar h-full">{children}</div>
-      </Mobile>
+      <Suspense>
+        <Mobile>
+          <div className="grid grid-rows-category-sidebar h-full">
+            {children}
+          </div>
+        </Mobile>
+      </Suspense>
     </div>
   );
 };

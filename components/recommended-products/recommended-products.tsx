@@ -12,13 +12,13 @@ const RecommendedProducts = () => {
     <Carousel opts={{ containScroll: 'keepSnaps', dragFree: true }}>
       <CarouselContent>
         <CarouselItem className="basis-[200px]">
-          <ProductCard />
+          {/* <ProductCard /> */}
         </CarouselItem>
         <CarouselItem className="basis-[200px]">
-          <ProductCard />
+          {/* <ProductCard /> */}
         </CarouselItem>
         <CarouselItem className="basis-[200px]">
-          <ProductCard />
+          {/* <ProductCard /> */}
         </CarouselItem>
       </CarouselContent>
       <CarouselPrevious className="2xl:-left-12 left-6 hidden md:inline-flex" />

@@ -12,7 +12,8 @@ export const useCurrentUser = () => {
     onCompleted({ clientPortalCurrentUser }) {
       setCurrentUser(clientPortalCurrentUser);
     },
-    skip: !sessionStorage.getItem('token'),
+    skip:
+      typeof window === 'undefined' || sessionStorage.getItem('token') === null
   });
 
   const { clientPortalCurrentUser: currentUser } = data || {};

@@ -9,6 +9,7 @@ import Footer from '../footer/footer';
 import Link from 'next/link';
 import CartTrigger from '../cart/cart-trigger';
 import CurrentUser from '@/containers/auth/current-user';
+import { Suspense } from 'react';
 
 const DefaultLayout = ({ children }: React.PropsWithChildren) => {
   return (
@@ -24,7 +25,9 @@ const DefaultLayout = ({ children }: React.PropsWithChildren) => {
             <ChevronDownIcon className="h-4 w-4 ml-1" />
           </Link>
         </Button>
-        <Search className="hidden md:block flex-1" />
+        <Suspense>
+          <Search className="hidden md:block flex-1" />
+        </Suspense>
         <nav className="hidden md:flex md:flex-row md:flex-nowrap gap-4">
           <CartTrigger />
           <CurrentUser />

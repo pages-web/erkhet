@@ -12,9 +12,7 @@ export default function Home() {
       <CategoryCard />
       <Display />
       <Heading title="Inspired by your picks" />
-      <div className="container pb-20">
-        <RecommendedProducts />
-      </div>
+      <div className="container pb-20">{/* <RecommendedProducts /> */}</div>
     </>
   );
 }

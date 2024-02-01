@@ -4,7 +4,7 @@ import {
   type Atom,
   Provider as JotaiProvider,
   atom,
-  useAtomValue,
+  useAtomValue
 } from 'jotai';
 import Apollo from '@/app/ApolloClient';
 import { selectAtom } from 'jotai/utils';
