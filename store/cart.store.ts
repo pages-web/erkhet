@@ -78,11 +78,13 @@ export const addToCartAtom = atom(
 );
 
 export const updateCartAtom = atom(
-  () => '',
-  (get, set, payload: IUpdateItem) =>
+  get => get(loadingOrderAtom),
+  (get, set, payload: IUpdateItem) => {
     set(get(currentUserAtom) ? itemsAtom : localCartAtom, prev =>
       changeCartItem(payload, prev)
-    )
+    );
+    !!get(currentUserAtom) && set(crudOrderAtom, true);
+  }
 );
 
 export const setCartAtom = atom(

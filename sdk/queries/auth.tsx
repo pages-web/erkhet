@@ -1,16 +1,23 @@
 import { useQuery } from '@apollo/client';
 import { queries } from '@/sdk/graphql/auth';
 import { useSetAtom, useAtom } from 'jotai';
-import { currentUserAtom, refetchCurrentUserAtom } from '@/store/user.store';
+import {
+  currentUserAtom,
+  loadingUserAtom,
+  refetchCurrentUserAtom
+} from '@/store/user.store';
 import { useEffect } from 'react';
 
-export const useCurrentUser = () => {
+export const useCurrentUser = (onCompleted?: (data: any) => void) => {
   const setCurrentUser = useSetAtom(currentUserAtom);
+  const setLoading = useSetAtom(loadingUserAtom);
   const [refetchUser, setRefetchUser] = useAtom(refetchCurrentUserAtom);
 
   const { data, loading, refetch } = useQuery(queries.currentUser, {
     onCompleted({ clientPortalCurrentUser }) {
       setCurrentUser(clientPortalCurrentUser);
+      setLoading(false);
+      onCompleted && onCompleted(clientPortalCurrentUser);
     },
     skip:
       typeof window === 'undefined' || sessionStorage.getItem('token') === null
@@ -20,7 +27,7 @@ export const useCurrentUser = () => {
 
   useEffect(() => {
     if (refetchUser) {
-      refetch;
+      refetch();
       setRefetchUser(false);
     }
   }, [refetchUser]);

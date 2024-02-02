@@ -3,10 +3,23 @@
 import CartProductList from '@/components/cart-product-list/cart-product-list';
 import CartEmpty from '@/components/cart/cart-empty';
 import { cartLengthAtom } from '@/store/cart.store';
+import { initialLoadingOrderAtom, loadingOrderAtom } from '@/store/order.store';
 import { useAtomValue } from 'jotai';
+import { Loader2Icon } from 'lucide-react';
 
 const CartPageContent = ({ children }: React.PropsWithChildren) => {
   const cartLength = useAtomValue(cartLengthAtom);
+  const loadingOrder = useAtomValue(initialLoadingOrderAtom);
+
+  if (loadingOrder)
+    return (
+      <>
+        <div className="flex items-center justify-center py-40 col-span-7 mb-10 md:mb-0">
+          <Loader2Icon className="h-6 w-6 animate-spin" />
+        </div>
+        {children}
+      </>
+    );
 
   if (!cartLength)
     return (

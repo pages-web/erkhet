@@ -11,21 +11,19 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
+  FormMessage
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Password } from '@/components/ui/password';
 import Link from 'next/link';
 import { useLogin } from '@/sdk/hooks/auth';
-import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
 
 const formSchema = z.object({
   login: z
     .string()
     .regex(/^[^\s@]+@[^\s@]+\.[^\s@]+|[0-9]{6,}$/, 'Invalid phone or email')
     .min(1, { message: 'Email is required' }),
-  password: z.string().min(1, { message: 'Password is required' }),
+  password: z.string().min(1, { message: 'Password is required' })
 });
 
 const LoginForm = () => {
@@ -33,14 +31,15 @@ const LoginForm = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       login: '',
-      password: '',
-    },
+      password: ''
+    }
   });
 
   const { login, loading, clientPortalId } = useLogin();
+
   function onSubmit(values: z.infer<typeof formSchema>) {
     login({
-      variables: { ...values, clientPortalId },
+      variables: { ...values, clientPortalId }
     });
   }
 
@@ -78,6 +77,7 @@ const LoginForm = () => {
                   asChild
                   variant="link"
                   className="py-1 h-auto font-normal px-0"
+                  tabIndex={-1}
                 >
                   <Link href="/forgot">Mартсан?</Link>
                 </Button>

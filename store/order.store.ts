@@ -42,6 +42,7 @@ export const orderParamsAtom = atom(get => {
   };
 });
 
+export const initialLoadingOrderAtom = atom<boolean>(true);
 export const loadingOrderAtom = atom<boolean>(false);
 
 export const crudOrderAtom = atom<boolean>(false);

@@ -2,7 +2,11 @@ import { useQuery } from '@apollo/client';
 import { queries } from '../graphql/order';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { currentUserAtom } from '@/store/user.store';
-import { activeOrderAtom, loadingOrderAtom } from '@/store/order.store';
+import {
+  activeOrderAtom,
+  initialLoadingOrderAtom,
+  loadingOrderAtom
+} from '@/store/order.store';
 import { defaultOrderItem, crudOrderAtom } from '../../store/order.store';
 import { localCartAtom } from '@/store/cart.store';
 import { OrderItem } from '../../types/order.types';
@@ -13,6 +17,7 @@ const useCurrentOrder = () => {
   const setCurrentAtom = useSetAtom(activeOrderAtom);
   const [localCart, setLocalCart] = useAtom(localCartAtom);
   const setLoadingOrder = useSetAtom(loadingOrderAtom);
+  const setInitialLoadingOrder = useSetAtom(initialLoadingOrderAtom);
   const setTriggerCRUD = useSetAtom(crudOrderAtom);
 
   const { data, error, loading } = useQuery(queries.currentOrder, {
@@ -33,6 +38,7 @@ const useCurrentOrder = () => {
     const currentOrder = (fullOrders || [])[0];
     if (currentOrder) {
       setLoadingOrder(false);
+      setInitialLoadingOrder(false);
       setCurrentAtom(currentOrder || defaultOrderItem);
       if (localCart.length > 0) {
         if (!currentOrder) {

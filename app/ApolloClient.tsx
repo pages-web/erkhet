@@ -31,35 +31,30 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
-const wsLink: any =
-  typeof window !== 'undefined'
-    ? new GraphQLWsLink(
-        createClient({
-          url: process.env.NEXT_PUBLIC_MAIN_SUBS_DOMAIN || ''
-        })
-      )
-    : null;
+const wsLink = new GraphQLWsLink(
+  createClient({
+    url: 'ws://localhost:4000/subscriptions'
+  })
+);
 
 const httpLinkWithMiddleware = authLink.concat(httpLink);
 
-type Definintion = {
-  kind: string;
-  operation?: string;
-};
-
-// const link = split(
-//   ({ query }) => {
-//     const { kind, operation }: Definintion = getMainDefinition(query);
-//     return kind === 'OperationDefinition' && operation === 'subscription';
-//   },
-//   wsLink,
-//   httpLinkWithMiddleware
-// );
+const splitLink = split(
+  ({ query }) => {
+    const definition = getMainDefinition(query);
+    return (
+      definition.kind === 'OperationDefinition' &&
+      definition.operation === 'subscription'
+    );
+  },
+  wsLink,
+  httpLinkWithMiddleware
+);
 
 const client = new ApolloClient({
   ssrMode: typeof window !== 'undefined',
   cache: new InMemoryCache(),
-  link: httpLinkWithMiddleware
+  link: splitLink
 });
 
 const Apollo = ({ children }: React.PropsWithChildren) => {

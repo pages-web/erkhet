@@ -14,7 +14,7 @@ const Image: FC<
     alt?: string;
     fallBack?: string;
   }
-> = (props) => {
+> = props => {
   const {
     src,
     fill = true,
@@ -30,7 +30,7 @@ const Image: FC<
   const fixedSrc = readFile(src || '');
 
   const [isImageLoading, setIsImageLoading] = useState(true);
-  const [srcI, setSrcI] = useState(fixedSrc || fallBack || '/icon.png');
+  const [srcI, setSrcI] = useState(fixedSrc || fallBack || PLACEHOLDER);
   const handleComplete = () => setIsImageLoading(false);
 
   useEffect(() => {
@@ -47,7 +47,7 @@ const Image: FC<
     fill: !width && !height ? true : undefined,
     width,
     height,
-    onError,
+    onError
   };
 
   return (
