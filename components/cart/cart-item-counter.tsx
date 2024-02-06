@@ -1,19 +1,19 @@
 import Price from '../price/price';
 import { Counter, CounterButton, CounterInput } from '../counter/counter';
-import { useSetAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import { updateCartAtom } from '@/store/cart.store';
 import { memo } from 'react';
 
 const CartItemCounter = ({
   unitPrice,
   _id,
-  count
+  count,
 }: {
   _id: string;
   unitPrice: number;
   count: number;
 }) => {
-  const changeCartItem = useSetAtom(updateCartAtom);
+  const [loading, changeCartItem] = useAtom(updateCartAtom);
 
   return (
     <div className="flex h-16 flex-col justify-between">
@@ -24,13 +24,18 @@ const CartItemCounter = ({
       <Counter size="sm">
         <CounterButton
           minus
+          disabled={loading}
           onClick={() => changeCartItem({ _id, count: count - 1 })}
         />
         <CounterInput
           value={count}
-          onChange={e => changeCartItem({ _id, count: Number(e.target.value) })}
+          disabled={loading}
+          onChange={(e) =>
+            changeCartItem({ _id, count: Number(e.target.value) })
+          }
         />
         <CounterButton
+          disabled={loading}
           onClick={() => changeCartItem({ _id, count: count + 1 })}
         />
       </Counter>

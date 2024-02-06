@@ -5,7 +5,7 @@ import { currentUserAtom } from '@/store/user.store';
 import {
   activeOrderAtom,
   initialLoadingOrderAtom,
-  loadingOrderAtom
+  loadingOrderAtom,
 } from '@/store/order.store';
 import { defaultOrderItem, crudOrderAtom } from '../../store/order.store';
 import { localCartAtom } from '@/store/cart.store';
@@ -27,9 +27,9 @@ const useCurrentOrder = () => {
       perPage: 1,
       page: 1,
       sortField: 'createdAt',
-      sortDirection: -1
+      sortDirection: -1,
     },
-    skip: !erxesCustomerId
+    skip: !erxesCustomerId,
   });
 
   const fullOrders = useMemo(() => data?.fullOrders, [data]);
@@ -39,17 +39,18 @@ const useCurrentOrder = () => {
     if (currentOrder) {
       setLoadingOrder(false);
       setInitialLoadingOrder(false);
+      setTriggerCRUD(false);
       setCurrentAtom(currentOrder || defaultOrderItem);
       if (localCart.length > 0) {
         if (!currentOrder) {
           setCurrentAtom({
             ...currentOrder,
-            items: localCart
+            items: localCart,
           });
         } else {
           setCurrentAtom({
             ...currentOrder,
-            items: syncCarts(localCart, currentOrder.items)
+            items: syncCarts(localCart, currentOrder.items),
           });
         }
         setTriggerCRUD(true);
@@ -64,9 +65,9 @@ const useCurrentOrder = () => {
 };
 
 function syncCarts(localCart: OrderItem[], items: OrderItem[]) {
-  const synchronizedCart = localCart.map(localItem => {
+  const synchronizedCart = localCart.map((localItem) => {
     const matchingSavedItem = items.find(
-      savedItem => savedItem.productId === localItem.productId
+      (savedItem) => savedItem.productId === localItem.productId
     );
     if (matchingSavedItem) {
       // If the product exists in the saved cart, update the count by summing the values
@@ -76,9 +77,9 @@ function syncCarts(localCart: OrderItem[], items: OrderItem[]) {
     }
   });
 
-  items.forEach(savedItem => {
+  items.forEach((savedItem) => {
     const isAlreadyInLocalCart = synchronizedCart.some(
-      localItem => localItem.productId === savedItem.productId
+      (localItem) => localItem.productId === savedItem.productId
     );
     if (!isAlreadyInLocalCart) {
       synchronizedCart.push(savedItem);

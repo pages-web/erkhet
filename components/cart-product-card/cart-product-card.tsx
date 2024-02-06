@@ -3,19 +3,19 @@ import Link from 'next/link';
 import Image from '../ui/image';
 import { TagIcon } from 'lucide-react';
 import { Button } from '../ui/button';
-import { useAtomValue, useSetAtom, type Atom } from 'jotai';
+import { useAtom, useAtomValue, useSetAtom, type Atom } from 'jotai';
 import { OrderItem } from '@/types/order.types';
 import Price from '../price/price';
 import { Counter, CounterButton, CounterInput } from '../counter/counter';
 import { updateCartAtom } from '@/store/cart.store';
 
 const CartProductCard = ({
-  cartItemAtom
+  cartItemAtom,
 }: {
   cartItemAtom: Atom<OrderItem>;
 }) => {
   const { _id, productName, unitPrice, count } = useAtomValue(cartItemAtom);
-  const changeCartItem = useSetAtom(updateCartAtom);
+  const [loading, changeCartItem] = useAtom(updateCartAtom);
   return (
     <div className="relative flex first:border-t border-b-[1px] border-neutral-200 hover:shadow-lg min-w-[320px] p-4 last:mb-0">
       <div className="relative overflow-hidden rounded-md w-[100px] sm:w-[176px]">
@@ -34,17 +34,20 @@ const CartProductCard = ({
         <div className="items-start sm:items-center sm:mt-auto flex flex-col sm:flex-row sm:justify-between sm:w-full sm:gap-2">
           <Counter>
             <CounterButton
+              disabled={loading}
               minus
               onClick={() => changeCartItem({ _id, count: count - 1 })}
             />
             <CounterInput
               value={count}
-              onChange={e =>
+              onChange={(e) =>
                 changeCartItem({ _id, count: Number(e.target.value) })
               }
+              disabled={loading}
             />
             <CounterButton
               onClick={() => changeCartItem({ _id, count: count + 1 })}
+              disabled={loading}
             />
           </Counter>
           <Button
@@ -52,6 +55,7 @@ const CartProductCard = ({
             size="sm"
             className="text-destructive hover:bg-destructive/10 hover:text-destructive"
             onClick={() => changeCartItem({ _id, count: 0 })}
+            disabled={loading}
           >
             Remove
           </Button>
