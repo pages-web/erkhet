@@ -84,6 +84,7 @@ const RegisterForm = () => {
                   placeholder="John"
                   {...field}
                   autoComplete="given-name"
+                  className="h-12"
                 />
               </FormControl>
               <FormMessage />

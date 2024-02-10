@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import { cn } from '@/lib/utils';
-import { buttonVariants } from '../ui/button';
+import { Button, buttonVariants } from '../ui/button';
 
 interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
   items: {
@@ -24,21 +24,29 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
       )}
       {...props}
     >
-      {items.map((item) => (
-        <Link
-          key={item.href}
-          href={item.href}
-          className={cn(
-            buttonVariants({ variant: 'ghost' }),
-            pathname === item.href
-              ? 'bg-muted hover:bg-muted'
-              : 'hover:bg-transparent hover:underline',
-            'justify-start'
-          )}
-        >
-          {item.title}
-        </Link>
-      ))}
+      {items.map((item) => {
+        if (item.href === '/logout')
+          return (
+            <Button className="justify-start" variant="ghost">
+              Log out
+            </Button>
+          );
+        return (
+          <Link
+            key={item.href}
+            href={item.href}
+            className={cn(
+              buttonVariants({ variant: 'ghost' }),
+              pathname === item.href
+                ? 'bg-muted hover:bg-muted'
+                : 'hover:bg-transparent hover:underline',
+              'justify-start'
+            )}
+          >
+            {item.title}
+          </Link>
+        );
+      })}
     </nav>
   );
 }
