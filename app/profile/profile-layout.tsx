@@ -33,7 +33,7 @@ const sidebarNavItems = [
     href: '/profile/orders',
   },
   {
-    title: 'Whislist',
+    title: 'Wishlist',
     href: '/profile/wishlist',
   },
   {

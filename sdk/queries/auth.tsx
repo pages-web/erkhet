@@ -4,7 +4,7 @@ import { useSetAtom, useAtom } from 'jotai';
 import {
   currentUserAtom,
   loadingUserAtom,
-  refetchCurrentUserAtom
+  refetchCurrentUserAtom,
 } from '@/store/user.store';
 import { useEffect } from 'react';
 
@@ -20,7 +20,7 @@ export const useCurrentUser = (onCompleted?: (data: any) => void) => {
       onCompleted && onCompleted(clientPortalCurrentUser);
     },
     skip:
-      typeof window === 'undefined' || sessionStorage.getItem('token') === null
+      typeof window === 'undefined' || sessionStorage.getItem('token') === null,
   });
 
   const { clientPortalCurrentUser: currentUser } = data || {};
@@ -33,4 +33,15 @@ export const useCurrentUser = (onCompleted?: (data: any) => void) => {
   }, [refetchUser]);
 
   return { currentUser, loading };
+};
+
+export const useUserDetail = () => {
+  const [currentUser, setCurrentUser] = useAtom(currentUserAtom);
+  const { loading } = useQuery(queries.userDetail, {
+    onCompleted({ clientPortalCurrentUser }) {
+      setCurrentUser({ ...currentUser, ...clientPortalCurrentUser });
+    },
+  });
+
+  return { loading };
 };

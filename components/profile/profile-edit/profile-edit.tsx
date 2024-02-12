@@ -10,38 +10,35 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '../ui/form';
-import { Input } from '../ui/input';
-import { Button } from '../ui/button';
+} from '../../ui/form';
+import { Input } from '../../ui/input';
+import { Button } from '../../ui/button';
+import { useAtomValue } from 'jotai';
+import { currentUserAtom } from '@/store/user.store';
 
 const formSchema = z.object({
   firstName: z.string().min(1, { message: 'First name is required' }),
   lastName: z.string(),
-  email: z.string().email(),
-  phone: z
-    .string()
-    .regex(/[0-9]{6,}$/, 'invalid')
-    .min(1, { message: 'Phone is required' }),
 });
 
 const ProfileEdit = () => {
+  const { firstName, lastName } = useAtomValue(currentUserAtom) || {};
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      phone: '',
+    values: {
+      firstName: firstName || '',
+      lastName: lastName || '',
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
   }
+
   return (
     <Form {...form}>
       <form
-        className="space-y-6 relative"
+        className="space-y-6 relative max-w-xl"
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormField
@@ -78,40 +75,7 @@ const ProfileEdit = () => {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="john@doe.com"
-                  {...field}
-                  autoComplete="email"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="phone"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Phone</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="0000 0000"
-                  {...field}
-                  autoComplete="tel-national"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+
         <div>
           <Button>Save Changes</Button>
         </div>

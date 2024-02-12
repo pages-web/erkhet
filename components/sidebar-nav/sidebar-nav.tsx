@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 
 import { cn } from '@/lib/utils';
 import { Button, buttonVariants } from '../ui/button';
+import Logout from '@/containers/auth/logout';
 
 interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
   items: {
@@ -25,12 +26,7 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
       {...props}
     >
       {items.map((item) => {
-        if (item.href === '/logout')
-          return (
-            <Button className="justify-start" variant="ghost">
-              Log out
-            </Button>
-          );
+        if (item.href === '/logout') return <Logout />;
         return (
           <Link
             key={item.href}

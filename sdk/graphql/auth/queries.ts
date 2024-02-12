@@ -4,18 +4,22 @@ const currentUser = gql`
   query clientPortalCurrentUser {
     clientPortalCurrentUser {
       _id
-      email
       firstName
       lastName
-      type
-      erxesCompanyId
-      phone
       avatar
-      customer {
-        addresses
-      }
       erxesCustomerId
-      companyRegistrationNumber
+    }
+  }
+`;
+
+const userDetail = gql`
+  query UserDetail {
+    clientPortalCurrentUser {
+      phone
+      email
+      password
+      isEmailVerified
+      isPhoneVerified
     }
   }
 `;
@@ -30,6 +34,6 @@ const currentConfig = gql`
   }
 `;
 
-const queries = { currentUser, currentConfig };
+const queries = { currentUser, currentConfig, userDetail };
 
 export default queries;

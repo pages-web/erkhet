@@ -17,11 +17,10 @@ const config = {
       center: true,
       padding: {
         DEFAULT: '1rem',
-        md: '1.5rem',
         '2xl': '2rem',
       },
       screens: {
-        '2xl': '1500px',
+        '2xl': '1536px',
       },
     },
     extend: {
