@@ -42,7 +42,7 @@ export function CategoryCard({ ...attributes }: CategoryCardProps) {
             href={`/category?slug=${order}`}
             aria-label={name}
           >
-            <div className="relative h-[240px] w-[240px] rounded-full bg-neutral-100 group-hover:shadow-xl group-active:shadow-none">
+            <div className="relative h-40 md:h-60 w-40 md:w-60 rounded-full bg-neutral-100 group-hover:shadow-xl group-active:shadow-none">
               <Image src={image} alt={name} width={240} height={240} />
             </div>
             <div className="flex justify-center">

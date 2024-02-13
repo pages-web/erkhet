@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+import * as z from 'zod';
 import {
   Form,
   FormControl,
@@ -15,6 +15,7 @@ import { Input } from '../../ui/input';
 import { Button } from '../../ui/button';
 import { useAtomValue } from 'jotai';
 import { currentUserAtom } from '@/store/user.store';
+import useUserEdit from '@/sdk/hooks/auth';
 
 const formSchema = z.object({
   firstName: z.string().min(1, { message: 'First name is required' }),
@@ -22,7 +23,8 @@ const formSchema = z.object({
 });
 
 const ProfileEdit = () => {
-  const { firstName, lastName } = useAtomValue(currentUserAtom) || {};
+  const { firstName, lastName, _id } = useAtomValue(currentUserAtom) || {};
+  const { editUser, loading } = useUserEdit();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     values: {
@@ -32,7 +34,7 @@ const ProfileEdit = () => {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    editUser({ variables: { ...values, _id } });
   }
 
   return (
@@ -76,9 +78,7 @@ const ProfileEdit = () => {
           )}
         />
 
-        <div>
-          <Button>Save Changes</Button>
-        </div>
+        <Button disabled={loading}>Save Changes</Button>
       </form>
     </Form>
   );

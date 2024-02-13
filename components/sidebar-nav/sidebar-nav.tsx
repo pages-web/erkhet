@@ -20,20 +20,22 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
   return (
     <nav
       className={cn(
-        'flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1',
+        'flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1 p-0.5',
         className
       )}
       {...props}
     >
       {items.map((item) => {
-        if (item.href === '/logout') return <Logout />;
+        if (item.href === '/logout') return <Logout key={'logout'} />;
         return (
           <Link
             key={item.href}
             href={item.href}
             className={cn(
               buttonVariants({ variant: 'ghost' }),
-              pathname === item.href
+              pathname === item.href ||
+                (pathname.includes('/profile/orders/') &&
+                  item.href === '/profile/orders')
                 ? 'bg-muted hover:bg-muted'
                 : 'hover:bg-transparent hover:underline',
               'justify-start'

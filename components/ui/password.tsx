@@ -29,12 +29,12 @@ const Password = React.forwardRef<
         {...props}
         placeholder="•••••••••••••"
       />
-      <Separator orientation="vertical" className="border-l h-9" />
+      <Separator orientation="vertical" className="border-l h-10" />
       <Button
         tabIndex={-1}
         size="sm"
         variant={'ghost'}
-        className="h-9 rounded-none"
+        className="h-10 rounded-none"
         type="button"
         onClick={() => setShow((prev) => !prev)}
       >

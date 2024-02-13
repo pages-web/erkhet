@@ -16,7 +16,7 @@ export const useLogin = (onCompleted?: BaseMutationOptions['onCompleted']) => {
 
   const onLoginComplete = ({
     token,
-    refetchToken
+    refetchToken,
   }: {
     token?: string;
     refetchToken?: string;
@@ -27,7 +27,7 @@ export const useLogin = (onCompleted?: BaseMutationOptions['onCompleted']) => {
       triggerRefetchUser(true);
       setLoadingUser(true);
       toast.success('Hello Dear', {
-        description: 'You successfully logged in'
+        description: 'You successfully logged in',
       });
 
       router.push(from ? from : '/');
@@ -41,7 +41,7 @@ export const useLogin = (onCompleted?: BaseMutationOptions['onCompleted']) => {
     },
     onError(error) {
       toast.error('Error', { description: error.message });
-    }
+    },
   });
 
   return { login, loading, clientPortalId };
@@ -51,10 +51,24 @@ export const useRegister = (
   onCompleted?: BaseMutationOptions['onCompleted']
 ) => {
   const [register, { loading }] = useMutation(mutations.createUser, {
-    onCompleted: data => {
+    onCompleted: (data) => {
       !!onCompleted && onCompleted(data);
-    }
+    },
   });
 
   return { register, loading, clientPortalId };
 };
+
+const useUserEdit = () => {
+  const setRefetchUser = useSetAtom(refetchCurrentUserAtom);
+  const [editUser, { loading }] = useMutation(mutations.userEdit, {
+    onCompleted(data) {
+      setRefetchUser(true);
+      toast.success('Personal information updated');
+    },
+  });
+
+  return { loading, editUser };
+};
+
+export default useUserEdit;

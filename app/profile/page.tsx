@@ -1,14 +1,10 @@
 import ProfileEdit from '@/components/profile/profile-edit/profile-edit';
 import ProfileLayout from './profile-layout';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import {
-  LockIcon,
-  LucideIcon,
-  MailIcon,
-  PhoneIcon,
-  User2Icon,
-} from 'lucide-react';
+import { Tabs, TabsContent } from '@/components/ui/tabs';
 import ProfileTabsList from '@/components/profile/profile-tab-trigger';
+import ChangePhone from '@/components/profile/profile-edit/change-phone';
+import ChangeEmail from '@/components/profile/profile-edit/change-email';
+import ChangePassword from '@/components/profile/profile-edit/change-password';
 
 const Profile = () => {
   return (
@@ -22,7 +18,15 @@ const Profile = () => {
         <TabsContent value="info">
           <ProfileEdit />
         </TabsContent>
-        <TabsContent value="password">Change your password here.</TabsContent>
+        <TabsContent value="password">
+          <ChangePassword />
+        </TabsContent>
+        <TabsContent value="phone">
+          <ChangePhone />
+        </TabsContent>
+        <TabsContent value="email">
+          <ChangeEmail />
+        </TabsContent>
       </Tabs>
     </ProfileLayout>
   );
