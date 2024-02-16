@@ -11,8 +11,8 @@ const OrderProduct = () => {
         className="h-40 w-40"
       />
 
-      <div>
-        <h3 className="font-bold"></h3>
+      <div className="py-8">
+        <h3 className="font-medium">Nike Air Jordan 1</h3>
       </div>
     </div>
   );
