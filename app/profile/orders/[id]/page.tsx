@@ -55,7 +55,7 @@ const OrderDetail = () => {
         <Card>
           <CardHeader className="justify-between flex-row items-center md:py-3 space-y-0 md:space-y-2">
             <div>
-              <div className="text-sm text-black/60 font-medium">
+              <div className="text-sm text-black/60 font-medium text-nowrap">
                 Захиалгын дугаар
               </div>
               <div className="font-semibold md:font-bold text-base md:text-lg">
@@ -63,7 +63,7 @@ const OrderDetail = () => {
               </div>
             </div>
             <div className="text-right">
-              <div className="text-sm text-black/60 font-medium">
+              <div className="text-sm text-black/60 font-medium text-nowrap">
                 Захиалга хийсэн огноо
               </div>
               <div className="font-semibold md:font-bold text-base md:text-lg">
