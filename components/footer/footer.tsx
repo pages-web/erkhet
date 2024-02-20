@@ -38,11 +38,11 @@ const Footer = ({ className = '' }: { className?: string }) => {
             <Button
               variant="link"
               asChild
-              className="mb-2 py-1 font-semibold text-lg capitalize"
+              className="mb-2 py-1 mt-1 font-semibold text-lg capitalize"
             >
               <Link href={link}>{key}</Link>
             </Button>
-            {details?.map((option) => (
+            {details?.map(option => (
               <p className="text-sm leading-5" key={option}>
                 {option}
               </p>
@@ -54,7 +54,13 @@ const Footer = ({ className = '' }: { className?: string }) => {
         <div className="container text-sm leading-5 text-white justify-end py-10 lg:flex">
           <div className="flex justify-center gap-6 lg:self-start">
             {socialMedia.map(({ icon, label, link }) => (
-              <Button asChild key={label} size="icon" variant={'ghost'} className='hover:bg-white/10 hover:text-white'>
+              <Button
+                asChild
+                key={label}
+                size="icon"
+                variant={'ghost'}
+                className="hover:bg-white/10 hover:text-white"
+              >
                 <Link href={link} title={label}>
                   {icon}
                 </Link>

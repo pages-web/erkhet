@@ -5,17 +5,17 @@ import { Suspense } from 'react';
 const ProfileLayout = ({
   children,
   title,
-  description,
+  description
 }: React.PropsWithChildren & { title: string; description: string }) => {
   return (
-    <div className="space-y-6 pt-6 md:pt-10 pb-16 container">
-      <div className="space-y-0.5">
+    <div className="space-y-3 md:space-y-6 pt-6 md:pt-10 pb-16 container">
+      <div className="space-y-0.5 -mx-2 md:mx-0">
         <h2 className="text-2xl font-bold tracking-tight">{title}</h2>
         <p className="text-muted-foreground">{description}</p>
       </div>
-      <Separator className="my-6" />
-      <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-10 lg:space-y-0">
-        <aside className="lg:w-1/5 overflow-auto">
+      <Separator className="-mx-2 md:mx-0" />
+      <div className="flex flex-col space-y-4 md:space-y-8 lg:flex-row lg:space-x-10 lg:space-y-0">
+        <aside className="lg:w-1/5 overflow-auto -mx-2 md:mx-0">
           <Suspense>
             <SidebarNav items={sidebarNavItems} />
           </Suspense>
@@ -29,24 +29,24 @@ const ProfileLayout = ({
 const sidebarNavItems = [
   {
     title: 'Profile',
-    href: '/profile',
+    href: '/profile'
   },
   {
     title: 'Orders',
-    href: '/profile/orders',
+    href: '/profile/orders'
   },
   {
     title: 'Wishlist',
-    href: '/profile/wishlist',
+    href: '/profile/wishlist'
   },
   {
     title: 'Viewed',
-    href: '/profile/viewed',
+    href: '/profile/viewed'
   },
   {
     title: 'Log out',
-    href: '/logout',
-  },
+    href: '/logout'
+  }
 ];
 
 export default ProfileLayout;

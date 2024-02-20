@@ -2,7 +2,7 @@ import {
   PhoneIcon,
   FacebookIcon,
   HelpCircleIcon,
-  MessageCircleQuestionIcon,
+  MessageCircleQuestionIcon
 } from 'lucide-react';
 
 export const categories = [
@@ -11,161 +11,161 @@ export const categories = [
     subcategories: [
       {
         key: 'paymentMethods',
-        link: '/',
+        link: '/'
       },
       {
         key: 'orderPickup',
-        link: '/',
+        link: '/'
       },
       {
         key: 'purchaseStatus',
-        link: '/',
+        link: '/'
       },
       {
         key: 'trackOrders',
-        link: '/',
+        link: '/'
       },
       {
         key: 'returns',
-        link: '/',
-      },
-    ],
+        link: '/'
+      }
+    ]
   },
   {
     key: 'help',
     subcategories: [
       {
         key: 'helpCenter',
-        link: '/',
+        link: '/'
       },
       {
         key: 'securityFraud',
-        link: '/',
+        link: '/'
       },
       {
         key: 'feedback',
-        link: '/',
+        link: '/'
       },
       {
         key: 'contact',
-        link: '/',
-      },
-    ],
+        link: '/'
+      }
+    ]
   },
   {
     key: 'services',
     subcategories: [
       {
         key: 'giftCards',
-        link: '/',
+        link: '/'
       },
       {
         key: 'storeLocator',
-        link: '/',
+        link: '/'
       },
       {
         key: 'clickCollect',
-        link: '/',
+        link: '/'
       },
       {
         key: 'sameDayDelivery',
-        link: '/',
+        link: '/'
       },
       {
         key: 'shippingDelivery',
-        link: '/',
+        link: '/'
       },
       {
         key: 'couponsDiscounts',
-        link: '/',
+        link: '/'
       },
       {
         key: 'newsletter',
-        link: '/',
-      },
-    ],
+        link: '/'
+      }
+    ]
   },
   {
     key: 'about',
     subcategories: [
       {
         key: 'aboutUs',
-        link: '/',
+        link: '/'
       },
       {
         key: 'jobs',
-        link: '/',
+        link: '/'
       },
       {
         key: 'pressCenter',
-        link: '/',
+        link: '/'
       },
       {
         key: 'affiliateProgram',
-        link: '/',
+        link: '/'
       },
       {
         key: 'suppliers',
-        link: '/',
-      },
-    ],
-  },
+        link: '/'
+      }
+    ]
+  }
 ];
 export const socialMedia = [
   {
     label: 'Facebook',
     link: '/',
-    icon: <FacebookIcon className="h-5 w-5" />,
+    icon: <FacebookIcon className="h-5 w-5" />
   },
   {
     label: 'Twitter',
     link: '/',
-    icon: <FacebookIcon className="h-5 w-5" />,
+    icon: <FacebookIcon className="h-5 w-5" />
   },
   {
     label: 'Instagram',
     link: '/',
-    icon: <FacebookIcon className="h-5 w-5" />,
+    icon: <FacebookIcon className="h-5 w-5" />
   },
   {
     label: 'Pinterest',
     link: '/',
-    icon: <FacebookIcon className="h-5 w-5" />,
+    icon: <FacebookIcon className="h-5 w-5" />
   },
   {
     label: 'Youtube',
     link: '/',
-    icon: <FacebookIcon className="h-5 w-5" />,
-  },
+    icon: <FacebookIcon className="h-5 w-5" />
+  }
 ];
 export const contactOptions = [
   {
     key: 'helpCenter',
     link: '/',
     details: ['description'],
-    icon: <HelpCircleIcon className="h-10 w-10" />,
+    icon: <HelpCircleIcon className="h-10 w-10" strokeWidth={1.5} />
   },
   {
     key: 'liveChat',
     link: '/',
     details: ['openingHours-1', 'openingHours-2'],
-    icon: <MessageCircleQuestionIcon className="h-10 w-10" />,
+    icon: <MessageCircleQuestionIcon className="h-10 w-10" strokeWidth={1.5} />
   },
   {
     key: 'phone',
     link: '/',
     details: ['openingHours-1', 'openingHours-2'],
-    icon: <PhoneIcon className="h-10 w-10" />,
-  },
+    icon: <PhoneIcon className="h-10 w-10" strokeWidth={1.5} />
+  }
 ];
 export const bottomLinks = [
   {
     key: 'terms',
-    link: '/',
+    link: '/'
   },
   {
     key: 'privacyPolicy',
-    link: '/',
-  },
+    link: '/'
+  }
 ];
 export const companyName = `© ${new Date().getFullYear()} Vue Storefront`;

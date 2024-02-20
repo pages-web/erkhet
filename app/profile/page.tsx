@@ -14,7 +14,6 @@ const Profile = () => {
     >
       <Tabs defaultValue="info" className="w-full">
         <ProfileTabsList />
-
         <TabsContent value="info">
           <ProfileEdit />
         </TabsContent>
