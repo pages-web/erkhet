@@ -1,11 +1,11 @@
 import Price from '@/components/price/price';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import Image, { cloudflareLoader } from '@/components/ui/image';
 import { IOrder } from '@/types/order.types';
 import Link from 'next/link';
 import { format } from 'date-fns';
-import { cn } from '@/lib/utils';
+import { cn, readFile } from '@/lib/utils';
+import { cloudflareLoader } from '@/components/ui/picture';
 
 const OrderItem = ({ number, totalAmount, createdAt, items }: IOrder) => {
   return (
@@ -36,7 +36,7 @@ const OrderItem = ({ number, totalAmount, createdAt, items }: IOrder) => {
             >
               <AvatarImage
                 src={cloudflareLoader({
-                  src: item.productImgUrl || '',
+                  src: readFile(item.productImgUrl || ''),
                   width: 60,
                   quality: 100
                 })}
