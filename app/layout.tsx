@@ -1,8 +1,7 @@
 import { Inter as FontSans } from 'next/font/google';
 import './globals.css';
-
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import { cn } from '@/lib/utils';
-import { NavbarTop } from '@/components/navbar-top';
 import DefaultLayout from '@/components/layouts';
 import Providers from '@/store';
 import CurrentOrder from '@/containers/currentOrder';
@@ -34,6 +33,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <OrderCRUD />
         </Providers>
         <Toaster richColors closeButton />
+        <SpeedInsights />
       </body>
     </html>
   );
