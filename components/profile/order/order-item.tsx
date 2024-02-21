@@ -31,7 +31,7 @@ const OrderItem = ({ number, totalAmount, createdAt, items }: IOrder) => {
         <div className="flex flex-row-reverse md:w-3/12 justify-end">
           {items.map((item, index) => (
             <Avatar
-              className={cn('h-12 w-12 border-2', index > 0 && '-mr-2')}
+              className={cn('h-12 w-12 border-2', index > 0 && '-mr-3')}
               key={item.productName}
             >
               <AvatarImage

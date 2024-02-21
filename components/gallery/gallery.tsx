@@ -5,14 +5,13 @@ import {
   Carousel,
   CarouselApi,
   CarouselContent,
-  CarouselItem,
+  CarouselItem
 } from '../ui/carousel';
 import { memo, useCallback, useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { IAttachment } from '@/types/products.types';
 
 const Gallery = ({ attachments = [] }: { attachments: IAttachment[] }) => {
-  const items = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
   const [emblaMainApi, setApi] = useState<CarouselApi>();
   const [emblaThumbsApi, setThumbApi] = useState<CarouselApi>();
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -40,9 +39,9 @@ const Gallery = ({ attachments = [] }: { attachments: IAttachment[] }) => {
 
   return (
     <div className="flex flex-row-reverse gap-6 justify-stretch">
-      <Carousel className="flex-1" setApi={(ap) => setApi(ap)}>
+      <Carousel className="flex-1" setApi={ap => setApi(ap)}>
         <CarouselContent className="ml-0">
-          {attachments.map((attachment) => (
+          {attachments.map(attachment => (
             <CarouselItem className="relative aspect-square pl-0">
               <Image
                 src={attachment?.url || ''}
@@ -59,7 +58,7 @@ const Gallery = ({ attachments = [] }: { attachments: IAttachment[] }) => {
         orientation="vertical"
         className="w-28 hidden md:block"
         opts={{ containScroll: 'keepSnaps', dragFree: true }}
-        setApi={(ap) => setThumbApi(ap)}
+        setApi={ap => setThumbApi(ap)}
       >
         <CarouselContent className="basis-[5rem] xl:max-h-[600px] mt-0">
           {attachments.map((item, index) => (

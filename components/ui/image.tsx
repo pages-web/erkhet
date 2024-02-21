@@ -1,20 +1,24 @@
 'use client';
 
 import { FC, useEffect, useState } from 'react';
-import NextImage, { ImageLoaderProps, ImageProps } from 'next/image';
-import { Package } from 'lucide-react';
+import NextImage, { ImageProps as NextImageProps } from 'next/image';
 
 import { cn, readFile } from '@/lib/utils';
+import { cloudflareLoader } from './picture';
 
 const PLACEHOLDER = '/images/placeholder-1.png';
 
-const Image: FC<
-  ImageProps & {
-    src?: string;
-    alt?: string;
-    fallBack?: string;
-  }
-> = props => {
+export type CommonImageProps = Omit<Omit<NextImageProps, 'alt'>, 'src'> & {
+  alt?: string;
+};
+
+type ImageProps = CommonImageProps & {
+  src?: string;
+  alt?: string;
+  fallBack?: string;
+};
+
+export const useImage = (props: ImageProps) => {
   const {
     src,
     fill = true,
@@ -28,11 +32,9 @@ const Image: FC<
     ...rest
   } = props;
   const fixedSrc = readFile(src || '');
-
   const [isImageLoading, setIsImageLoading] = useState(true);
   const [srcI, setSrcI] = useState(fixedSrc || fallBack || PLACEHOLDER);
   const handleComplete = () => setIsImageLoading(false);
-
   useEffect(() => {
     if (src) {
       const fixedSrc = readFile(src || '');
@@ -49,7 +51,12 @@ const Image: FC<
     height,
     onError
   };
+  return { updatedProps, isImageLoading, handleComplete, srcI };
+};
 
+const Image = (props: ImageProps) => {
+  const { className, sizes, ...rest } = props;
+  const { updatedProps, srcI, handleComplete, isImageLoading } = useImage(rest);
   return (
     <NextImage
       {...updatedProps}
@@ -73,10 +80,5 @@ const Image: FC<
     />
   );
 };
-
-export function cloudflareLoader({ src, width, quality }: ImageLoaderProps) {
-  const params = [`width=${width}`, `quality=${quality || 75}`, 'format=auto'];
-  return `https://erxes.io/cdn-cgi/image/${params.join(',')}/${src}`;
-}
 
 export default Image;
