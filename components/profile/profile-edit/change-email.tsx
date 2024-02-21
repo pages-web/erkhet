@@ -6,7 +6,7 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormMessage,
+  FormMessage
 } from '@/components/ui/form';
 import * as z from 'zod';
 import { currentUserAtom } from '@/store/user.store';
@@ -18,7 +18,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/components/ui/input';
 
 const formSchema = z.object({
-  email: z.string().email(),
+  email: z.string().email()
 });
 
 const ChangeEmail = () => {
@@ -27,8 +27,8 @@ const ChangeEmail = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     values: {
-      email: email || '',
-    },
+      email: email || ''
+    }
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
@@ -60,7 +60,7 @@ const ChangeEmail = () => {
                     {...field}
                     autoComplete="email"
                     className="min-w-80 h-12 pl-6 pr-12 bg-secondary disabled:opacity-100"
-                    value="info@erxes.io"
+                    value={email}
                     disabled
                   />
                   <CheckCircle className="h-5 w-5 absolute top-1/2 right-4 -translate-y-1/2" />
@@ -71,7 +71,7 @@ const ChangeEmail = () => {
           )}
         />
 
-        <Button>Дугаараа солих</Button>
+        <Button>Цахим хаяг солих</Button>
       </form>
     </Form>
   );

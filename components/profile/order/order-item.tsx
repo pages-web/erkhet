@@ -1,11 +1,13 @@
 import Price from '@/components/price/price';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import Image from '@/components/ui/image';
+import Image, { cloudflareLoader } from '@/components/ui/image';
+import { IOrder } from '@/types/order.types';
 import Link from 'next/link';
+import { format } from 'date-fns';
+import { cn } from '@/lib/utils';
 
-const OrderItem = () => {
+const OrderItem = ({ number, totalAmount, createdAt, items }: IOrder) => {
   return (
     <Button
       variant="outline"
@@ -17,30 +19,37 @@ const OrderItem = () => {
         <div className="flex flex-1 items-start md:items-center">
           <div className="text-left space-y-0.5 w-5/12">
             <div className="text-black/60">Code</div>
-            <h2 className="md:text-base">20230212.0001</h2>
+            <h2 className="md:text-base">{number}</h2>
           </div>
           <div className="text-right md:text-left space-y-0.5 w-7/12">
-            <div className="text-black/60">2023/11/27 20:11</div>
+            <div className="text-black/60">
+              {format(createdAt, 'yyyy/MM/dd hh:mm')}
+            </div>
             <div className="text-wrap">Захиалга хүчингүй болсон</div>
           </div>
         </div>
-        <div className="flex flex-row-reverse md:w-3/12 justify-end md:justify-center">
-          <Avatar className="h-12 w-12 border-2">
-            <Image src={'/images/product.webp'} height={60} width={60} alt="" />
-            <AvatarFallback />
-          </Avatar>
-          <Avatar className="h-12 w-12 -mr-3 border-2">
-            <Image src={'/images/product.webp'} height={60} width={60} alt="" />
-            <AvatarFallback />
-          </Avatar>
-          <Avatar className="h-12 w-12 -mr-3 border-2">
-            <Image src={'/images/product.webp'} height={60} width={60} alt="" />
-            <AvatarFallback />
-          </Avatar>
+        <div className="flex flex-row-reverse md:w-3/12 justify-end">
+          {items.map((item, index) => (
+            <Avatar
+              className={cn('h-12 w-12 border-2', index > 0 && '-mr-2')}
+              key={item.productName}
+            >
+              <AvatarImage
+                src={cloudflareLoader({
+                  src: item.productImgUrl || '',
+                  width: 60,
+                  quality: 100
+                })}
+              />
+              <AvatarFallback>
+                {(item.productName || '').toUpperCase()[0]}
+              </AvatarFallback>
+            </Avatar>
+          ))}
         </div>
         <div className="text-right md:w-2/12 md:mr-4">
           <div className="text-black/60">Total Amount</div>
-          <Price className=" text-base" amount="75000" />
+          <Price className=" text-base" amount={totalAmount + ''} />
         </div>
       </Link>
     </Button>

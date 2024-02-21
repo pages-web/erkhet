@@ -84,8 +84,10 @@ const OrderDetail = () => {
           </CardContent>
           <Separator />
           <CardFooter className="justify-between py-3 md:py-4">
-            <div className="font-bold text-base md:text-lg">Нийт төлөх дүн</div>
-            <div>165,880 ₮</div>
+            <div className="font-bold text-base md:text-lg text-nowrap">
+              Нийт төлөх дүн
+            </div>
+            <div className="text-nowrap">165,880 ₮</div>
           </CardFooter>
         </Card>
         <Card>

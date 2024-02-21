@@ -10,15 +10,15 @@ import { Counter, CounterButton, CounterInput } from '../counter/counter';
 import { updateCartAtom } from '@/store/cart.store';
 
 const CartProductCard = ({
-  cartItemAtom,
+  cartItemAtom
 }: {
   cartItemAtom: Atom<OrderItem>;
 }) => {
   const { _id, productName, unitPrice, count } = useAtomValue(cartItemAtom);
   const [loading, changeCartItem] = useAtom(updateCartAtom);
   return (
-    <div className="relative flex first:border-t border-b-[1px] border-neutral-200 hover:shadow-lg min-w-[320px] p-4 last:mb-0">
-      <div className="relative overflow-hidden rounded-md w-[100px] sm:w-[176px]">
+    <div className="relative flex first:border-t border-b border-neutral-200 hover:shadow-lg min-w-[320px] py-4 md:px-4 last:mb-0 last:border-b-0 md:last:border-b">
+      <div className="relative overflow-hidden rounded-md w-[100px] md:w-[176px]">
         <Link href={`/product/${_id}`}>
           <Image src={''} alt="" width={300} height={300} />
         </Link>
@@ -28,10 +28,14 @@ const CartProductCard = ({
         </div>
       </div>
       <div className="flex flex-col pl-4 min-w-[180px] flex-1 ">
-        <Button className="text-lg justify-start px-0" asChild variant="link">
+        <Button
+          className="text-lg justify-start px-0 mb-2 md:mb-0"
+          asChild
+          variant="link"
+        >
           <Link href={`/product/${_id}`}>{productName}</Link>
         </Button>
-        <div className="items-start sm:items-center sm:mt-auto flex flex-col sm:flex-row sm:justify-between sm:w-full sm:gap-2">
+        <div className="items-center md:mt-auto flex flex-wrap md:flex-nowrap md:justify-between md:w-full gap-2">
           <Counter>
             <CounterButton
               disabled={loading}
@@ -40,7 +44,7 @@ const CartProductCard = ({
             />
             <CounterInput
               value={count}
-              onChange={(e) =>
+              onChange={e =>
                 changeCartItem({ _id, count: Number(e.target.value) })
               }
               disabled={loading}
@@ -59,7 +63,7 @@ const CartProductCard = ({
           >
             Remove
           </Button>
-          <span className="font-bold sm:ml-auto sm:order-1 text-sm sm:text-lg">
+          <span className="font-bold md:ml-auto md:order-1 text-sm md:text-lg">
             <Price amount={unitPrice + ''} />
           </span>
         </div>

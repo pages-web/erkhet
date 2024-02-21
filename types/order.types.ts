@@ -106,7 +106,7 @@ export interface IPaidAmount {
 
 export interface IOrder extends IOrderCommon {
   _id: string;
-  createdAt?: string;
+  createdAt: string;
   modifiedAt?: string;
   paidDate?: string;
   cashAmount?: number;

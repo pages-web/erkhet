@@ -19,17 +19,19 @@ export const orderItemFields = `
 export const currentOrder = gql`
   query CurrentOrder(
     $customerId: String
-    $statuses: [String]
+    $saleStatus: String
     $perPage: Int
     $sortField: String
     $sortDirection: Int
+    $statuses: [String]
   ) {
     fullOrders(
       customerId: $customerId
-      statuses: $statuses
+      saleStatus: $saleStatus
       perPage: $perPage
       sortField: $sortField
       sortDirection: $sortDirection
+      statuses: $statuses
     ) {
       _id
       deliveryInfo
@@ -61,11 +63,15 @@ export const fullOrders = gql`
       sortDirection: $sortDirection
     ) {
       _id
-      modifiedAt
+      createdAt
       paidDate
       status
       totalAmount
       number
+      items {
+        productName
+        productImgUrl
+      }
     }
   }
 `;
