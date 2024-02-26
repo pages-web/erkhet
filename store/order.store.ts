@@ -1,13 +1,17 @@
-import { IOrder } from '@/types/order.types';
+import { IDeliveryInfo, IOrder } from '@/types/order.types';
 import { atom } from 'jotai';
 import { focusAtom } from 'jotai-optics';
 import { splitAtom } from 'jotai/utils';
 import { cartTotalAtom } from './cart.store';
 import { currentUserAtom } from './user.store';
-export const defaultOrderItem = { items: [], deliveryInfo: null };
-export const activeOrderAtom = atom<IOrder | { items: []; deliveryInfo: null }>(
-  { items: [], deliveryInfo: null }
-);
+export const defaultOrderItem = {
+  items: [],
+  deliveryInfo: null,
+  description: ''
+};
+export const activeOrderAtom = atom<
+  IOrder | { items: []; deliveryInfo: null; description: string }
+>({ items: [], deliveryInfo: null, description: '' });
 
 export const orderParamsAtom = atom(get => {
   const {
@@ -53,6 +57,39 @@ export const itemsAtom = focusAtom(activeOrderAtom, optic =>
 
 export const deliveryInfoAtom = focusAtom(activeOrderAtom, optic =>
   optic.prop('deliveryInfo')
+);
+export const descriptionAtom = focusAtom(activeOrderAtom, optic =>
+  optic.prop('description')
+);
+
+export const changeDeliveryInfoAtom = atom(
+  get => get(loadingOrderAtom),
+  (get, set, v: IDeliveryInfo) => {
+    const params = {
+      description: `
+        Нэр: ${v.firstName},
+        ${v.lastName && `Овог: ${v.lastName},`}
+        Утасны дугаар: ${v.lastName},
+        И-Мэйл хаяг: ${v.email},
+        ------------------------- 
+        Хот: ${v.city},
+        Дүүрэг: ${v.district},
+        Хороо: ${v.street},
+        Дэлгэрэнгүй: ${v.detail},
+        Нэмэлт Анхааруулга: ${
+          (v.haveBaby ? 'Нялх хүүхэдтэй, ' : '') +
+          (v.callBefore ? 'Хүргэхийн өмнө заавал залгах, ' : '') +
+          (v.onlyAfternoon ? 'Зөвхөн оройн цагаар хүргэх' : '')
+        }
+      `,
+      deliveryInfo: v
+    };
+
+    if (get(descriptionAtom) !== params.description) {
+      set(cudOrderAtom, true);
+      set(activeOrderAtom, prev => ({ ...(prev as IOrder), ...params }));
+    }
+  }
 );
 
 export const itemAtomsAtom = splitAtom(itemsAtom);

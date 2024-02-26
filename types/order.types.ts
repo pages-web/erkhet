@@ -104,6 +104,20 @@ export interface IPaidAmount {
   type: string;
 }
 
+export interface IDeliveryInfo {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  city: string;
+  district: string;
+  street: string;
+  detail: string;
+  haveBaby: boolean;
+  callBefore: boolean;
+  onlyAfternoon: boolean;
+}
+
 export interface IOrder extends IOrderCommon {
   _id: string;
   createdAt: string;
@@ -113,7 +127,8 @@ export interface IOrder extends IOrderCommon {
   mobileAmount?: number;
   directDiscount?: number;
   registerNumber?: string;
-  deliveryInfo?: object;
+  deliveryInfo?: IDeliveryInfo | null;
+  description?: string;
   number?: string;
   status?: IOrderStatus;
   customer?: Customer;

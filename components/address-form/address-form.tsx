@@ -18,8 +18,12 @@ import { Separator } from '../ui/separator';
 import { Textarea } from '../ui/textarea';
 import { Toggle } from '../ui/toggle';
 import { currentUserAtom } from '@/store/user.store';
-import { useAtomValue } from 'jotai';
-import { useOrderChange } from '@/sdk/hooks/order';
+import { useAtom, useAtomValue } from 'jotai';
+import { deliveryInfoAtom } from '@/store/order.store';
+import { changeDeliveryInfoAtom } from '@/store/order.store';
+import { LoadingIcon } from '../ui/loading';
+import { useRouter } from 'next/navigation';
+import { IDeliveryInfo } from '@/types/order.types';
 
 const formSchema = z.object({
   firstName: z.string().min(1, { message: 'First name is required' }),
@@ -45,7 +49,9 @@ const AddressForm = () => {
     email = '',
     phone = ''
   } = useAtomValue(currentUserAtom) || {};
-  const;
+  const deliveryInfo = useAtomValue(deliveryInfoAtom);
+  const [loading, changeDeliveryInfo] = useAtom(changeDeliveryInfoAtom);
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -60,30 +66,14 @@ const AddressForm = () => {
       detail: '',
       haveBaby: false,
       callBefore: false,
-      onlyAfternoon: false
+      onlyAfternoon: false,
+      ...deliveryInfo
     }
   });
 
   function onSubmit(v: z.infer<typeof formSchema>) {
-    ({
-      description: `
-        Нэр: ${v.firstName},
-        ${v.lastName && `Овог: ${v.lastName},`}
-        Утасны дугаар: ${v.lastName},
-        И-Мэйл хаяг: ${v.email},
-        ------------------------- 
-        Хот: ${v.city},
-        Дүүрэг: ${v.district},
-        Хороо: ${v.street},
-        Дэлгэрэнгүй: ${v.detail},
-        Нэмэлт Анхааруулга: ${
-          (v.haveBaby ? 'Нялх хүүхэдтэй, ' : '') +
-          (v.callBefore ? 'Хүргэхийн өмнө заавал залгах, ' : '') +
-          (v.onlyAfternoon ? 'Зөвхөн оройн цагаар хүргэх' : '')
-        }
-      `,
-      deliveryInfo: v
-    });
+    changeDeliveryInfo(v);
+    router.push('/verify');
   }
 
   return (
@@ -303,7 +293,8 @@ const AddressForm = () => {
           </div>
         </div>
         <OrderSummary className="col-span-5 md:sticky md:top-20 h-fit">
-          <Button className="w-full" size="lg">
+          <Button className="w-full" size="lg" disabled={loading}>
+            {loading && <LoadingIcon />}
             Submit
           </Button>
         </OrderSummary>

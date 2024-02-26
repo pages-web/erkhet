@@ -16,7 +16,7 @@ const Cart = () => {
         <CartPageContent>
           <OrderSummary className="col-span-5 md:sticky md:top-20 h-fit">
             <Button asChild size={'lg'} className="w-full">
-              <Link href="/checkout">Proceed to Checkout</Link>
+              <Link href="/address">Proceed to Checkout</Link>
             </Button>
           </OrderSummary>
         </CartPageContent>
