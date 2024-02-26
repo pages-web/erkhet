@@ -12,13 +12,15 @@ const Cart = () => {
       backTitle="Back To Shopping"
       backUrl="/category"
     >
-      <CartPageContent>
-        <OrderSummary className="col-span-5 md:sticky md:top-20 h-fit">
-          <Button asChild size={'lg'} className="w-full">
-            <Link href="/checkout">Proceed to Checkout</Link>
-          </Button>
-        </OrderSummary>
-      </CartPageContent>
+      <div className="md:grid md:grid-cols-12 md:gap-x-6">
+        <CartPageContent>
+          <OrderSummary className="col-span-5 md:sticky md:top-20 h-fit">
+            <Button asChild size={'lg'} className="w-full">
+              <Link href="/checkout">Proceed to Checkout</Link>
+            </Button>
+          </OrderSummary>
+        </CartPageContent>
+      </div>
     </CheckoutLayout>
   );
 };

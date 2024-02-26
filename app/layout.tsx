@@ -6,7 +6,7 @@ import DefaultLayout from '@/components/layouts';
 import Providers from '@/store';
 import CurrentOrder from '@/containers/currentOrder';
 import { Toaster } from '@/components/ui/sonner';
-import OrderCRUD from '@/containers/order-crud';
+import OrderCRUD from '@/containers/order-cud';
 
 export const fontSans = FontSans({
   subsets: ['latin'],

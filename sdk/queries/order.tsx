@@ -7,7 +7,7 @@ import {
   initialLoadingOrderAtom,
   loadingOrderAtom
 } from '@/store/order.store';
-import { defaultOrderItem, crudOrderAtom } from '@/store/order.store';
+import { defaultOrderItem, cudOrderAtom } from '@/store/order.store';
 import { localCartAtom } from '@/store/cart.store';
 import { OrderItem } from '@/types/order.types';
 import { useEffect, useMemo } from 'react';
@@ -19,7 +19,7 @@ const useCurrentOrder = () => {
   const [localCart, setLocalCart] = useAtom(localCartAtom);
   const setLoadingOrder = useSetAtom(loadingOrderAtom);
   const setInitialLoadingOrder = useSetAtom(initialLoadingOrderAtom);
-  const setTriggerCRUD = useSetAtom(crudOrderAtom);
+  const setTriggerCRUD = useSetAtom(cudOrderAtom);
 
   const { data, error, loading } = useQuery(queries.currentOrder, {
     variables: {

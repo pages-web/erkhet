@@ -25,7 +25,7 @@ const CheckoutLayout = ({
             </Link>
           </Button>
         </div>
-        <div className="md:grid md:grid-cols-12 md:gap-x-6">{children}</div>
+        {children}
       </PrivateRoute>
     </div>
   );

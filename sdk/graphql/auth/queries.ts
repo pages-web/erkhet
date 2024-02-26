@@ -8,6 +8,8 @@ const currentUser = gql`
       lastName
       avatar
       erxesCustomerId
+      phone
+      email
     }
   }
 `;
@@ -15,9 +17,6 @@ const currentUser = gql`
 const userDetail = gql`
   query UserDetail {
     clientPortalCurrentUser {
-      phone
-      email
-      password
       isEmailVerified
       isPhoneVerified
     }

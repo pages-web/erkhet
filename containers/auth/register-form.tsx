@@ -11,7 +11,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
+  FormMessage
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Password } from '@/components/ui/password';
@@ -36,7 +36,7 @@ const formSchema = z.object({
       /^(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
       'Password must contain at least one lowercase letter, one uppercase letter, and be at least 8 characters long.'
     )
-    .min(1, { message: 'Password is required' }),
+    .min(1, { message: 'Password is required' })
 });
 
 const RegisterForm = () => {
@@ -48,23 +48,23 @@ const RegisterForm = () => {
       lastName: '',
       email: '',
       phone: '',
-      password: '',
-    },
+      password: ''
+    }
   });
   const { register, loading, clientPortalId } = useRegister();
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     register({
       variables: { ...values, clientPortalId },
-      onCompleted(data) {
+      onCompleted() {
         toast.success('Congratulations, You registered successfully', {
-          description: 'Таны имэйл рүү баталгаажуулах холбоос илгээлээ.',
+          description: 'Таны имэйл рүү баталгаажуулах холбоос илгээлээ.'
         });
         router.push('/login');
       },
       onError(error) {
         toast.error(error.message);
-      },
+      }
     });
   }
   return (
@@ -84,7 +84,6 @@ const RegisterForm = () => {
                   placeholder="John"
                   {...field}
                   autoComplete="given-name"
-                  className="h-12"
                 />
               </FormControl>
               <FormMessage />

@@ -4,10 +4,10 @@ import { focusAtom } from 'jotai-optics';
 import { splitAtom } from 'jotai/utils';
 import { cartTotalAtom } from './cart.store';
 import { currentUserAtom } from './user.store';
-
-export const defaultOrderItem = { items: [] };
-
-export const activeOrderAtom = atom<IOrder | { items: [] }>({ items: [] });
+export const defaultOrderItem = { items: [], deliveryInfo: null };
+export const activeOrderAtom = atom<IOrder | { items: []; deliveryInfo: null }>(
+  { items: [], deliveryInfo: null }
+);
 
 export const orderParamsAtom = atom(get => {
   const {
@@ -45,10 +45,14 @@ export const orderParamsAtom = atom(get => {
 export const initialLoadingOrderAtom = atom<boolean>(true);
 export const loadingOrderAtom = atom<boolean>(false);
 
-export const crudOrderAtom = atom<boolean>(false);
+export const cudOrderAtom = atom<boolean>(false);
 
 export const itemsAtom = focusAtom(activeOrderAtom, optic =>
   optic.prop('items')
+);
+
+export const deliveryInfoAtom = focusAtom(activeOrderAtom, optic =>
+  optic.prop('deliveryInfo')
 );
 
 export const itemAtomsAtom = splitAtom(itemsAtom);

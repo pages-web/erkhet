@@ -2,7 +2,7 @@ import { OrderItem, OrderItemInput } from '@/types/order.types';
 import { IProduct } from '@/types/product.types';
 import { atom } from 'jotai';
 import { currentUserAtom } from './user.store';
-import { crudOrderAtom, itemsAtom, loadingOrderAtom } from './order.store';
+import { cudOrderAtom, itemsAtom, loadingOrderAtom } from './order.store';
 import { splitAtom, atomWithStorage } from 'jotai/utils';
 
 interface IUpdateItem {
@@ -73,7 +73,7 @@ export const addToCartAtom = atom(
     set(get(currentUserAtom) ? itemsAtom : localCartAtom, prev =>
       addToCart(payload, prev)
     );
-    !!get(currentUserAtom) && set(crudOrderAtom, true);
+    !!get(currentUserAtom) && set(cudOrderAtom, true);
   }
 );
 
@@ -83,7 +83,7 @@ export const updateCartAtom = atom(
     set(get(currentUserAtom) ? itemsAtom : localCartAtom, prev =>
       changeCartItem(payload, prev)
     );
-    !!get(currentUserAtom) && set(crudOrderAtom, true);
+    !!get(currentUserAtom) && set(cudOrderAtom, true);
   }
 );
 
