@@ -8,6 +8,7 @@ import { Separator } from '@/components/ui/separator';
 import ItemsSummary from '@/components/verify/items-summary';
 import ItemsGrid from '@/components/verify/items-grid';
 import VerifyAddress from '@/components/verify/verify-address';
+import VerifyButton from '@/components/verify/verifyButton';
 
 const Verify = () => {
   return (
@@ -23,9 +24,7 @@ const Verify = () => {
           className="col-span-5 md:sticky md:top-20 h-fit"
           content={<ItemsSummary />}
         >
-          <Button asChild size="lg" className="w-full">
-            <Link href="/address">Төлбөр төлөх</Link>
-          </Button>
+          <VerifyButton />
         </OrderSummary>
       </div>
     </CheckoutLayout>

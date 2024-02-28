@@ -137,6 +137,7 @@ export interface IOrder extends IOrderCommon {
   user: IOrderUser;
   sloteCode?: string;
   isPre?: boolean;
+  saleStatus: string;
 }
 
 export interface IOrderHistory {

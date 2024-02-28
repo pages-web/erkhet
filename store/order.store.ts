@@ -21,7 +21,8 @@ export const orderParamsAtom = atom(get => {
     description,
     deliveryInfo,
     branchId,
-    _id
+    _id,
+    saleStatus
   } = get(activeOrderAtom) as IOrder;
   const totalAmount = get(cartTotalAtom);
   const customerId = get(currentUserAtom)?.erxesCustomerId;
@@ -42,7 +43,8 @@ export const orderParamsAtom = atom(get => {
     origin: 'kiosk',
     deliveryInfo,
     description,
-    branchId
+    branchId,
+    saleStatus
   };
 });
 
@@ -89,6 +91,14 @@ export const changeDeliveryInfoAtom = atom(
       set(cudOrderAtom, true);
       set(activeOrderAtom, prev => ({ ...(prev as IOrder), ...params }));
     }
+  }
+);
+
+export const changeSaleStatusAtom = atom(
+  get => get(loadingOrderAtom),
+  (_, set, payload: string) => {
+    set(activeOrderAtom, prev => ({ ...prev, saleStatus: payload }));
+    set(cudOrderAtom, true);
   }
 );
 

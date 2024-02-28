@@ -14,7 +14,7 @@ const items = [
     backgroundColor: 'bg-secondary-200',
     buttonLink: '/category',
     titleClass: 'md:typography-headline-2',
-    subtitleClass: 'md:typography-headline-6',
+    subtitleClass: 'md:typography-headline-6'
   },
   {
     image: '/images/display-2.png',
@@ -24,7 +24,7 @@ const items = [
     buttonText: 'Discover now',
     reverse: true,
     backgroundColor: 'bg-negative-200',
-    buttonLink: '/category',
+    buttonLink: '/category'
   },
   {
     image: '/images/display-3.png',
@@ -34,8 +34,8 @@ const items = [
     buttonText: 'Discover now',
     reverse: true,
     backgroundColor: 'bg-warning-200',
-    buttonLink: '/category',
-  },
+    buttonLink: '/category'
+  }
 ];
 
 export type DisplayProps = {
@@ -66,16 +66,16 @@ const Display = ({ ...attributes }: DisplayProps) => {
           buttonText,
           reverse,
           titleClass,
-          subtitleClass,
+          subtitleClass
         }) => (
           <div
             key={title}
-            className="relative flex md:[&:not(:first-of-type)]:flex-1 md:first-of-type:w-full first:bg-indigo-200 last:bg-rose-200 even:bg-amber-200"
+            className="relative flex md:[&:not(:first-of-type)]:flex-1 md:first-of-type:w-full first:bg-indigo-200 last:bg-rose-200 even:bg-amber-200 rounded-2xl overflow-hidden"
           >
             <div
               className={cn('flex overflow-hidden grow flex-col', {
                 'flex-col-reverse': reverse,
-                'md:flex-row-reverse': reverse,
+                'md:flex-row-reverse': reverse
               })}
             >
               <div className="flex flex-1 flex-col justify-center items-center md:items-start p-6 lg:p-10 max-w-1/2">

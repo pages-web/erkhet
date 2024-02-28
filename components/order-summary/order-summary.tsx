@@ -30,7 +30,7 @@ const OrderSummary = ({
         {!!content && (
           <div>
             <Separator />
-            <div className="py-3">{content}</div>
+            <div className="py-3 space-y-1">{content}</div>
             <Separator />
           </div>
         )}

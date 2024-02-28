@@ -10,7 +10,10 @@ const ItemsGrid = () => {
   return (
     <div className="flex items-center gap-4 mt-4 pb-7">
       {cart.map(item => (
-        <div className="border rounded-lg aspect-square overflow-hidden w-24 md:w-32 relative">
+        <div
+          className="border rounded-lg aspect-square overflow-hidden w-24 md:w-32 relative"
+          key={item._id}
+        >
           <Image
             src={item.productImgUrl}
             height={120}

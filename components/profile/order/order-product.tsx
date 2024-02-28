@@ -1,12 +1,19 @@
 import Price from '@/components/price/price';
 import { Badge } from '@/components/ui/badge';
 import Image from '@/components/ui/image';
+import { OrderItem } from '@/types/order.types';
 
-const OrderProduct = () => {
+const OrderProduct = ({
+  productImgUrl,
+  productName,
+  status,
+  count,
+  unitPrice
+}: OrderItem) => {
   return (
     <div className="overflow-hidden flex p-2 border-b last-of-type:border-b-0 gap-2 md:gap-0">
       <Image
-        src="/images/product.webp"
+        src={productImgUrl}
         alt=""
         height={200}
         width={200}
@@ -15,14 +22,14 @@ const OrderProduct = () => {
 
       <div className="flex justify-between flex-1 p-2 md:p-6 flex-wrap text-sm md:text-base gap-2 md:gap-0">
         <div className="space-y-2">
-          <h3 className="font-medium">Nike Air Jordan 1</h3>
-          <Badge>Delivered</Badge>
+          <h3 className="font-medium">{productName}</h3>
+          <Badge>{status}</Badge>
         </div>
         <div>
           <div className="flex gap-4">
-            <Price amount="176000" />
-            <Badge variant="secondary">x2</Badge>
-            <Price amount="176000" className="font-semibold" />
+            <Price amount={unitPrice + ''} />
+            <Badge variant="secondary">x{count}</Badge>
+            <Price amount={unitPrice * count + ''} className="font-semibold" />
           </div>
         </div>
       </div>

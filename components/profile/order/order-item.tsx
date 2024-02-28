@@ -7,7 +7,7 @@ import { format } from 'date-fns';
 import { cn, readFile } from '@/lib/utils';
 import { cloudflareLoader } from '@/components/ui/picture';
 
-const OrderItem = ({ number, totalAmount, createdAt, items }: IOrder) => {
+const OrderItem = ({ number, totalAmount, createdAt, items, _id }: IOrder) => {
   return (
     <Button
       variant="outline"
@@ -15,7 +15,7 @@ const OrderItem = ({ number, totalAmount, createdAt, items }: IOrder) => {
       size={'lg'}
       asChild
     >
-      <Link href={`/profile/orders/1`}>
+      <Link href={`/profile/orders/${_id}`}>
         <div className="flex flex-1 items-start md:items-center">
           <div className="text-left space-y-0.5 w-5/12">
             <div className="text-black/60">Code</div>

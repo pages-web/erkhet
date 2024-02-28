@@ -40,6 +40,7 @@ export const currentOrder = gql`
       registerNumber
       totalAmount
       mobileAmount
+      saleStatus
       items {
         ${orderItemFields}
       }

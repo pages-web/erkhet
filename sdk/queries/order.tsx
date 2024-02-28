@@ -10,7 +10,7 @@ import {
 import { defaultOrderItem, cudOrderAtom } from '@/store/order.store';
 import { localCartAtom } from '@/store/cart.store';
 import { OrderItem } from '@/types/order.types';
-import { useEffect, useMemo } from 'react';
+import { use, useEffect, useMemo } from 'react';
 import { ORDER_SALE_STATUS, ORDER_STATUSES } from '@/lib/constants';
 
 const useCurrentOrder = () => {
@@ -37,8 +37,8 @@ const useCurrentOrder = () => {
   const fullOrders = useMemo(() => data?.fullOrders, [data]);
 
   useEffect(() => {
-    const currentOrder = (fullOrders || [])[0];
-    if (currentOrder) {
+    if (fullOrders) {
+      const currentOrder = (fullOrders || [])[0];
       setLoadingOrder(false);
       setInitialLoadingOrder(false);
       setTriggerCRUD(false);
@@ -109,6 +109,20 @@ export const useFullOrders = (props?: { variables?: OperationVariables }) => {
   const fullOrders = useMemo(() => data?.fullOrders, [data]);
 
   return { fullOrders, loading };
+};
+
+export const useOrderDetail = (id: string) => {
+  const { erxesCustomerId } = useAtomValue(currentUserAtom) || {};
+  const { data, loading } = useQuery(queries.orderDetail, {
+    variables: {
+      customerId: erxesCustomerId,
+      id
+    }
+  });
+
+  const { orderDetail } = data || {};
+
+  return { orderDetail, loading };
 };
 
 export default useCurrentOrder;
