@@ -94,12 +94,4 @@ export const changeDeliveryInfoAtom = atom(
   }
 );
 
-export const changeSaleStatusAtom = atom(
-  get => get(loadingOrderAtom),
-  (_, set, payload: string) => {
-    set(activeOrderAtom, prev => ({ ...prev, saleStatus: payload }));
-    set(cudOrderAtom, true);
-  }
-);
-
 export const itemAtomsAtom = splitAtom(itemsAtom);

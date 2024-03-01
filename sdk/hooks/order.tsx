@@ -1,7 +1,8 @@
 import {
   type ApolloError,
   useMutation,
-  type OperationVariables
+  type OperationVariables,
+  BaseMutationOptions
 } from '@apollo/client';
 import { mutations } from '../graphql/order';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
@@ -14,6 +15,7 @@ import {
 import { useEffect } from 'react';
 import { toast } from 'sonner';
 import { IOrder } from '@/types/order.types';
+import { ORDER_SALE_STATUS } from '@/lib/constants';
 
 const refetchQueries = ['CurrentOrder'];
 
@@ -65,20 +67,22 @@ export const useOrderCUD = () => {
   return {};
 };
 
-export const useOrderChange = () => {
+export const useOrderChangeSaleStatus = () => {
   const { _id } = useAtomValue(activeOrderAtom) as IOrder;
-  const [change, { loading }] = useMutation(mutations.ordersChange, {
+
+  const [change, { loading }] = useMutation(mutations.orderChangeSaleStatus, {
     refetchQueries
   });
-  const setLoading = useSetAtom(loadingOrderAtom);
-  const handleChange = (params: OperationVariables) => {
-    setLoading(true);
+
+  const handleConfirm = (onCompleted?: BaseMutationOptions['onCompleted']) => {
     change({
       variables: {
         _id,
-        ...params
-      }
+        saleStatus: ORDER_SALE_STATUS.CONFIRMED
+      },
+      onCompleted
     });
   };
-  return { handleChange, loading };
+
+  return { handleConfirm, loading };
 };

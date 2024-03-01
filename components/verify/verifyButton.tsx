@@ -1,22 +1,20 @@
 'use client';
 
 import { Button } from '../ui/button';
-import { useAtom, useAtomValue } from 'jotai';
-import { activeOrderAtom, changeSaleStatusAtom } from '@/store/order.store';
+import { useAtomValue } from 'jotai';
+import { activeOrderAtom } from '@/store/order.store';
 import { useRouter } from 'next/navigation';
 import { LoadingIcon } from '../ui/loading';
 import { IOrder } from '@/types/order.types';
-import { ORDER_SALE_STATUS } from '@/lib/constants';
+import { useOrderChangeSaleStatus } from '@/sdk/hooks/order';
 
 const VerifyButton = () => {
   const { _id } = useAtomValue(activeOrderAtom) as IOrder;
   const router = useRouter();
-  const [loading, changeStatus] = useAtom(changeSaleStatusAtom);
+  const { handleConfirm, loading } = useOrderChangeSaleStatus();
 
-  const handleClick = () => {
-    changeStatus(ORDER_SALE_STATUS.CONFIRMED);
-    router.push(`/profile/orders/${_id}`);
-  };
+  const handleClick = () =>
+    handleConfirm(() => router.push(`/profile/orders/${_id}`));
 
   return (
     <Button
