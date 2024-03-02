@@ -1,4 +1,4 @@
-const OrderStatus = ({ sta }) => {
+const OrderStatus = ({ sta }: any) => {
   return <>Enter</>;
 };
 

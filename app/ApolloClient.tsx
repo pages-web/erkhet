@@ -5,7 +5,7 @@ import {
   HttpLink,
   InMemoryCache,
   split,
-  ApolloProvider,
+  ApolloProvider
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
@@ -14,7 +14,7 @@ import { getMainDefinition } from '@apollo/client/utilities';
 
 const httpLink: any = new HttpLink({
   uri: `${process.env.NEXT_PUBLIC_MAIN_API_DOMAIN}/graphql`,
-  credentials: 'include',
+  credentials: 'include'
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -25,15 +25,14 @@ const authLink = setContext((_, { headers }) => {
       ...headers,
       cookie,
       'Access-Control-Allow-Origin': `${process.env.NEXT_PUBLIC_MAIN_API_DOMAIN}/graphql`,
-      'erxes-app-token': process.env.NEXT_PUBLIC_ERXES_APP_TOKEN,
-      authorization: token ? `Bearer ${token}` : '',
-    },
+      authorization: token ? `Bearer ${token}` : ''
+    }
   };
 });
 
 const wsLink = new GraphQLWsLink(
   createClient({
-    url: `${process.env.NEXT_PUBLIC_WS_DOMAIN}`,
+    url: `${process.env.NEXT_PUBLIC_WS_DOMAIN}`
   })
 );
 
@@ -54,7 +53,7 @@ const splitLink = split(
 const client = new ApolloClient({
   ssrMode: typeof window !== 'undefined',
   cache: new InMemoryCache(),
-  link: splitLink,
+  link: splitLink
 });
 
 const Apollo = ({ children }: React.PropsWithChildren) => {

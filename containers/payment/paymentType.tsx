@@ -25,26 +25,33 @@ const PaymentType = ({
       <Button
         variant="outline"
         className={cn(
-          'h-auto flex-col py-6 gap-1 group rounded-2xl w-full border-2 ease-in duration-150 transition-colors',
+          'h-auto flex-col items-start pt-5 pb-4 pl-6 gap-1 group rounded-2xl w-full border-2 border-border/10 shadow-md ease-in duration-100 transition-colors relative',
           selected && 'bg-primary/10 hover:bg-primary/10  border-primary'
         )}
         asChild
       >
         <div>
-          <RadioGroupItem value={kind} id={kind} className="hidden" />
+          <RadioGroupItem
+            value={kind}
+            id={kind}
+            className={cn(
+              'absolute right-5 top-5 h-5 w-5 border-2 shadow-none',
+              selected && 'border-primary'
+            )}
+          />
 
           <Image
             src={`/images/payments/${kind}.png`}
             alt="storepay"
             className="object-contain rounded-lg mb-0.5"
-            height={48}
-            width={48}
+            height={36}
+            width={36}
           />
           <div className="flex-auto text-left">
-            <div className={cn('font-medium')}>{name}</div>
+            <div className={'font-medium capitalize text-black'}>{kind}</div>
           </div>
           <label
-            className={cn('absolute inset-0 rounded-2xl  cursor-pointer')}
+            className={cn('absolute inset-0 rounded-2xl cursor-pointer')}
             htmlFor={kind}
           />
         </div>

@@ -7,7 +7,7 @@ import {
 import { Separator } from '../ui/separator';
 import { Alert } from '../ui/alert';
 import CancelOrder from '@/containers/orders/cancel-order';
-import BuyButton from '@/containers/orders/buy-button';
+import BuyButton from '@/containers/payment/buy-button';
 import { IOrder } from '@/types/order.types';
 
 const OrderHeader = ({ status }: IOrder) => {
