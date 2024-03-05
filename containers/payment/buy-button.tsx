@@ -1,38 +1,31 @@
 import { Button } from '@/components/ui/button';
-
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import * as SheetPrimitive from '@radix-ui/react-dialog';
-import { XIcon } from 'lucide-react';
-import Payment from './payment';
+import PaymentMethods from './payment-methods-dialog';
+import PaymentDetail from './payment-detail-dialog';
+import { useAtomValue, useSetAtom } from 'jotai';
+import {
+  openDetailAtom,
+  openMethodsAtom,
+  selectedMethodAtom
+} from '@/store/payment.store';
 
 const BuyButton = () => {
+  const setOpenMethods = useSetAtom(openMethodsAtom);
+  const setOpenDetails = useSetAtom(openDetailAtom);
+  const selectedMethod = useAtomValue(selectedMethodAtom);
+
+  const handlePay = () => {
+    if (selectedMethod) return setOpenDetails(true);
+    setOpenMethods(true);
+  };
+
   return (
-    <Sheet>
-      <SheetTrigger asChild>
-        <Button size="lg" className="md:h-12 md:px-8">
-          Төлбөр төлөх
-        </Button>
-      </SheetTrigger>
-      <SheetContent
-        side="bottom"
-        className="md:h-[95vh] md:max-h-[768px] rounded-t-2xl"
-      >
-        <div className="relative">
-          <SheetPrimitive.Close asChild>
-            <Button
-              className="absolute right-5 -top-1 rounded-full"
-              variant="outline"
-              size="icon"
-            >
-              <XIcon className="h-[1.125rem] w-[1.125rem]" />
-            </Button>
-          </SheetPrimitive.Close>
-        </div>
-        <div className="container max-w-5xl">
-          <Payment />
-        </div>
-      </SheetContent>
-    </Sheet>
+    <>
+      <Button size="lg" className="md:h-12 md:px-8" onClick={handlePay}>
+        Төлбөр төлөх
+      </Button>
+      <PaymentMethods />
+      <PaymentDetail />
+    </>
   );
 };
 

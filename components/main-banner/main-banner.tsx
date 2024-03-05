@@ -10,7 +10,7 @@ import Picture from '../ui/picture';
 const MainBanner = () => {
   return (
     <div className="container">
-      <Carousel className="mt-5 mb-10">
+      <Carousel className="mt-3 mb-4 md:mt-5 md:mb-10">
         <CarouselContent className="ml-0">
           <CarouselItem className="relative aspect-[7/3] md:aspect-[80/23] flex-basis-[1] rounded-2xl overflow-hidden">
             <Picture

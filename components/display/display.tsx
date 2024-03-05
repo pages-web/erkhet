@@ -100,7 +100,7 @@ const Display = ({ ...attributes }: DisplayProps) => {
               <Image
                 src={image}
                 alt={title}
-                className="w-full md:w-1/2 self-end object-contain flex-1"
+                className="w-full md:w-1/2 md:max-w-lg self-end object-contain flex-1"
                 height={400}
                 width={400}
               />

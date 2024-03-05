@@ -1,9 +1,13 @@
 import { useQuery } from '@apollo/client';
 import { queries } from '../graphql/payment';
+import { IPayment } from '@/types/payment.types';
 
 const usePaymentConfig = () => {
-  const { data, loading } = useQuery(queries.paymentConfig);
-  const { erxesAppToken, paymentIds } = data?.currentConfig || {};
+  const { data, loading } = useQuery(queries.paymentConfig, {
+    nextFetchPolicy: 'cache-first'
+  });
+
+  const { erxesAppToken, paymentIds, name } = data?.currentConfig || {};
 
   const paymentQuery = useQuery(queries.payment, {
     context: {
@@ -11,6 +15,7 @@ const usePaymentConfig = () => {
         'erxes-app-token': erxesAppToken
       }
     },
+    nextFetchPolicy: 'cache-first',
     skip: !erxesAppToken
   });
 
@@ -22,14 +27,10 @@ const usePaymentConfig = () => {
 
   return {
     loading: loading || paymentQuery.loading,
-    payments: selectedPayments
+    payments: selectedPayments,
+    name,
+    erxesAppToken
   };
 };
-
-interface IPayment {
-  _id: string;
-  name: string;
-  kind: string;
-}
 
 export { usePaymentConfig };

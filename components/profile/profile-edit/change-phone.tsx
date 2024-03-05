@@ -6,7 +6,7 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormMessage,
+  FormMessage
 } from '@/components/ui/form';
 import PhoneNumber from '@/components/ui/phone-number';
 import * as z from 'zod';
@@ -16,12 +16,10 @@ import { SmartphoneIcon } from 'lucide-react';
 import useUserEdit from '@/sdk/hooks/auth';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { phoneZod } from '@/lib/zod';
 
 const formSchema = z.object({
-  phone: z
-    .string()
-    .regex(/[0-9]{6,}$/, 'invalid')
-    .min(1, { message: 'Phone is required' }),
+  phone: phoneZod
 });
 
 const ChangePhone = () => {
@@ -30,8 +28,8 @@ const ChangePhone = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     values: {
-      phone: phone || '',
-    },
+      phone: phone || ''
+    }
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {

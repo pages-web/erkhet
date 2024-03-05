@@ -1,5 +1,5 @@
 import { type OperationVariables, useQuery } from '@apollo/client';
-import { queries } from '../graphql/order';
+import { queries, subscriptions } from '../graphql/order';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { currentUserAtom } from '@/store/user.store';
 import {
@@ -12,6 +12,7 @@ import { localCartAtom } from '@/store/cart.store';
 import { OrderItem } from '@/types/order.types';
 import { use, useEffect, useMemo } from 'react';
 import { ORDER_SALE_STATUS, ORDER_STATUSES } from '@/lib/constants';
+import { usePaymentConfig } from './payment';
 
 const useCurrentOrder = () => {
   const { erxesCustomerId } = useAtomValue(currentUserAtom) || {};
@@ -113,14 +114,39 @@ export const useFullOrders = (props?: { variables?: OperationVariables }) => {
 
 export const useOrderDetail = (id: string) => {
   const { erxesCustomerId } = useAtomValue(currentUserAtom) || {};
-  const { data, loading } = useQuery(queries.orderDetail, {
-    variables: {
-      customerId: erxesCustomerId,
-      id
+  const { data, loading, subscribeToMore, refetch } = useQuery(
+    queries.orderDetail,
+    {
+      variables: {
+        customerId: erxesCustomerId,
+        id
+      }
     }
-  });
+  );
 
   const { orderDetail } = data || {};
+  const { _id } = orderDetail || {};
+
+  useEffect(() => {
+    if (_id) {
+      subscribeToMore({
+        document: subscriptions.ordersOrdered,
+        variables: {
+          token: process.env.NEXT_PUBLIC_POS_TOKEN,
+          statuses: ORDER_STATUSES.ALL,
+          customerId: erxesCustomerId
+        },
+        updateQuery: (prev, { subscriptionData }) => {
+          const { ordersOrdered } = subscriptionData.data || {};
+          if (!ordersOrdered) return prev;
+          if (ordersOrdered._id === _id) {
+            refetch();
+          }
+          return prev;
+        }
+      });
+    }
+  }, [_id]);
 
   return { orderDetail, loading };
 };

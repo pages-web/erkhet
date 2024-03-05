@@ -21,15 +21,13 @@ import { toast } from 'sonner';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { InfoIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { phoneZod } from '@/lib/zod';
 
 const formSchema = z.object({
   firstName: z.string().min(1, { message: 'First name is required' }),
   lastName: z.string(),
   email: z.string().email().min(1, { message: 'Email is required' }),
-  phone: z
-    .string()
-    .regex(/[0-9]{6,}$/, 'invalid')
-    .min(1, { message: 'Phone is required' }),
+  phone: phoneZod,
   password: z
     .string()
     .regex(

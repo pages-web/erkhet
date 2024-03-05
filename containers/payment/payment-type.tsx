@@ -25,24 +25,24 @@ const PaymentType = ({
       <Button
         variant="outline"
         className={cn(
-          'h-auto flex-col items-start pt-5 pb-4 pl-6 gap-1 group rounded-2xl w-full border-2 border-border/10 shadow-md ease-in duration-100 transition-colors relative',
+          'h-auto flex-col items-center md:items-start pt-5 pb-4 pl-6 gap-1 group rounded-2xl w-full border-2 border-border/10 shadow-md ease-in duration-100 transition-colors relative',
           selected && 'bg-primary/10 hover:bg-primary/10  border-primary'
         )}
         asChild
       >
         <div>
           <RadioGroupItem
-            value={kind}
-            id={kind}
+            value={_id}
+            id={_id}
             className={cn(
-              'absolute right-5 top-5 h-5 w-5 border-2 shadow-none',
+              'absolute right-5 top-5 h-5 w-5 border-2 shadow-none hidden md:inline-flex',
               selected && 'border-primary'
             )}
           />
 
           <Image
             src={`/images/payments/${kind}.png`}
-            alt="storepay"
+            alt={kind}
             className="object-contain rounded-lg mb-0.5"
             height={36}
             width={36}
@@ -52,7 +52,7 @@ const PaymentType = ({
           </div>
           <label
             className={cn('absolute inset-0 rounded-2xl cursor-pointer')}
-            htmlFor={kind}
+            htmlFor={_id}
           />
         </div>
       </Button>

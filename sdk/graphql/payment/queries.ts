@@ -5,6 +5,7 @@ const paymentConfig = gql`
     currentConfig {
       erxesAppToken
       paymentIds
+      name
     }
   }
 `;

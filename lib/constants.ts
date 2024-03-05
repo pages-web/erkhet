@@ -18,3 +18,7 @@ export const ORDER_SALE_STATUS = {
   CONFIRMED: 'confirmed',
   ALL: ['cart', 'confirmed']
 };
+
+export const statusLabel = {
+  pending: 'Төлбөр хүлээгдэж байна'
+};
