@@ -7,20 +7,30 @@ import { useSetAtom } from 'jotai';
 import { handleMethodAtom } from '@/store/payment.store';
 import BackButton from './back-button';
 import CheckPayment from './check-payment';
+import Link from 'next/link';
+
+const getName = (name: string) => {
+  if (name === 'Trade and Development bank') return 'TDB';
+  if (name === 'National investment bank') return 'NIB';
+  if (name === 'Chinggis khaan bank') return 'CKHB';
+  return name;
+};
 
 const QrDetail = ({
   errorDescription,
   status,
   qrCode,
-  id
+  id,
+  urls
 }: {
   errorDescription?: string;
   status: string;
   qrCode: string;
   id: string;
+  urls: { name: string; logo: string; link: string }[];
 }) => {
   return (
-    <>
+    <div className="max-h-[60vh] overflow-auto">
       <QrContainer error={errorDescription}>
         {qrCode ? (
           <Image
@@ -37,11 +47,36 @@ const QrDetail = ({
           />
         )}
       </QrContainer>
-      <DialogFooter className="sm:justify-center gap-2">
+      {!!urls?.length && (
+        <div className="pt-4 grid grid-cols-3 gap-4 md:hidden">
+          {urls.map(url => (
+            <Button
+              className="text-xs flex flex-col gap-1 items-center justify-center px-2 py-3 shadow border border-border/10 h-auto rounded-md"
+              variant={'ghost'}
+              size="sm"
+              asChild
+            >
+              <Link href={url.link}>
+                <Image
+                  src={url.logo}
+                  className="h-12 w-12 block rounded-md object-contain"
+                  alt=""
+                  height={164}
+                  width={164}
+                />
+                <span className="h-4 overflow-hidden mt-1 text-neutral-600">
+                  {getName(url.name)}
+                </span>
+              </Link>
+            </Button>
+          ))}
+        </div>
+      )}
+      <DialogFooter className="sm:justify-center gap-2 pt-4 block md:flex space-y-2 md:space-y-0">
         <BackButton />
         <CheckPayment id={id} />
       </DialogFooter>
-    </>
+    </div>
   );
 };
 
@@ -76,9 +111,9 @@ export const QrContainer = ({
       </Alert>
     )}
     {loading && (
-      <DialogFooter className="sm:justify-center gap-2">
+      <DialogFooter className="sm:justify-center gap-2 pt-4 block md:flex space-y-2 md:space-y-0">
         <BackButton disabled />
-        <Button size="lg" className="flex-1" disabled>
+        <Button size="lg" className="flex-1 w-full" disabled>
           Төлбөр шалгах
         </Button>
       </DialogFooter>

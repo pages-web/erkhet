@@ -16,7 +16,7 @@ export function useDetail() {
   const context = useContext(OrderDetailContext);
 
   if (!context) {
-    throw new Error('useCounter must be used within a <Counter />');
+    throw new Error('useDetail must be used within a <OrderDetail />');
   }
 
   return context;

@@ -51,7 +51,7 @@ export const onError = (error: ApolloError) => toast.error(error.message);
 export const getLabel = (status: string) =>
   statusLabel[status as keyof typeof statusLabel] || status;
 
-export const getOrderDetail = (status: string, paidDate?: string) => {
+export const getOrderStatus = (status: string, paidDate?: string) => {
   if (!paidDate) return 'Төлбөр хүлээгдэж байна';
   switch (status) {
     case ORDER_STATUSES.DOING:

@@ -35,7 +35,7 @@ const PaymentDetailDialog = () => {
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerContent>
+      <DrawerContent className="p-4 pt-0">
         <PaymentDetail />
       </DrawerContent>
     </Drawer>

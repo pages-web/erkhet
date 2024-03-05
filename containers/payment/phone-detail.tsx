@@ -109,9 +109,9 @@ const PhoneDetail = ({
             </AlertDescription>
           </Alert>
         )}
-        <DialogFooter className="sm:justify-center gap-2 pt-4">
+        <DialogFooter className="sm:justify-center gap-2 pt-4 block md:flex space-y-2 md:space-y-0">
           <BackButton disabled={loading} />
-          <Button size="lg" className="flex-1" disabled={loading}>
+          <Button size="lg" className="flex-1 w-full" disabled={loading}>
             {loading && <LoadingIcon />} Хүсэлт илгээх
           </Button>
         </DialogFooter>

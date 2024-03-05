@@ -8,7 +8,7 @@ const BackButton = ({ disabled }: { disabled?: boolean }) => {
     <Button
       size="lg"
       variant={'outline'}
-      className="flex-1"
+      className="flex-1 w-full"
       onClick={() => handleMethod('')}
       disabled={disabled}
       type="button"

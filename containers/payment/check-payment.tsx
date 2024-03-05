@@ -9,7 +9,7 @@ const CheckPayment = ({ id, disabled }: { id: string; disabled?: boolean }) => {
   return (
     <Button
       size="lg"
-      className="flex-1"
+      className="flex-1 w-full"
       disabled={disabled || loading}
       onClick={() =>
         checkInvoice({

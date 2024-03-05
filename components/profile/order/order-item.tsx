@@ -4,10 +4,19 @@ import { Button } from '@/components/ui/button';
 import { IOrder } from '@/types/order.types';
 import Link from 'next/link';
 import { format } from 'date-fns';
-import { cn, readFile } from '@/lib/utils';
+import { cn, getOrderStatus, readFile } from '@/lib/utils';
 import { cloudflareLoader } from '@/components/ui/picture';
+import OrderStatus from '@/components/order-detail/order-status';
 
-const OrderItem = ({ number, totalAmount, createdAt, items, _id }: IOrder) => {
+const OrderItem = ({
+  number,
+  totalAmount,
+  createdAt,
+  items,
+  _id,
+  status,
+  paidDate
+}: IOrder) => {
   return (
     <Button
       variant="outline"
@@ -25,7 +34,9 @@ const OrderItem = ({ number, totalAmount, createdAt, items, _id }: IOrder) => {
             <div className="text-black/60">
               {format(createdAt, 'yyyy/MM/dd hh:mm')}
             </div>
-            <div className="text-wrap">Захиалга хүчингүй болсон</div>
+            <div className="text-wrap">
+              {getOrderStatus(status || '', paidDate)}
+            </div>
           </div>
         </div>
         <div className="flex flex-row-reverse md:w-3/12 justify-end">
