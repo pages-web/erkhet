@@ -8,7 +8,7 @@ const ICInput = ({
   inputRegExp = /^[0-9]$/,
   amount = 8,
   handleOutputString,
-  value,
+  value
 }: any) => {
   const [characterArray, setCharacterArray] = useState<any[]>(
     Array(amount).fill('')
@@ -88,7 +88,7 @@ const ICInput = ({
 
   useEffect(() => {
     // add or remove refs
-    setElRefs((elRefs) =>
+    setElRefs(elRefs =>
       Array(amount)
         .fill(null)
         .map((_, i) => elRefs[i] || createRef())
@@ -132,7 +132,7 @@ const ICInput = ({
     }
   }, [latestClickedKey]);
   return (
-    <div className="inline-flex gap-3">
+    <div className="inline-flex gap-1.5 md:gap-3">
       {Array.from({ length: amount }).map((_, idx) => (
         <Input
           key={idx}
@@ -143,7 +143,7 @@ const ICInput = ({
           name={'input' + idx}
           ref={elRefs[idx]}
           value={characterArray[idx]}
-          className="h-12 w-10 text-center text-lg font-semibold"
+          className="h-11 md:h-12 w-9 md:w-10 px-0 text-center md:text-lg font-semibold"
         />
       ))}
     </div>

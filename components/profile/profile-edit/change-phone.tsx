@@ -17,13 +17,14 @@ import useUserEdit from '@/sdk/hooks/auth';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { phoneZod } from '@/lib/zod';
+import { LoadingIcon } from '@/components/ui/loading';
 
 const formSchema = z.object({
   phone: phoneZod
 });
 
 const ChangePhone = () => {
-  const { phone } = useAtomValue(currentUserAtom) || {};
+  const { phone, _id } = useAtomValue(currentUserAtom) || {};
   const { editUser, loading } = useUserEdit();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -33,7 +34,9 @@ const ChangePhone = () => {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    editUser({
+      variables: { _id, phone: values.phone }
+    });
   }
   return (
     <Form {...form}>
@@ -65,7 +68,10 @@ const ChangePhone = () => {
           )}
         />
 
-        <Button>Дугаараа солих</Button>
+        <Button disabled={loading}>
+          {loading && <LoadingIcon />}
+          Дугаараа солих
+        </Button>
       </form>
     </Form>
   );

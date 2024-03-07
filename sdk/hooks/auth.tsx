@@ -4,6 +4,7 @@ import { useSetAtom } from 'jotai';
 import { loadingUserAtom, refetchCurrentUserAtom } from '@/store/user.store';
 import { toast } from 'sonner';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { onError } from '@/lib/utils';
 
 const clientPortalId = process.env.NEXT_PUBLIC_CP_ID;
 
@@ -16,7 +17,7 @@ export const useLogin = (onCompleted?: BaseMutationOptions['onCompleted']) => {
 
   const onLoginComplete = ({
     token,
-    refetchToken,
+    refetchToken
   }: {
     token?: string;
     refetchToken?: string;
@@ -27,7 +28,7 @@ export const useLogin = (onCompleted?: BaseMutationOptions['onCompleted']) => {
       triggerRefetchUser(true);
       setLoadingUser(true);
       toast.success('Hello Dear', {
-        description: 'You successfully logged in',
+        description: 'You successfully logged in'
       });
 
       router.push(from ? from : '/');
@@ -41,7 +42,7 @@ export const useLogin = (onCompleted?: BaseMutationOptions['onCompleted']) => {
     },
     onError(error) {
       toast.error('Error', { description: error.message });
-    },
+    }
   });
 
   return { login, loading, clientPortalId };
@@ -51,24 +52,50 @@ export const useRegister = (
   onCompleted?: BaseMutationOptions['onCompleted']
 ) => {
   const [register, { loading }] = useMutation(mutations.createUser, {
-    onCompleted: (data) => {
+    onCompleted: data => {
       !!onCompleted && onCompleted(data);
     },
+    onError
   });
 
   return { register, loading, clientPortalId };
 };
 
-const useUserEdit = () => {
+export const useUserEdit = () => {
   const setRefetchUser = useSetAtom(refetchCurrentUserAtom);
   const [editUser, { loading }] = useMutation(mutations.userEdit, {
-    onCompleted(data) {
+    onCompleted() {
       setRefetchUser(true);
       toast.success('Personal information updated');
     },
+    onError
   });
 
   return { loading, editUser };
 };
 
-export default useUserEdit;
+export const useForgotPassword = () => {
+  const [forgotPassword, { loading, data }] = useMutation(
+    mutations.forgotPassword,
+    {
+      onError
+    }
+  );
+
+  const { clientPortalForgotPassword: success } = data || {};
+
+  return { loading, forgotPassword, clientPortalId, success };
+};
+
+export const useResetPassword = () => {
+  const [resetPassword, { loading, data }] = useMutation(
+    mutations.resetPassword,
+    {
+      onError
+    }
+  );
+
+  const { clientPortalResetPassword: success } = data || {};
+
+  return { loading, resetPassword, clientPortalId, success };
+};

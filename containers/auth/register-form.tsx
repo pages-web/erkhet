@@ -21,20 +21,15 @@ import { toast } from 'sonner';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { InfoIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { phoneZod } from '@/lib/zod';
+import { passwordZod, phoneZod } from '@/lib/zod';
+import { LoadingIcon } from '@/components/ui/loading';
 
 const formSchema = z.object({
   firstName: z.string().min(1, { message: 'First name is required' }),
   lastName: z.string(),
-  email: z.string().email().min(1, { message: 'Email is required' }),
+  email: z.string().email(),
   phone: phoneZod,
-  password: z
-    .string()
-    .regex(
-      /^(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
-      'Password must contain at least one lowercase letter, one uppercase letter, and be at least 8 characters long.'
-    )
-    .min(1, { message: 'Password is required' })
+  password: passwordZod
 });
 
 const RegisterForm = () => {
@@ -59,9 +54,6 @@ const RegisterForm = () => {
           description: 'Таны имэйл рүү баталгаажуулах холбоос илгээлээ.'
         });
         router.push('/login');
-      },
-      onError(error) {
-        toast.error(error.message);
       }
     });
   }
@@ -152,7 +144,8 @@ const RegisterForm = () => {
             </FormItem>
           )}
         />
-        <Button className="w-full col-span-2" size="lg">
+        <Button className="w-full col-span-2" size="lg" disabled={loading}>
+          {loading && <LoadingIcon />}
           Бүртгүүлэх
         </Button>
         <Alert className="col-span-2">

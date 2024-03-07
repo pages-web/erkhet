@@ -10,6 +10,7 @@ import CancelOrder from '@/containers/orders/cancel-order';
 import BuyButton from '@/containers/payment/buy-button';
 import { IOrder } from '@/types/order.types';
 import OrderStatus from './order-status';
+import { ORDER_STATUSES } from '../../lib/constants';
 
 const OrderHeader = () => {
   return (
@@ -34,11 +35,11 @@ const OrderHeader = () => {
         <h4 className="text-lg md:text-xl font-medium text-center my-5 md:mt-0">
           <OrderStatus />
         </h4>
-        <Alert variant="warning" className="md:font-medium text-black">
-          Төлбөр төлөгдсөний дараа таны захиалга баталгаажихыг анхаарна уу!
-          Дээрх хугацаанд төлбөрөө төлөөгүй тохиолдолд таны захиалга автоматаар
-          цуцлагдана.
-        </Alert>
+        {status === ORDER_STATUSES.NEW && (
+          <Alert variant="warning" className="md:font-medium text-black">
+            Төлбөр төлөгдсөний дараа таны захиалга баталгаажихыг анхаарна уу!
+          </Alert>
+        )}
       </CardContent>
       <Separator />
       <CardFooter className="justify-between pt-4 md:py-4">
