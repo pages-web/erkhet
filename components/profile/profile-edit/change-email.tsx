@@ -12,7 +12,7 @@ import * as z from 'zod';
 import { currentUserAtom } from '@/store/user.store';
 import { useAtomValue } from 'jotai';
 import { CheckCircle, MailIcon } from 'lucide-react';
-import useUserEdit from '@/sdk/hooks/auth';
+import { useUserEdit } from '@/sdk/hooks/auth';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/components/ui/input';

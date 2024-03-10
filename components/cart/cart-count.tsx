@@ -4,7 +4,7 @@ import { useAtomValue } from 'jotai';
 
 const CartCount = () => {
   const length = useAtomValue(cartLengthAtom);
-  return <>{length}</>;
+  return <span suppressHydrationWarning>{length}</span>;
 };
 
 export default CartCount;

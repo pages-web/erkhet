@@ -23,7 +23,7 @@ const CategoryPageContent = ({
 }: CategoryPageContentProps) => {
   return (
     <div className="mb-20">
-      <h1 className="my-6 font-bold text-2xl md:text-4xl">{title}</h1>
+      <h1 className="md:my-6 font-bold text-2xl md:text-4xl">{title}</h1>
       <div className="md:flex gap-6">
         <CategorySidebar>{sidebar}</CategorySidebar>
         <div className="flex-1">

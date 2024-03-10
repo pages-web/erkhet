@@ -7,14 +7,12 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
+  FormMessage
 } from '@/components/ui/form';
-import PhoneNumber from '@/components/ui/phone-number';
 import * as z from 'zod';
 import { currentUserAtom } from '@/store/user.store';
 import { useAtomValue } from 'jotai';
-import { SmartphoneIcon } from 'lucide-react';
-import useUserEdit from '@/sdk/hooks/auth';
+import { useUserEdit } from '@/sdk/hooks/auth';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Password } from '@/components/ui/password';
@@ -30,16 +28,12 @@ const passwordValidate = z
 const formSchema = z.object({
   password: passwordValidate,
   newPassword: passwordValidate,
-  verifyPassword: passwordValidate,
+  verifyPassword: passwordValidate
 });
 
 const ChangePassword = () => {
-  const { phone } = useAtomValue(currentUserAtom) || {};
-
-  const { editUser, loading } = useUserEdit();
-
   const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(formSchema)
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {

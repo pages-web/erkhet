@@ -15,15 +15,17 @@ import {
 } from '@/components/ui/form';
 import { useResetPassword } from '@/sdk/hooks/auth';
 import { LoadingIcon } from '@/components/ui/loading';
-import { CheckCircle2Icon } from 'lucide-react';
+import { CheckCircle2Icon, XCircleIcon } from 'lucide-react';
 import { passwordZod } from '@/lib/zod';
 import { Password } from '@/components/ui/password';
+import { useSearchParams } from 'next/navigation';
 
 const formSchema = z.object({
   password: passwordZod
 });
 
 const ResetPasswordForm = () => {
+  const token = useSearchParams().get('token');
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -36,8 +38,21 @@ const ResetPasswordForm = () => {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     resetPassword({
-      variables: { newPassword: values.password, clientPortalId }
+      variables: { newPassword: values.password, clientPortalId, token }
     });
+  }
+
+  if (!token) {
+    return (
+      <div className="flex items-center flex-col">
+        <XCircleIcon
+          className="text-red-500 h-12 w-12 animate-pulse"
+          strokeWidth={1.5}
+        />
+        <p className="text-base font-medium my-1 text-center">Буруу холбоос</p>
+        <p className="text-sm text-neutral-500">Та имэйл хаяг aa шалгана уу.</p>
+      </div>
+    );
   }
 
   if (success) {
@@ -48,9 +63,11 @@ const ResetPasswordForm = () => {
           strokeWidth={1.5}
         />
         <p className="text-base font-medium my-1 text-center">
-          Танд нууц үг солих холбоос бүхий имэйл илгээлээ.
+          Таны нууц үг амжилттай шинэчлэгдлээ
         </p>
-        <p className="text-sm text-neutral-500">Та имэйл хаяг aa шалгана уу.</p>
+        <p className="text-sm text-neutral-500">
+          Та нэвтэрч ороод үргэлжлүүлнэ үү.
+        </p>
       </div>
     );
   }
@@ -76,7 +93,7 @@ const ResetPasswordForm = () => {
         />
         <Button className="w-full col-span-2" size="lg" disabled={loading}>
           {loading && <LoadingIcon />}
-          Нууц үг сэргээх
+          Нууц үг шинэчлэх
         </Button>
       </form>
     </Form>

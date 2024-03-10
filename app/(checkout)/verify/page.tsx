@@ -9,24 +9,27 @@ import ItemsSummary from '@/components/verify/items-summary';
 import ItemsGrid from '@/components/verify/items-grid';
 import VerifyAddress from '@/components/verify/verify-address';
 import VerifyButton from '@/components/verify/verifyButton';
+import VerifyLayout from '@/containers/orders/verify-layout';
 
 const Verify = () => {
   return (
     <CheckoutLayout title="Баталгаажуулах" backTitle="Back" backUrl="/address">
-      <div className="md:grid md:grid-cols-12 md:gap-x-6">
-        <div className="col-span-7">
-          <div className="text-black/60 ">Захиалга</div>
-          <ItemsGrid />
-          <Separator />
-          <VerifyAddress />
+      <VerifyLayout>
+        <div className="md:grid md:grid-cols-12 md:gap-x-6">
+          <div className="col-span-7">
+            <div className="text-black/60 ">Захиалга</div>
+            <ItemsGrid />
+            <Separator />
+            <VerifyAddress />
+          </div>
+          <OrderSummary
+            className="col-span-5 md:sticky md:top-20 h-fit"
+            content={<ItemsSummary />}
+          >
+            <VerifyButton />
+          </OrderSummary>
         </div>
-        <OrderSummary
-          className="col-span-5 md:sticky md:top-20 h-fit"
-          content={<ItemsSummary />}
-        >
-          <VerifyButton />
-        </OrderSummary>
-      </div>
+      </VerifyLayout>
     </CheckoutLayout>
   );
 };

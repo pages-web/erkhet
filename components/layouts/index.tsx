@@ -2,7 +2,7 @@ import { ChevronDownIcon } from '@radix-ui/react-icons';
 import { NavbarTop } from '../navbar-top';
 import { Button } from '../ui/button';
 import Search from '../search/search';
-import BottomNav from '../bottom-nav';
+import BottomNav from '../bottom-nav/bottom-nav';
 import ScrollToTop from '../scroll-to-top';
 import Footer from '../footer/footer';
 import Link from 'next/link';
@@ -34,7 +34,9 @@ const DefaultLayout = ({ children }: React.PropsWithChildren) => {
       </NavbarTop>
       {children}
       <ScrollToTop />
-      <BottomNav />
+      <Suspense>
+        <BottomNav />
+      </Suspense>
       <Footer />
     </>
   );

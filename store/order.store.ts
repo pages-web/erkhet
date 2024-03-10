@@ -60,6 +60,7 @@ export const itemsAtom = focusAtom(activeOrderAtom, optic =>
 export const deliveryInfoAtom = focusAtom(activeOrderAtom, optic =>
   optic.prop('deliveryInfo')
 );
+
 export const descriptionAtom = focusAtom(activeOrderAtom, optic =>
   optic.prop('description')
 );

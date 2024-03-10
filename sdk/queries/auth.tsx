@@ -15,13 +15,6 @@ export const useCurrentUser = (onCompleted?: (data: any) => void) => {
   const [refetchUser, setRefetchUser] = useAtom(refetchCurrentUserAtom);
 
   const { data, refetch } = useQuery(queries.currentUser, {
-    onCompleted({ clientPortalCurrentUser }) {
-      setCurrentUser(clientPortalCurrentUser);
-      setLoading(false);
-      onCompleted && onCompleted(clientPortalCurrentUser);
-    },
-    skip:
-      typeof window === 'undefined' || sessionStorage.getItem('token') === null,
     onError(error) {
       if (error.message === 'token expired') {
         sessionStorage.removeItem('token');
@@ -30,6 +23,15 @@ export const useCurrentUser = (onCompleted?: (data: any) => void) => {
       setLoading(false);
     }
   });
+
+  useEffect(() => {
+    if (data) {
+      const { clientPortalCurrentUser } = data;
+      setCurrentUser(clientPortalCurrentUser);
+      setLoading(false);
+      onCompleted && onCompleted(clientPortalCurrentUser);
+    }
+  }, [data]);
 
   useEffect(() => {
     if (refetchUser) {

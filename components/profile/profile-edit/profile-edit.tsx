@@ -9,17 +9,17 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
+  FormMessage
 } from '../../ui/form';
 import { Input } from '../../ui/input';
 import { Button } from '../../ui/button';
 import { useAtomValue } from 'jotai';
 import { currentUserAtom } from '@/store/user.store';
-import useUserEdit from '@/sdk/hooks/auth';
+import { useUserEdit } from '@/sdk/hooks/auth';
 
 const formSchema = z.object({
   firstName: z.string().min(1, { message: 'First name is required' }),
-  lastName: z.string(),
+  lastName: z.string()
 });
 
 const ProfileEdit = () => {
@@ -29,8 +29,8 @@ const ProfileEdit = () => {
     resolver: zodResolver(formSchema),
     values: {
       firstName: firstName || '',
-      lastName: lastName || '',
-    },
+      lastName: lastName || ''
+    }
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {

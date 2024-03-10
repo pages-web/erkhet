@@ -99,3 +99,21 @@ export const useResetPassword = () => {
 
   return { loading, resetPassword, clientPortalId, success };
 };
+
+export const useLogout = () => {
+  const triggerRefetchUser = useSetAtom(refetchCurrentUserAtom);
+  const [logout, { loading }] = useMutation(mutations.logout, {
+    onCompleted() {
+      triggerRefetchUser(true);
+    },
+    onError
+  });
+
+  const handleLogout = () => {
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('refetchToken');
+    logout();
+  };
+
+  return { loading, logout: handleLogout };
+};
