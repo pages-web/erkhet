@@ -32,7 +32,8 @@ type GetProducts = (params?: CommonParams) => Promise<{
 }>;
 
 export const getProducts: GetProducts = async params => {
-  const { perPage, page, ...variables } = params?.variables || {};
+  const { perPage, page, sortField, sortDirection, ...variables } =
+    params?.variables || {};
   const { data, error } = await getClient().query({
     query: queries.products,
     variables: params?.variables

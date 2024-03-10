@@ -27,6 +27,8 @@ const products = gql`
     $perPage: Int, 
     $isKiosk: Boolean, 
     $groupedSimilarity: String
+    $sortField: String
+    $sortDirection: Int
     ) {
     poscProducts(
       searchValue: $searchValue, 
@@ -36,6 +38,8 @@ const products = gql`
       perPage: $perPage, 
       isKiosk: $isKiosk, 
       groupedSimilarity: $groupedSimilarity
+      sortField: $sortField
+      sortDirection: $sortDirection
     )  {
       ${commonFields}
       category {
@@ -150,6 +154,6 @@ const queries = {
   products,
   productsCount,
   productSimilarities,
-  productDetail,
+  productDetail
 };
 export default queries;

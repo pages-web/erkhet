@@ -1,10 +1,10 @@
+'use client';
 import Link from 'next/link';
-import { UrlObject } from 'node:url';
-import { ReactNode } from 'react';
 import { Button } from './ui/button';
 import { ICategory } from '../types/product.types';
 import { ArrowLeftIcon } from '@radix-ui/react-icons';
 import { cn } from '@/lib/utils';
+import { useSearchParams } from 'next/navigation';
 
 export type CategoryTreeItemProps =
   | (ICategory & { parent?: boolean })
@@ -13,8 +13,10 @@ export type CategoryTreeItemProps =
 export function CategoryTreeItem({
   parent,
   name,
-  order,
+  order
 }: ICategory & { parent?: boolean }): JSX.Element {
+  const sort = useSearchParams().get('sort');
+
   return (
     <Button
       variant={'ghost'}
@@ -22,7 +24,7 @@ export function CategoryTreeItem({
       asChild
       size="sm"
     >
-      <Link href={{ pathname: '/category', query: { order } }}>
+      <Link href={{ pathname: '/category', query: { order, sort } }}>
         <span
           className={cn('flex gap-2 items-center w-full', !parent && 'pl-6')}
         >

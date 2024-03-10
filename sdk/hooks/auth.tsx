@@ -8,44 +8,71 @@ import { onError } from '@/lib/utils';
 
 const clientPortalId = process.env.NEXT_PUBLIC_CP_ID;
 
-export const useLogin = (onCompleted?: BaseMutationOptions['onCompleted']) => {
+interface ILoginData {
+  token?: string;
+  refetchToken?: string;
+}
+
+const useLoginCallback = () => {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const from = searchParams.get('from');
+  const from = useSearchParams().get('from');
   const triggerRefetchUser = useSetAtom(refetchCurrentUserAtom);
   const setLoadingUser = useSetAtom(loadingUserAtom);
 
-  const onLoginComplete = ({
-    token,
-    refetchToken
-  }: {
-    token?: string;
-    refetchToken?: string;
-  }) => {
-    if (token) {
-      sessionStorage.setItem('token', token);
-      sessionStorage.setItem('refetchToken', refetchToken || '');
-      triggerRefetchUser(true);
-      setLoadingUser(true);
-      toast.success('Hello Dear', {
-        description: 'You successfully logged in'
-      });
+  return {
+    loginCallback: (
+      { token, refetchToken }: ILoginData,
+      callback?: () => void
+    ) => {
+      if (token) {
+        sessionStorage.setItem('token', token);
+        sessionStorage.setItem('refetchToken', refetchToken || '');
+        triggerRefetchUser(true);
+        setLoadingUser(true);
+        toast.success('Hello Dear', {
+          description: 'You successfully logged in'
+        });
 
-      router.push(from ? from : '/');
+        router.push(from ? from : '/');
+        !!callback && callback();
+      }
     }
   };
+};
+
+export const useLogin = (onCompleted?: () => void) => {
+  const { loginCallback } = useLoginCallback();
 
   const [login, { loading }] = useMutation(mutations.login, {
     onCompleted: ({ clientPortalLogin }) => {
-      onLoginComplete(clientPortalLogin);
-      !!onCompleted && onCompleted(clientPortalLogin);
+      loginCallback(clientPortalLogin, onCompleted);
     },
-    onError(error) {
-      toast.error('Error', { description: error.message });
-    }
+    onError
   });
 
   return { login, loading, clientPortalId };
+};
+
+export const useGoogleLogin = () => {
+  const { loginCallback } = useLoginCallback();
+  const [googleLogin, { loading }] = useMutation(mutations.googleLogin, {
+    onCompleted({ clientPortalGoogleAuthentication }) {
+      loginCallback(clientPortalGoogleAuthentication);
+    },
+    onError
+  });
+  return { googleLogin, loading, clientPortalId };
+};
+
+export const useFacebookLogin = () => {
+  const { loginCallback } = useLoginCallback();
+  const [facebookLogin, { loading }] = useMutation(mutations.fbLogin, {
+    onCompleted({ clientPortalFacebookAuthentication }) {
+      loginCallback(clientPortalFacebookAuthentication);
+    },
+    onError
+  });
+  return { facebookLogin, loading, clientPortalId };
 };
 
 export const useRegister = (

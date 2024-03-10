@@ -13,17 +13,18 @@ import { LinkProps } from 'next/link';
 import { Breadcrumb } from '@/components/breadcrumb';
 
 const Category = async ({ searchParams }: IPageProps) => {
-  const { order, page, q } = searchParams;
+  const { order, page, q, sort } = searchParams;
   const { categories } = await getCategories();
 
   const activeCategory = categories.find(category => category.order === order);
-
+  console.log(getSort(sort));
   const { products, count } = await getProducts({
     variables: {
       categoryId: activeCategory?._id,
       page: parseInt((page || 1).toString()),
       perPage: PER_PAGE,
-      searchValue: q
+      searchValue: q,
+      ...getSort(sort)
     }
   });
 
@@ -76,6 +77,23 @@ const Category = async ({ searchParams }: IPageProps) => {
       />
     </BreadcrumbsLayout>
   );
+};
+
+const getSort = (sortValue?: string | string[]) => {
+  const sort = (sortValue || '').toString();
+
+  switch (sort) {
+    case 'newToOld':
+      return { sortField: 'createdAt', sortDirection: -1 };
+    case 'oldToNew':
+      return { sortField: 'createdAt', sortDirection: 1 };
+    case 'priceUp':
+      return { sortField: 'unitPrice', sortDirection: -1 };
+    case 'priceDown':
+      return { sortField: 'unitPrice', sortDirection: 1 };
+    default:
+      return { sortField: 'createdAt', sortDirection: -1 };
+  }
 };
 
 export default Category;

@@ -1,4 +1,7 @@
 import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import FacebookLogin from '@/containers/auth/facebook-login';
+import GoogleLogin from '@/containers/auth/google-login';
 import LoginForm from '@/containers/auth/login-form';
 import Link from 'next/link';
 import { Suspense } from 'react';
@@ -10,10 +13,19 @@ const Login = () => {
         Тавтай морил
       </div>
       <div className="mb-auto mx-auto mt-4 md:mt-8 w-full sm:max-w-md">
-        <div className="md:border md:rounded-xl w-full sm:py-10 px-3 sm:px-10 space-y-5 bg-white">
+        <div className="md:border md:rounded-xl w-full sm:py-10 px-3 sm:px-10 space-y-5 bg-white relative">
           <Suspense>
             <LoginForm />
           </Suspense>
+          <Separator />
+          <div className="space-y-3">
+            <Suspense>
+              <FacebookLogin />
+            </Suspense>
+            <Suspense>
+              <GoogleLogin />
+            </Suspense>
+          </div>
         </div>
       </div>
       <div className="mt-8 text-center text-sm relative md:mb-20">

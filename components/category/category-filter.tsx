@@ -1,3 +1,5 @@
+'use client';
+import { useRouter, useSearchParams } from 'next/navigation';
 import {
   Select,
   SelectContent,
@@ -7,12 +9,22 @@ import {
 } from '../ui/select';
 
 const CategoryFilter = () => {
+  const sort = useSearchParams().get('sort');
+  const order = useSearchParams().get('order');
+  const router = useRouter();
+
   return (
     <div>
       <span className="block py-2 px-4 mb-4 bg-neutral-100 typography-headline-6 font-bold text-neutral-900 uppercase tracking-widest md:rounded-md">
         Sort by
       </span>
-      <Select defaultValue={'newToOld'}>
+      <Select
+        defaultValue={'newToOld'}
+        value={sort || 'newToOld'}
+        onValueChange={val =>
+          router.push(`/category?sort=${val}&order=${order}`)
+        }
+      >
         <SelectTrigger className="w-full h-11">
           <SelectValue placeholder="Sort" />
         </SelectTrigger>
