@@ -1,9 +1,9 @@
 import { ChevronDownIcon } from '@radix-ui/react-icons';
-import { NavbarTop } from '../navbar-top';
+import { NavbarTop } from './navbar-top';
 import { Button } from '../ui/button';
 import Search from '../search/search';
 import BottomNav from '../bottom-nav/bottom-nav';
-import ScrollToTop from '../scroll-to-top';
+import ScrollToTop from '../scroll-to-top/scroll-to-top';
 import Footer from '../footer/footer';
 import Link from 'next/link';
 import CartTrigger from '../cart/cart-trigger';
@@ -25,7 +25,7 @@ const DefaultLayout = ({ children }: React.PropsWithChildren) => {
           </Link>
         </Button>
         <Suspense fallback={<div className="hidden md:block flex-1" />}>
-          <Search className="hidden md:block flex-1" />
+          <Search className="hidden md:block flex-1 max-w-2xl mr-auto" />
         </Suspense>
         <nav className="hidden md:flex md:flex-row md:flex-nowrap gap-4">
           <CartTrigger />

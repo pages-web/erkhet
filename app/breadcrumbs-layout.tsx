@@ -1,5 +1,5 @@
 import { PropsWithChildren } from 'react';
-import { Breadcrumb, Breadcrumbs } from '@/components/breadcrumb';
+import { Breadcrumb, Breadcrumbs } from '@/components/breadcrumb/breadcrumb';
 
 type BreadcrumbsLayoutProps = PropsWithChildren & {
   breadcrumbs?: Breadcrumb[];
@@ -7,7 +7,7 @@ type BreadcrumbsLayoutProps = PropsWithChildren & {
 
 export function BreadcrumbsLayout({
   breadcrumbs = [],
-  children,
+  children
 }: BreadcrumbsLayoutProps) {
   return (
     <>

@@ -1,5 +1,5 @@
-import CategoryPageContent from '@/components/category-page-content';
-import CategoryTree from '@/components/category-tree';
+import CategoryPageContent from '@/components/category/category-page-content';
+import CategoryTree from '@/components/category/category-tree';
 import { BreadcrumbsLayout } from '../breadcrumbs-layout';
 import {
   getProducts,
@@ -10,7 +10,7 @@ import { ICategory } from '@/types/product.types';
 import { PER_PAGE } from '@/lib/constants';
 import { IPageProps } from '@/types';
 import { LinkProps } from 'next/link';
-import { Breadcrumb } from '@/components/breadcrumb';
+import { Breadcrumb } from '@/components/breadcrumb/breadcrumb';
 
 const Category = async ({ searchParams }: IPageProps) => {
   const { order, page, q, sort } = searchParams;

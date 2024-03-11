@@ -2,8 +2,8 @@ import { PropsWithChildren, ReactNode } from 'react';
 import { IProduct } from '@/types/product.types';
 import CategorySidebar from './category-sidebar';
 import CategorySidebarTrigger from './category-sidebar-trigger';
-import ProductCard from './product-card/product-card';
-import ProductPagination from './productPagination';
+import ProductCard from '../product-card/product-card';
+import ProductPagination from '../product-pagination/product-pagination';
 import { IPageProps } from '@/types';
 
 export interface CategoryPageContentProps extends PropsWithChildren {

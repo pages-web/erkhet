@@ -20,12 +20,13 @@ const FacebookLogin = () => {
   } = useFacebookLogin();
 
   const handleLogin = (response: { authResponse: { accessToken: string } }) => {
-    facebookLogin({
-      variables: {
-        clientPortalId,
-        accesToken: response?.authResponse?.accessToken
-      }
-    });
+    response?.authResponse?.accessToken &&
+      facebookLogin({
+        variables: {
+          clientPortalId,
+          accesToken: response?.authResponse?.accessToken
+        }
+      });
   };
 
   useEffect(() => {

@@ -1,7 +1,7 @@
 'use client';
 
 import { ChevronUpIcon } from 'lucide-react';
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 import { useRef } from 'react';
 import useIntersection from '@/hooks/useIntersection';
 import { cn } from '@/lib/utils';
@@ -10,7 +10,7 @@ const ScrollToTop = () => {
   const intersectionReference = useRef(null);
   const intersection = useIntersection(intersectionReference, {
     rootMargin: '0px',
-    threshold: 0,
+    threshold: 0
   });
 
   return (

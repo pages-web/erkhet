@@ -1,7 +1,7 @@
 import { useAtom } from 'jotai';
-import { Sheet, SheetClose, SheetContent } from './ui/sheet';
+import { Sheet, SheetClose, SheetContent } from '../ui/sheet';
 import { categorySheetAtom } from '@/store';
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 import { XIcon } from 'lucide-react';
 
 const CategorySideBarMobile = ({ children }: React.PropsWithChildren) => {

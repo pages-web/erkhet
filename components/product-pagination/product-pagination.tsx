@@ -6,14 +6,14 @@ import {
   PaginationItem,
   PaginationLink,
   PaginationNext,
-  PaginationPrevious,
-} from './ui/pagination';
-import { Separator } from './ui/separator';
+  PaginationPrevious
+} from '../ui/pagination';
+import { Separator } from '../ui/separator';
 import { IPageProps } from '@/types/index';
 
 const ProductPagination = ({
   searchParams,
-  totalProducts,
+  totalProducts
 }: {
   searchParams: IPageProps['searchParams'];
   totalProducts: number;
@@ -52,8 +52,8 @@ const ProductPagination = ({
               pathname: '/category',
               query: {
                 ...searchParams,
-                page: currentPage === 1 ? 1 : currentPage - 1,
-              },
+                page: currentPage === 1 ? 1 : currentPage - 1
+              }
             }}
           />
 
@@ -67,7 +67,7 @@ const ProductPagination = ({
                 <PaginationLink
                   href={{
                     pathname: '/category',
-                    query: { ...searchParams, page },
+                    query: { ...searchParams, page }
                   }}
                   isActive={currentPage === page}
                   key={i}
@@ -83,8 +83,8 @@ const ProductPagination = ({
               pathname: '/category',
               query: {
                 ...searchParams,
-                page: currentPage === totalPages ? totalPages : currentPage + 1,
-              },
+                page: currentPage === totalPages ? totalPages : currentPage + 1
+              }
             }}
           />
         </PaginationContent>

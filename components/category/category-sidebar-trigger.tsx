@@ -1,7 +1,7 @@
 'use client';
 
 import { SlidersHorizontalIcon } from 'lucide-react';
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 import { useSetAtom } from 'jotai';
 import { categorySheetAtom } from '@/store';
 

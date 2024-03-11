@@ -5,7 +5,7 @@ import { ICategory } from '@/types/product.types';
 import { IProductDetail } from '../../types/products.types';
 import { IProduct } from '../../types/product.types';
 import type { LinkProps } from 'next/link';
-import { Breadcrumb } from '@/components/breadcrumb';
+import { Breadcrumb } from '@/components/breadcrumb/breadcrumb';
 
 interface CommonParams {
   variables?: QueryOptions['variables'];
