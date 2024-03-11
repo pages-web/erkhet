@@ -6,7 +6,7 @@ import {
   getBreadcrumbs,
   getCategories
 } from '@/sdk/queries/products';
-import { ICategory } from '@/types/product.types';
+import { ICategory } from '@/types/products.types';
 import { PER_PAGE } from '@/lib/constants';
 import { IPageProps } from '@/types';
 import { LinkProps } from 'next/link';
@@ -14,10 +14,10 @@ import { Breadcrumb } from '@/components/breadcrumb/breadcrumb';
 
 const Category = async ({ searchParams }: IPageProps) => {
   const { order, page, q, sort } = searchParams;
-  const { categories } = await getCategories();
+  const { categories, getParent, primaryCategories } = await getCategories();
 
   const activeCategory = categories.find(category => category.order === order);
-  console.log(getSort(sort));
+
   const { products, count } = await getProducts({
     variables: {
       categoryId: activeCategory?._id,
@@ -27,13 +27,6 @@ const Category = async ({ searchParams }: IPageProps) => {
       ...getSort(sort)
     }
   });
-
-  const getParent = (parentId: string) =>
-    categories.find(c => c._id === parentId);
-
-  const primaryCategories = categories.filter(
-    category => !getParent(category.parentId)
-  );
 
   const parentCategory = activeCategory && getParent(activeCategory.parentId);
 

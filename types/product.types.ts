@@ -34,12 +34,3 @@ export interface IUseProducts {
   productsCount: number;
   handleLoadMore: () => void;
 }
-
-export interface ICategory {
-  _id: string;
-  name: string;
-  isRoot: boolean;
-  order: string;
-  parentId: string;
-  code: string;
-}

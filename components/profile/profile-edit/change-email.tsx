@@ -37,17 +37,9 @@ const ChangeEmail = () => {
   return (
     <Form {...form}>
       <form
-        className="flex items-center justify-center py-12 flex-col gap-8"
+        className="flex items-center justify-center flex-col gap-6"
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <MailIcon className="h-8 w-8 text-black/60" strokeWidth={1.7} />
-        <div className="text-center space-y-1 mb-4">
-          <h3 className="font-medium">Таны цахим хаяг баталгаажлаа</h3>
-          <div className="text-sm text-black/50">
-            Хэрэв та цахим хаягаа өөрчлөхийг хүсэж байгаа бол "Цахим хаяг солих"
-            товч дээр дарна уу
-          </div>
-        </div>
         <FormField
           control={form.control}
           name="email"
@@ -71,7 +63,7 @@ const ChangeEmail = () => {
           )}
         />
 
-        <Button>Цахим хаяг солих</Button>
+        <Button size="lg">Цахим хаяг солих</Button>
       </form>
     </Form>
   );

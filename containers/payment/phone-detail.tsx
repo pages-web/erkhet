@@ -18,6 +18,12 @@ import { InfoIcon, CheckCircle2Icon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import BackButton from './back-button';
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot
+} from '@/components/ui/input-otp';
 
 const formSchema = z.object({
   phone: phoneZod
@@ -79,9 +85,32 @@ const PhoneDetail = ({
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <PhoneNumber
-                    value={field.value}
-                    handleOutputString={(val: string) => field.onChange(val)}
+                  <InputOTP
+                    maxLength={8}
+                    render={({ slots }) => (
+                      <>
+                        <InputOTPGroup>
+                          {slots.slice(0, 4).map((slot, index) => (
+                            <InputOTPSlot
+                              key={index}
+                              {...slot}
+                              className="ring-0"
+                            />
+                          ))}
+                        </InputOTPGroup>
+                        <InputOTPSeparator />
+                        <InputOTPGroup>
+                          {slots.slice(4).map((slot, index) => (
+                            <InputOTPSlot
+                              key={index}
+                              {...slot}
+                              className="ring-0"
+                            />
+                          ))}
+                        </InputOTPGroup>
+                      </>
+                    )}
+                    {...field}
                   />
                 </FormControl>
                 <FormMessage />

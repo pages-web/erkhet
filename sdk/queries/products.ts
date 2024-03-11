@@ -1,20 +1,15 @@
 import { getClient } from '@/sdk/ssClient';
-import type { QueryOptions } from '@apollo/client';
 import { queries } from '../graphql/products';
-import { ICategory } from '@/types/product.types';
-import { IProductDetail } from '../../types/products.types';
-import { IProduct } from '../../types/product.types';
+import { IProduct } from '@/types/product.types';
+import {
+  GetCategories,
+  IProductDetail,
+  IGetParent,
+  CommonParams,
+  ICategory
+} from '@/types/products.types';
 import type { LinkProps } from 'next/link';
 import { Breadcrumb } from '@/components/breadcrumb/breadcrumb';
-
-interface CommonParams {
-  variables?: QueryOptions['variables'];
-}
-
-type GetCategories = (params?: CommonParams) => Promise<{
-  categories: ICategory[];
-  error_msg: string | undefined;
-}>;
 
 export const getCategories: GetCategories = async params => {
   const { data, error } = await getClient().query({
@@ -22,7 +17,20 @@ export const getCategories: GetCategories = async params => {
     variables: params?.variables
   });
   const { poscProductCategories: categories } = data || {};
-  return { categories, error_msg: error?.message };
+
+  const getParent: IGetParent = (parentId: string) =>
+    categories.find((c: ICategory) => c._id === parentId);
+
+  const primaryCategories = (categories || []).filter(
+    (category: ICategory) => !getParent(category.parentId)
+  );
+  console.log(categories, '--------------->');
+  return {
+    categories,
+    error_msg: error?.message,
+    primaryCategories,
+    getParent
+  };
 };
 
 type GetProducts = (params?: CommonParams) => Promise<{

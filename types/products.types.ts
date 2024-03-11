@@ -1,3 +1,4 @@
+import type { QueryOptions } from '@apollo/client';
 import { IProduct } from './product.types';
 
 export interface CustomField {
@@ -30,4 +31,18 @@ export interface ICategory {
   name: string;
   isRoot: boolean;
   order: string;
+  parentId: string;
+  code: string;
 }
+
+export interface CommonParams {
+  variables?: QueryOptions['variables'];
+}
+export type IGetParent = (parentId: string) => ICategory | undefined;
+
+export type GetCategories = (params?: CommonParams) => Promise<{
+  categories: ICategory[];
+  error_msg: string | undefined;
+  primaryCategories: ICategory[];
+  getParent: IGetParent;
+}>;

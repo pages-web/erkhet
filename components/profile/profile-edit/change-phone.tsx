@@ -8,7 +8,6 @@ import {
   FormItem,
   FormMessage
 } from '@/components/ui/form';
-import PhoneNumber from '@/components/ui/phone-number';
 import * as z from 'zod';
 import { currentUserAtom } from '@/store/user.store';
 import { useAtomValue } from 'jotai';
@@ -18,6 +17,12 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { phoneZod } from '@/lib/zod';
 import { LoadingIcon } from '@/components/ui/loading';
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot
+} from '@/components/ui/input-otp';
 
 const formSchema = z.object({
   phone: phoneZod
@@ -58,9 +63,24 @@ const ChangePhone = () => {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <PhoneNumber
-                  value={field.value}
-                  handleOutputString={(val: string) => field.onChange(val)}
+                <InputOTP
+                  maxLength={8}
+                  render={({ slots }) => (
+                    <>
+                      <InputOTPGroup>
+                        {slots.slice(0, 4).map((slot, index) => (
+                          <InputOTPSlot key={index} {...slot} />
+                        ))}
+                      </InputOTPGroup>
+                      <InputOTPSeparator />
+                      <InputOTPGroup>
+                        {slots.slice(4).map((slot, index) => (
+                          <InputOTPSlot key={index} {...slot} />
+                        ))}
+                      </InputOTPGroup>
+                    </>
+                  )}
+                  {...field}
                 />
               </FormControl>
               <FormMessage />
