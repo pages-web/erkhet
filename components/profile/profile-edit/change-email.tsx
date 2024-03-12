@@ -16,13 +16,14 @@ import { useUserEdit } from '@/sdk/hooks/auth';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/components/ui/input';
+import { LoadingIcon } from '@/components/ui/loading';
 
 const formSchema = z.object({
   email: z.string().email()
 });
 
 const ChangeEmail = () => {
-  const { email } = useAtomValue(currentUserAtom) || {};
+  const { email, _id } = useAtomValue(currentUserAtom) || {};
   const { editUser, loading } = useUserEdit();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -32,7 +33,12 @@ const ChangeEmail = () => {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    editUser({
+      variables: {
+        email: values.email,
+        _id
+      }
+    });
   }
   return (
     <Form {...form}>
@@ -53,7 +59,6 @@ const ChangeEmail = () => {
                     autoComplete="email"
                     className="min-w-80 h-12 pl-6 pr-12 bg-secondary disabled:opacity-100"
                     value={email}
-                    disabled
                   />
                   <CheckCircle className="h-5 w-5 absolute top-1/2 right-4 -translate-y-1/2" />
                 </div>
@@ -63,7 +68,10 @@ const ChangeEmail = () => {
           )}
         />
 
-        <Button size="lg">Цахим хаяг солих</Button>
+        <Button size="lg" disabled={loading}>
+          {loading && <LoadingIcon />}
+          Цахим хаяг солих
+        </Button>
       </form>
     </Form>
   );

@@ -7,6 +7,7 @@ import { cva } from 'class-variance-authority';
 
 type CounterProps = React.PropsWithChildren & {
   size?: 'sm' | 'default' | 'lg';
+  disabled?: boolean;
 };
 
 type ContextProps = CounterProps;
@@ -38,12 +39,12 @@ const inputVariants = cva(
       size: {
         default: 'h-9 w-9',
         sm: 'h-7 w-7',
-        lg: 'h-11 w-11',
-      },
+        lg: 'h-11 w-11'
+      }
     },
     defaultVariants: {
-      size: 'default',
-    },
+      size: 'default'
+    }
   }
 );
 
@@ -51,11 +52,12 @@ const CounterInput = forwardRef<
   HTMLInputElement,
   React.InputHTMLAttributes<HTMLInputElement>
 >(({ className, ...props }, ref) => {
-  const { size } = useCounter();
+  const { size, disabled } = useCounter();
   return (
     <Input
       ref={ref}
       className={cn(inputVariants({ size, className }))}
+      disabled={disabled}
       {...props}
       type="number"
     />
@@ -69,12 +71,12 @@ const buttonVariants = cva('', {
     size: {
       default: 'h-9 w-9',
       sm: 'h-7 w-7',
-      lg: 'h-11 w-11',
-    },
+      lg: 'h-11 w-11'
+    }
   },
   defaultVariants: {
-    size: 'default',
-  },
+    size: 'default'
+  }
 });
 
 const iconVariants = cva('text-neutral-600', {
@@ -82,22 +84,23 @@ const iconVariants = cva('text-neutral-600', {
     size: {
       default: 'h-4 w-4',
       sm: 'h-4 <w-4></w-4>',
-      lg: 'h-5 w-5',
-    },
+      lg: 'h-5 w-5'
+    }
   },
   defaultVariants: {
-    size: 'default',
-  },
+    size: 'default'
+  }
 });
 
 const CounterButton = forwardRef<
   HTMLButtonElement,
   ButtonProps & { minus?: boolean }
 >(({ className, minus, ...props }, ref) => {
-  const { size } = useCounter();
+  const { size, disabled } = useCounter();
   const Icon = minus ? MinusIcon : PlusIcon;
   return (
     <Button
+      disabled={disabled}
       {...props}
       className={cn(buttonVariants({ size, className }))}
       variant="ghost"

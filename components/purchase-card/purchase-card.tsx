@@ -9,26 +9,34 @@ import { CounterButton, Counter } from '../counter/counter';
 import AddToCart from './AddToCart.client';
 import Link from 'next/link';
 import { Button } from '../ui/button';
+import { cn } from '@/lib/utils';
 
 const PurchaseCard = ({
   name,
   unitPrice,
   _id,
   remainder,
-  attachment,
+  attachment
 }: IProductDetail) => {
   const product = { name, unitPrice, _id, remainder, attachment };
   return (
     <Card className="md:sticky md:top-20 ">
       <CardHeader>
-        <div className="mb-2">
+        <div>
           <Badge className="bg-indigo-600 h-auto py-1 md:py-1.5 px-2 md:px-3 text-sm">
             <Tag className="h-4 w-4 md:h-5 md:w-5" />
             <span className="ml-1 md:ml-2 inline-block">Sale</span>
           </Badge>
         </div>
-        <h1 className="mb-1 font-bold text-xl">{name}</h1>
-        <div className="my-1">
+        <h1
+          className={cn(
+            'font-bold capitalize line-clamp-2',
+            name.length > 20 ? 'text-xl' : 'text-2xl'
+          )}
+        >
+          {name}
+        </h1>
+        <div>
           <Price
             amount={unitPrice + ''}
             className="mr-2 text-indigo-600 font-bold text-2xl"
@@ -39,12 +47,25 @@ const PurchaseCard = ({
             className="text-base text-neutral-500 line-through"
           />
         </div>
-        <div className="inline-flex items-center mt-4 mb-2">
+        <div className="flex items-center pt-2">
           <Rate rate={4} />
           <span className="ml-2 text-sm text-neutral-500">( 5 )</span>
         </div>
+        <div className="flex items-center pt-2">
+          {remainder ? (
+            <>
+              Таны сонгосон бараа агуулахад:
+              <Badge className="mx-2 bg-green-700">
+                {remainder || 0}ш
+              </Badge>{' '}
+              байна.
+            </>
+          ) : (
+            <>Таны сонгосон бараа агуулахад дууссан байна.</>
+          )}
+        </div>
       </CardHeader>
-      <CardContent>
+      <CardContent className="md:py-0">
         <Separator />
         <AddToCart {...product} />
         <Separator />

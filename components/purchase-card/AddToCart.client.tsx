@@ -4,27 +4,28 @@ import { ShoppingCartIcon } from 'lucide-react';
 import { Counter, CounterButton, CounterInput } from '../counter/counter';
 import { Button } from '../ui/button';
 import { useState } from 'react';
-import { useSetAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import { addToCartAtom } from '@/store/cart.store';
 import { IProduct } from '@/types/product.types';
 import { cartSheetAtom } from '@/store';
+import { LoadingIcon } from '../ui/loading';
 
 const AddToCart = (product: IProduct) => {
   const [count, setCount] = useState(1);
-  const addToCart = useSetAtom(addToCartAtom);
+  const [loading, addToCart] = useAtom(addToCartAtom);
   const setOpenCart = useSetAtom(cartSheetAtom);
   return (
     <div className="py-4 flex items-center gap-4">
-      <Counter size="lg">
+      <Counter size="lg" disabled={!product.remainder}>
         <CounterButton
           minus
-          onClick={() => setCount((prev) => (prev > 1 ? prev - 1 : 1))}
+          onClick={() => setCount(prev => (prev > 1 ? prev - 1 : 1))}
         />
         <CounterInput
           value={count}
-          onChange={(e) => setCount(Number(e.target.value))}
+          onChange={e => setCount(Number(e.target.value))}
         />
-        <CounterButton onClick={() => setCount((prev) => prev + 1)} />
+        <CounterButton onClick={() => setCount(prev => prev + 1)} />
       </Counter>
       <Button
         className="h-11 flex-1 font-semibold"
@@ -34,8 +35,13 @@ const AddToCart = (product: IProduct) => {
           setOpenCart(true);
           setCount(1);
         }}
+        disabled={!product.remainder || loading}
       >
-        <ShoppingCartIcon className="h-5 w-5 mr-2" />
+        {loading ? (
+          <LoadingIcon />
+        ) : (
+          <ShoppingCartIcon className="h-5 w-5 mr-2" />
+        )}
         Add to cart
       </Button>
     </div>
