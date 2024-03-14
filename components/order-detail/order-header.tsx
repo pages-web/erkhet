@@ -11,8 +11,10 @@ import BuyButton from '@/containers/payment/buy-button';
 import { IOrder } from '@/types/order.types';
 import OrderStatus from './order-status';
 import { ORDER_STATUSES } from '../../lib/constants';
+import { useDetail } from './order-detail';
 
 const OrderHeader = () => {
+  const { status, paidDate } = useDetail();
   return (
     <Card>
       <CardHeader className="justify-between flex-row items-center md:py-5 gap-1 md:gap-0">
@@ -36,7 +38,10 @@ const OrderHeader = () => {
           <OrderStatus />
         </h4>
         {status === ORDER_STATUSES.NEW && (
-          <Alert variant="warning" className="md:font-medium text-black">
+          <Alert
+            variant="warning"
+            className="md:font-medium text-black text-center"
+          >
             Төлбөр төлөгдсөний дараа таны захиалга баталгаажихыг анхаарна уу!
           </Alert>
         )}

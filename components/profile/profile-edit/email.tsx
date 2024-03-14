@@ -4,7 +4,7 @@ import ChangeEmail from './change-email';
 const Email = () => {
   return (
     <div className="py-12">
-      <EmailDescription title="Таны цахим хаяг баталгаажлаа">
+      <EmailDescription title="Таны цахим хаяг баталгаажсан">
         Хэрэв та цахим хаягаа өөрчлөхийг хүсэж байгаа бол "Цахим хаяг солих"
         товч дээр дарна уу
       </EmailDescription>

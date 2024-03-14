@@ -58,7 +58,6 @@ const ChangeEmail = () => {
                     {...field}
                     autoComplete="email"
                     className="min-w-80 h-12 pl-6 pr-12 bg-secondary disabled:opacity-100"
-                    value={email}
                   />
                   <CheckCircle className="h-5 w-5 absolute top-1/2 right-4 -translate-y-1/2" />
                 </div>

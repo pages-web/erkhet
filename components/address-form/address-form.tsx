@@ -39,7 +39,9 @@ const formSchema = z.object({
   detail: z.string().min(1, { message: 'Detailed address is required' }),
   haveBaby: z.boolean(),
   callBefore: z.boolean(),
-  onlyAfternoon: z.boolean()
+  onlyAfternoon: z.boolean(),
+  billType: z.string(),
+  registerNumber: z.string().nullable()
 });
 
 const AddressForm = () => {
@@ -67,6 +69,8 @@ const AddressForm = () => {
       haveBaby: false,
       callBefore: false,
       onlyAfternoon: false,
+      billType: '1',
+      registerNumber: null,
       ...deliveryInfo
     }
   });
@@ -156,6 +160,9 @@ const AddressForm = () => {
               )}
             />
             <div />
+            <Separator className="col-span-6 my-6" />
+            <h2 className="col-span-6 text-lg font-bold">И-баримт авах</h2>
+
             <Separator className="col-span-6 my-6" />
             <h2 className="col-span-6 text-lg font-bold">Хүргэлтийн хаяг</h2>
             <FormField

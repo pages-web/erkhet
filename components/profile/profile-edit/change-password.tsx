@@ -12,32 +12,39 @@ import {
 import * as z from 'zod';
 import { currentUserAtom } from '@/store/user.store';
 import { useAtomValue } from 'jotai';
-import { useUserEdit } from '@/sdk/hooks/auth';
+import { useChangePassword, useUserEdit } from '@/sdk/hooks/auth';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Password } from '@/components/ui/password';
-
-const passwordValidate = z
-  .string()
-  .regex(
-    /^(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
-    'Password must contain at least one lowercase letter, one uppercase letter, and be at least 8 characters long.'
-  )
-  .min(1, { message: 'Password is required' });
+import { passwordZod } from '@/lib/zod';
+import { toast } from 'sonner';
+import { LoadingIcon } from '@/components/ui/loading';
 
 const formSchema = z.object({
-  password: passwordValidate,
-  newPassword: passwordValidate,
-  verifyPassword: passwordValidate
+  currentPassword: z.string().min(1, 'Password is required'),
+  newPassword: passwordZod,
+  verifyPassword: passwordZod
 });
 
 const ChangePassword = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema)
   });
+  const { changePassword, loading, clientPortalId } = useChangePassword();
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    const { currentPassword, newPassword, verifyPassword } = values;
+
+    if (newPassword !== verifyPassword)
+      return toast.error('Нууц үг таарахгүй байна');
+
+    changePassword({
+      variables: { clientPortalId, currentPassword, newPassword },
+      onCompleted() {
+        toast.success('Нууц үг солигдлоо');
+        form.reset();
+      }
+    });
   }
 
   return (
@@ -48,12 +55,12 @@ const ChangePassword = () => {
       >
         <FormField
           control={form.control}
-          name="password"
+          name="currentPassword"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Одоогийн нууц үг</FormLabel>
               <FormControl>
-                <Password {...field} />
+                <Password {...field} autoComplete="current-password" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -68,7 +75,7 @@ const ChangePassword = () => {
             <FormItem>
               <FormLabel>Шинэ нууц үг</FormLabel>
               <FormControl>
-                <Password {...field} />
+                <Password {...field} autoComplete="new-password" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -81,15 +88,15 @@ const ChangePassword = () => {
             <FormItem>
               <FormLabel>Шинэ нууц үг баталгаажуулах</FormLabel>
               <FormControl>
-                <Password {...field} />
+                <Password {...field} autoComplete="new-password" />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
         <div className="border border-transparent flex items-end ">
-          <Button className="mt-auto w-full" size="lg">
-            Дугаараа солих
+          <Button className="mt-auto w-full" size="lg" disabled={loading}>
+            {loading && <LoadingIcon />} Нууц үг солих
           </Button>
         </div>
       </form>

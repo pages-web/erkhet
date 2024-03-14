@@ -95,7 +95,7 @@ const syncCarts = (localCart: OrderItem[], items: OrderItem[]) => {
 export const useFullOrders = (props?: { variables?: OperationVariables }) => {
   const { variables } = props || {};
   const { erxesCustomerId } = useAtomValue(currentUserAtom) || {};
-  const { data, loading } = useQuery(queries.fullOrders, {
+  const { data, loading, refetch } = useQuery(queries.fullOrders, {
     variables: {
       customerId: erxesCustomerId,
       statuses: ORDER_STATUSES.ALL,
@@ -109,7 +109,7 @@ export const useFullOrders = (props?: { variables?: OperationVariables }) => {
 
   const fullOrders = useMemo(() => data?.fullOrders, [data]);
 
-  return { fullOrders, loading };
+  return { fullOrders, loading, refetch };
 };
 
 export const useOrderDetail = (id: string) => {

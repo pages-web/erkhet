@@ -16,6 +16,7 @@ import { useEffect } from 'react';
 import { toast } from 'sonner';
 import { IOrder } from '@/types/order.types';
 import { ORDER_SALE_STATUS } from '@/lib/constants';
+import { onError } from '@/lib/utils';
 
 const refetchQueries = ['CurrentOrder'];
 
@@ -71,7 +72,8 @@ export const useOrderChangeSaleStatus = () => {
   const { _id } = useAtomValue(activeOrderAtom) as IOrder;
 
   const [change, { loading }] = useMutation(mutations.orderChangeSaleStatus, {
-    refetchQueries
+    refetchQueries,
+    onError
   });
 
   const handleConfirm = (onCompleted?: BaseMutationOptions['onCompleted']) => {
@@ -85,4 +87,12 @@ export const useOrderChangeSaleStatus = () => {
   };
 
   return { handleConfirm, loading };
+};
+
+export const useCancelOrder = () => {
+  const [cancel, { loading }] = useMutation(mutations.ordersCancel, {
+    onError
+  });
+
+  return { cancel, loading };
 };

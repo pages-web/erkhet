@@ -27,13 +27,16 @@ const OrderDetail = ({ id }: { id: string }) => {
 
   if (loading) return <Loading className="py-32" />;
 
+  if (!orderDetail)
+    return <div className="py-32 text-center">Order not found</div>;
+
   return (
     <OrderDetailContext.Provider value={orderDetail}>
       <OrderHeader />
-      <OrderGeneral {...orderDetail} />
-      <OrderProducts {...orderDetail} />
-      <OrderUser {...orderDetail} />
-      <OrderAddress {...orderDetail} />
+      <OrderGeneral />
+      <OrderProducts />
+      <OrderUser />
+      <OrderAddress />
     </OrderDetailContext.Provider>
   );
 };

@@ -30,8 +30,8 @@ const orderChangeSaleStatus = gql`
 `;
 
 const ordersCancel = gql`
-  mutation OrdersCancel($id: String!) {
-    ordersCancel(_id: $id)
+  mutation OrdersCancel($_id: String!) {
+    ordersCancel(_id: $_id)
   }
 `;
 

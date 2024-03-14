@@ -114,6 +114,19 @@ export const useForgotPassword = () => {
   return { loading, forgotPassword, clientPortalId, success };
 };
 
+export const useChangePassword = () => {
+  const [changePassword, { loading, data }] = useMutation(
+    mutations.userChangePassword,
+    {
+      onError
+    }
+  );
+
+  const { clientPortalUserChangePassword: success } = data || {};
+
+  return { loading, changePassword, clientPortalId, success };
+};
+
 export const useResetPassword = () => {
   const [resetPassword, { loading, data }] = useMutation(
     mutations.resetPassword,

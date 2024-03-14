@@ -5,11 +5,12 @@ import {
   CardHeader
 } from '@/components/ui/card';
 import { Separator } from '../ui/separator';
-import { IOrder } from '@/types/order.types';
 import { format } from 'date-fns';
 import Price from '../price/price';
+import { useDetail } from './order-detail';
 
-const OrderGeneral = ({ number, createdAt, totalAmount }: IOrder) => {
+const OrderGeneral = () => {
+  const { number, createdAt, totalAmount } = useDetail();
   return (
     <Card>
       <CardHeader className="justify-between flex-row items-center md:py-3 space-y-0 md:space-y-2">

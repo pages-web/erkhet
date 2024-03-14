@@ -5,9 +5,20 @@ import { useFullOrders } from '@/sdk/queries/order';
 import OrderItem from '@/components/profile/order/order-item';
 import { IOrder } from '@/types/order.types';
 import CartEmpty from '@/components/cart/cart-empty';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
 
 const FullOrders = () => {
-  const { fullOrders, loading } = useFullOrders();
+  const refetchOrders = useSearchParams().get('refetch') === 'true';
+  const router = useRouter();
+  const { fullOrders, loading, refetch } = useFullOrders();
+
+  useEffect(() => {
+    if (refetchOrders) {
+      refetch();
+      router.push('/profile/orders');
+    }
+  }, []);
 
   if (loading) return <Loading className="py-40" />;
 

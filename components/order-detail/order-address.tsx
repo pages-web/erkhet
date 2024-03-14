@@ -1,9 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '../ui/separator';
-import { IOrder } from '@/types/order.types';
+import { useDetail } from './order-detail';
 
-const OrderAddress = ({ deliveryInfo }: IOrder) => {
+const OrderAddress = () => {
+  const { deliveryInfo } = useDetail();
   const { phone, city, district, street, detail, email } = deliveryInfo || {};
+
   return (
     <Card>
       <CardHeader className="md:py-4">
