@@ -1,18 +1,22 @@
-import { type OperationVariables, useQuery } from '@apollo/client';
+import {
+  type OperationVariables,
+  useQuery,
+  useLazyQuery
+} from '@apollo/client';
 import { queries, subscriptions } from '../graphql/order';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
-import { currentUserAtom } from '@/store/user.store';
+import { currentUserAtom } from '@/store/auth.store';
 import {
-  activeOrderAtom,
   initialLoadingOrderAtom,
-  loadingOrderAtom
+  loadingOrderAtom,
+  activeOrderAtom
 } from '@/store/order.store';
 import { defaultOrderItem, cudOrderAtom } from '@/store/order.store';
 import { localCartAtom } from '@/store/cart.store';
 import { OrderItem } from '@/types/order.types';
-import { use, useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { ORDER_SALE_STATUS, ORDER_STATUSES } from '@/lib/constants';
-import { usePaymentConfig } from './payment';
+import { onError } from '@/lib/utils';
 
 const useCurrentOrder = () => {
   const { erxesCustomerId } = useAtomValue(currentUserAtom) || {};
@@ -104,6 +108,7 @@ export const useFullOrders = (props?: { variables?: OperationVariables }) => {
       sortDirection: -1,
       ...variables
     },
+    onError,
     skip: !erxesCustomerId
   });
 
@@ -120,7 +125,8 @@ export const useOrderDetail = (id: string) => {
       variables: {
         customerId: erxesCustomerId,
         id
-      }
+      },
+      onError
     }
   );
 
@@ -149,6 +155,21 @@ export const useOrderDetail = (id: string) => {
   }, [_id]);
 
   return { orderDetail, loading };
+};
+
+export const useCheckRegister = (onCompleted?: (name: string) => void) => {
+  const [checkRegister, { loading }] = useLazyQuery(
+    queries.ordersCheckCompany,
+    {
+      onError,
+      onCompleted(data) {
+        const { found, name } = (data || {}).ordersCheckCompany || {};
+
+        onCompleted && onCompleted(!found ? '' : name || 'Demo company');
+      }
+    }
+  );
+  return { checkRegister, loading };
 };
 
 export default useCurrentOrder;

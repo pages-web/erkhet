@@ -22,6 +22,7 @@ export const createUrl = (
 export const READ_FILE = '/read-file?key=';
 
 export const readFile = (url: string = '') => {
+  if (url.includes('://localhost')) return url;
   if (url.includes(READ_FILE)) {
     const apiUrl = url.split(READ_FILE)[0];
     return url.replace(apiUrl, process.env.NEXT_PUBLIC_MAIN_API_DOMAIN || '');
@@ -67,3 +68,82 @@ export const getOrderStatus = (status: string, paidDate?: string) => {
       return 'Захиалга баталгаажсан';
   }
 };
+
+export function hexToHsl(hex: string) {
+  // Remove the '#' symbol from the hex code
+  hex = hex.replace('#', '');
+
+  // Extract the individual RGB components
+  const r = parseInt(hex.substring(0, 2), 16);
+  const g = parseInt(hex.substring(2, 4), 16);
+  const b = parseInt(hex.substring(4, 6), 16);
+
+  return rgbToHsl(r, g, b);
+}
+
+export function rgbToHsl(r: number, g: number, b: number): string {
+  r /= 255;
+  g /= 255;
+  b /= 255;
+
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  let h: number,
+    s: number,
+    l: number = (max + min) / 2;
+
+  if (max === min) {
+    h = s = 0; // achromatic
+  } else {
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+
+    switch (max) {
+      case r:
+        h = (g - b) / d + (g < b ? 6 : 0);
+        break;
+      case g:
+        h = (b - r) / d + 2;
+        break;
+      case b:
+        h = (r - g) / d + 4;
+        break;
+      default:
+        h = 0;
+        break;
+    }
+
+    h /= 6;
+  }
+
+  // Convert h, s, l values to percentages
+  h = Math.round(h * 360);
+  s = Math.round(s * 100);
+  l = Math.round(l * 100);
+
+  return `${h} ${s}% ${l}%`;
+}
+
+export function getSimilarColorWithOpacity(
+  primaryColorHex: string,
+  opacity: number
+) {
+  // Convert primary color hex to RGB
+  const r = parseInt(primaryColorHex.substring(1, 3), 16);
+  const g = parseInt(primaryColorHex.substring(3, 5), 16);
+  const b = parseInt(primaryColorHex.substring(5, 7), 16);
+
+  // Blend primary color with white
+  const blendedR = Math.round((1 - opacity) * 255 + opacity * r);
+  const blendedG = Math.round((1 - opacity) * 255 + opacity * g);
+  const blendedB = Math.round((1 - opacity) * 255 + opacity * b);
+
+  // Convert blended RGB to hexadecimal
+  const blendedHex =
+    '#' +
+    ((1 << 24) + (blendedR << 16) + (blendedG << 8) + blendedB)
+      .toString(16)
+      .slice(1);
+
+  return blendedHex;
+}

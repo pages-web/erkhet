@@ -105,7 +105,9 @@ const PaymentDetail = () => {
         />
       )}
 
-      {loadingAction && <Loading className="absolute inset-0 bg-white/40" />}
+      {loadingAction && (
+        <Loading className="absolute inset-0 bg-background/40" />
+      )}
     </>
   );
 };

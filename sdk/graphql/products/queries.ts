@@ -58,6 +58,15 @@ const products = gql`
   }
 `;
 
+const productsMeta = gql`
+  query poscProducts($perPage: Int) {
+    poscProducts(perPage: $perPage, isKiosk: true) {
+      _id
+      modifiedAt
+    }
+  }
+`;
+
 const productSimilarities = gql`
   query PoscProductSimilarities($id: String!, $groupedSimilarity: String) {
     poscProductSimilarities(_id: $id, groupedSimilarity: $groupedSimilarity) {
@@ -154,6 +163,7 @@ const queries = {
   products,
   productsCount,
   productSimilarities,
-  productDetail
+  productDetail,
+  productsMeta
 };
 export default queries;

@@ -8,9 +8,15 @@ import { Separator } from '../ui/separator';
 import { format } from 'date-fns';
 import Price from '../price/price';
 import { useDetail } from './order-detail';
+import { useAtomValue } from 'jotai';
+import { deliveryItemIdAtom } from '@/store/auth.store';
+import { getDeliveryProduct } from '@/store/order.store';
 
 const OrderGeneral = () => {
-  const { number, createdAt, totalAmount } = useDetail();
+  const { number, createdAt, totalAmount, items } = useDetail();
+  const deliveryProductId = useAtomValue(deliveryItemIdAtom);
+  const deliveryProduct = getDeliveryProduct(items, deliveryProductId);
+
   return (
     <Card>
       <CardHeader className="justify-between flex-row items-center md:py-3 space-y-0 md:space-y-2">
@@ -35,11 +41,13 @@ const OrderGeneral = () => {
       <CardContent className="py-3 md:py-4 text-sm md:text-base">
         <div className="flex justify-between items-center">
           <span>Барааны дүн</span>
-          <Price amount={totalAmount + ''} />
+          <Price
+            amount={totalAmount - (deliveryProduct?.unitPrice || 0) + ''}
+          />
         </div>
         <div className="flex justify-between items-center">
           <span>Хүргэлтийн төлбөр</span>
-          <Price amount={'0'} />
+          <Price amount={(deliveryProduct?.unitPrice || 0).toString()} />
         </div>
       </CardContent>
       <Separator />

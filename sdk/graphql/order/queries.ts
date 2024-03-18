@@ -37,6 +37,7 @@ export const currentOrder = gql`
       deliveryInfo
       description
       paidDate
+      billType
       registerNumber
       totalAmount
       mobileAmount
@@ -77,7 +78,7 @@ export const fullOrders = gql`
   }
 `;
 
-const ordersCheckCompany = `
+const ordersCheckCompany = gql`
   query ordersCheckCompany($registerNumber: String!) {
     ordersCheckCompany(registerNumber: $registerNumber)
   }

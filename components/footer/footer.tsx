@@ -50,7 +50,7 @@ const Footer = ({ className = '' }: { className?: string }) => {
           </div>
         ))}
       </div>
-      <div className="bg-neutral-900" data-testid="section-bottom">
+      <div className="bg-primary" data-testid="section-bottom">
         <div className="container text-sm leading-5 text-white justify-end py-10 lg:flex">
           <div className="flex justify-center gap-6 lg:self-start">
             {socialMedia.map(({ icon, label, link }) => (
@@ -59,7 +59,7 @@ const Footer = ({ className = '' }: { className?: string }) => {
                 key={label}
                 size="icon"
                 variant={'ghost'}
-                className="hover:bg-white/10 hover:text-white"
+                className="hover:bg-background/10 hover:text-white"
               >
                 <Link href={link} title={label}>
                   {icon}

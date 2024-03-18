@@ -1,7 +1,7 @@
 import { IPayment } from '@/types/payment.types';
 import { atom } from 'jotai';
 
-export const openMethodsAtom = atom<boolean>(false);
+export const openMethodsAtom = atom<boolean>(true);
 export const openDetailAtom = atom<boolean>(false);
 export const selectedMethodAtom = atom<string>('');
 

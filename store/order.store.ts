@@ -1,17 +1,31 @@
-import { IDeliveryInfo, IOrder } from '@/types/order.types';
+import { IDeliveryInfo, IOrder, IBillType } from '@/types/order.types';
 import { atom } from 'jotai';
 import { focusAtom } from 'jotai-optics';
 import { splitAtom } from 'jotai/utils';
 import { cartTotalAtom } from './cart.store';
-import { currentUserAtom } from './user.store';
+import { currentUserAtom, deliveryItemIdAtom } from './auth.store';
+
 export const defaultOrderItem = {
   items: [],
   deliveryInfo: null,
   description: ''
 };
 export const activeOrderAtom = atom<
-  IOrder | { items: []; deliveryInfo: null; description: string }
->({ items: [], deliveryInfo: null, description: '' });
+  | IOrder
+  | {
+      items: [];
+      deliveryInfo: null;
+      description: string;
+      billType: IBillType;
+      registerNumber?: string;
+    }
+>({
+  items: [],
+  deliveryInfo: null,
+  description: '',
+  billType: '1',
+  registerNumber: ''
+});
 
 export const orderParamsAtom = atom(get => {
   const {
@@ -26,15 +40,18 @@ export const orderParamsAtom = atom(get => {
   } = get(activeOrderAtom) as IOrder;
   const totalAmount = get(cartTotalAtom);
   const customerId = get(currentUserAtom)?.erxesCustomerId;
+  const deliveryProductId = get(deliveryItemIdAtom);
 
   return {
     _id,
-    items: items.map(({ _id, count, productId, unitPrice }) => ({
-      _id,
-      count,
-      productId,
-      unitPrice
-    })),
+    items: items
+      .filter(item => item.productId !== deliveryProductId)
+      .map(({ _id, count, productId, unitPrice }) => ({
+        _id,
+        count,
+        productId,
+        unitPrice
+      })),
     totalAmount,
     type: 'delivery',
     customerId,
@@ -57,6 +74,32 @@ export const itemsAtom = focusAtom(activeOrderAtom, optic =>
   optic.prop('items')
 );
 
+export const filterDeliveryProduct = (
+  items: IOrder['items'],
+  deliveryProductId?: string
+) => items.filter(item => item.productId !== deliveryProductId);
+
+export const getDeliveryProduct = (
+  items: IOrder['items'],
+  deliveryProductId?: string
+) => items.find(item => item.productId === deliveryProductId);
+
+export const productItemsAtom = atom(get =>
+  filterDeliveryProduct(get(itemsAtom), get(deliveryItemIdAtom))
+);
+
+export const deliveryItemAtom = atom(get =>
+  getDeliveryProduct(get(itemsAtom), get(deliveryItemIdAtom))
+);
+
+export const billTypeAtom = focusAtom(activeOrderAtom, optic =>
+  optic.prop('billType')
+);
+
+export const registerNumberAtom = focusAtom(activeOrderAtom, optic =>
+  optic.prop('registerNumber')
+);
+
 export const deliveryInfoAtom = focusAtom(activeOrderAtom, optic =>
   optic.prop('deliveryInfo')
 );
@@ -67,7 +110,12 @@ export const descriptionAtom = focusAtom(activeOrderAtom, optic =>
 
 export const changeDeliveryInfoAtom = atom(
   get => get(loadingOrderAtom),
-  (get, set, v: IDeliveryInfo) => {
+  (
+    get,
+    set,
+    payload: IDeliveryInfo & { registerNumber?: string; billType: IBillType }
+  ) => {
+    const { billType, registerNumber, ...v } = payload;
     const params = {
       description: `
         Нэр: ${v.firstName},
@@ -85,10 +133,16 @@ export const changeDeliveryInfoAtom = atom(
           (v.onlyAfternoon ? 'Зөвхөн оройн цагаар хүргэх' : '')
         }
       `,
-      deliveryInfo: v
+      deliveryInfo: v,
+      billType,
+      registerNumber: billType === '3' ? registerNumber : ''
     };
 
-    if (get(descriptionAtom) !== params.description) {
+    if (
+      get(descriptionAtom) !== params.description ||
+      get(registerNumberAtom) !== registerNumber ||
+      get(billTypeAtom) !== billType
+    ) {
       set(cudOrderAtom, true);
       set(activeOrderAtom, prev => ({ ...(prev as IOrder), ...params }));
     }

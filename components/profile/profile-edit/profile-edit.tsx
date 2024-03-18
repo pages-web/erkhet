@@ -14,7 +14,7 @@ import {
 import { Input } from '../../ui/input';
 import { Button } from '../../ui/button';
 import { useAtomValue } from 'jotai';
-import { currentUserAtom } from '@/store/user.store';
+import { currentUserAtom } from '@/store/auth.store';
 import { useUserEdit } from '@/sdk/hooks/auth';
 
 const formSchema = z.object({

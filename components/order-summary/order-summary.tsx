@@ -1,6 +1,6 @@
 import CartCount from '../cart/cart-count';
 import CartTotal from '../cart/cart-total';
-import Price from '../price/price';
+
 import {
   Card,
   CardContent,
@@ -9,6 +9,7 @@ import {
   CardTitle
 } from '../ui/card';
 import { Separator } from '../ui/separator';
+import DeliveryFee from './delivery-fee';
 
 const OrderSummary = ({
   className,
@@ -34,14 +35,7 @@ const OrderSummary = ({
             <Separator />
           </div>
         )}
-        <div className="flex justify-between items-start">
-          <span>Items subtotal</span>
-          <CartTotal />
-        </div>
-        <div className="flex justify-between items-start">
-          <span>Shipping</span>
-          <Price amount="0" />
-        </div>
+        <DeliveryFee />
       </CardContent>
       <CardFooter className="flex-col gap-4 md:pb-6 md:pt-3">
         <Separator />

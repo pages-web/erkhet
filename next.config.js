@@ -5,10 +5,14 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: '*.cloudfront.net',
+        hostname: '*.cloudfront.net'
       },
-    ],
-  },
+      {
+        protocol: 'http',
+        hostname: 'localhost'
+      }
+    ]
+  }
 };
 
 module.exports = nextConfig;

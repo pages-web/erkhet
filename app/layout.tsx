@@ -1,12 +1,15 @@
 import { Inter as FontSans } from 'next/font/google';
 import './globals.css';
 import { SpeedInsights } from '@vercel/speed-insights/next';
-import { cn } from '@/lib/utils';
+import { cn, getSimilarColorWithOpacity, hexToHsl } from '@/lib/utils';
 import DefaultLayout from '@/components/layouts';
 import Providers from '@/store';
 import CurrentOrder from '@/containers/currentOrder';
 import { Toaster } from '@/components/ui/sonner';
 import OrderCRUD from '@/containers/order-cud';
+import { getConfig } from '@/sdk/queries/auth';
+import ConfigProvider from '@/components/layouts/config';
+import { Metadata } from 'next/types';
 
 export const fontSans = FontSans({
   subsets: ['latin'],
@@ -17,10 +20,53 @@ interface RootLayoutProps {
   children: React.ReactNode;
 }
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export const metadata = {
+  description:
+    'High-performance ecommerce store built with Next.js, Vercel, and Erxes.',
+  openGraph: {
+    type: 'website'
+  }
+};
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { config } = await getConfig();
+  const { pdomain, name, description, uiOptions } = config || {};
+  console.log(pdomain);
+  return {
+    metadataBase: new URL(pdomain),
+    title: name,
+    description,
+    openGraph: {
+      title: name,
+      description,
+      images: [uiOptions.logo],
+      type: 'website'
+    }
+  };
+}
+
+export default async function RootLayout({ children }: RootLayoutProps) {
+  const { config } = await getConfig();
+  const { uiOptions } = config || {};
+  const { colors } = uiOptions || {};
   return (
     <html lang="en" suppressHydrationWarning>
-      <head />
+      <head>
+        <link rel="icon" href={uiOptions.favIcon} />
+        <style>{`
+         :root {
+           --primary: ${hexToHsl(colors.primary)};
+           --secondary: ${hexToHsl(
+             getSimilarColorWithOpacity(colors.primary, 0.1)
+           )};
+           --accent: ${hexToHsl(
+             getSimilarColorWithOpacity(colors.primary, 0.2)
+           )};
+           --background: ${hexToHsl(colors.third)};
+           --card: ${hexToHsl(colors.third)};
+          }
+        `}</style>
+      </head>
       <body
         className={cn(
           'min-h-screen bg-background font-sans antialiased',
@@ -28,7 +74,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
         )}
       >
         <Providers>
-          <DefaultLayout>{children}</DefaultLayout>
+          <ConfigProvider config={config}>
+            <DefaultLayout>{children}</DefaultLayout>
+          </ConfigProvider>
           <CurrentOrder />
           <OrderCRUD />
         </Providers>
@@ -38,3 +86,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
     </html>
   );
 }
+
+//  --border: ${hexToHsl(
+//    getSimilarColorWithOpacity(colors.primary, 0.3)
+//  )};
+//  --input: ${hexToHsl(
+//    getSimilarColorWithOpacity(colors.primary, 0.2)
+//  )};

@@ -16,7 +16,7 @@ const DefaultLayout = ({ children }: React.PropsWithChildren) => {
       <NavbarTop>
         <Button
           variant="ghost"
-          className="hover:bg-white/10 hover:text-white hidden md:inline-flex"
+          className="hover:bg-background/10 hover:text-white hidden md:inline-flex"
           asChild
         >
           <Link href={'/category'}>

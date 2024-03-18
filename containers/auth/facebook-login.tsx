@@ -53,7 +53,7 @@ const FacebookLogin = () => {
       />
       <Button
         size="lg"
-        className="w-full"
+        className="w-full text-primary"
         variant="outline"
         disabled={loading || loadingAction}
         onClick={login}
@@ -62,7 +62,7 @@ const FacebookLogin = () => {
           <LoadingIcon />
         ) : (
           <FacebookIcon
-            className="h-5 w-5 mr-1 fill-foreground"
+            className="h-5 w-5 mr-1 fill-primary"
             strokeWidth={0.1}
           />
         )}

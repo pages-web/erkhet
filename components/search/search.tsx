@@ -34,7 +34,7 @@ export default function Search({ className }: { className?: string }) {
         placeholder="Бүтээгдэхүүн хайх..."
         autoComplete="off"
         defaultValue={searchParams?.get('q') || ''}
-        className="w-full text-sm font-medium text-black placeholder:text-neutral-500 bg-white px-4 focus-visible:ring-0"
+        className="w-full text-sm font-medium text-black placeholder:text-neutral-500 bg-background px-4 focus-visible:ring-0"
       />
       <div className="absolute right-0 top-0 mr-3 flex h-full items-center">
         <SearchIcon className="h-4 w-4 text-black" />

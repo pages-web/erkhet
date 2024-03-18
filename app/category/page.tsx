@@ -11,6 +11,19 @@ import { PER_PAGE } from '@/lib/constants';
 import { IPageProps } from '@/types';
 import { LinkProps } from 'next/link';
 import { Breadcrumb } from '@/components/breadcrumb/breadcrumb';
+import { Metadata } from 'next/types';
+import { getConfig } from '@/sdk/queries/auth';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { config } = await getConfig();
+
+  return {
+    title: config.name + ' - Бүтээгдэхүүнүүд',
+    openGraph: {
+      title: config.name + ' - Бүтээгдэхүүнүүд'
+    }
+  };
+}
 
 const Category = async ({ searchParams }: IPageProps) => {
   const { order, page, q, sort } = searchParams;
@@ -24,6 +37,7 @@ const Category = async ({ searchParams }: IPageProps) => {
       page: parseInt((page || 1).toString()),
       perPage: PER_PAGE,
       searchValue: q,
+      isKiosk: true,
       ...getSort(sort)
     }
   });

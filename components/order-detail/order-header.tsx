@@ -37,7 +37,7 @@ const OrderHeader = () => {
         <h4 className="text-lg md:text-xl font-medium text-center my-5 md:mt-0">
           <OrderStatus />
         </h4>
-        {status === ORDER_STATUSES.NEW && (
+        {status === ORDER_STATUSES.NEW && !paidDate && (
           <Alert
             variant="warning"
             className="md:font-medium text-black text-center"

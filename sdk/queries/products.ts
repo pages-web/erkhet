@@ -24,7 +24,6 @@ export const getCategories: GetCategories = async params => {
   const primaryCategories = (categories || []).filter(
     (category: ICategory) => !getParent(category.parentId)
   );
-  console.log(categories, '--------------->');
   return {
     categories,
     error_msg: error?.message,
@@ -36,6 +35,11 @@ export const getCategories: GetCategories = async params => {
 type GetProducts = (params?: CommonParams) => Promise<{
   products: IProduct[];
   count: number;
+  error_msg: string | undefined;
+}>;
+
+type GetProductsMeta = (params?: CommonParams) => Promise<{
+  products: { _id: string; modifiedAt: string }[];
   error_msg: string | undefined;
 }>;
 
@@ -56,6 +60,17 @@ export const getProducts: GetProducts = async params => {
     count: count?.data?.poscProductsTotalCount,
     error_msg: error?.message
   };
+};
+
+export const getProductsMeta: GetProductsMeta = async params => {
+  const { data, error } = await getClient().query({
+    query: queries.productsMeta,
+    variables: params?.variables
+  });
+
+  const { poscProducts: products } = data || {};
+
+  return { products, error_msg: error?.message };
 };
 
 type GetProductDetail = (params?: CommonParams) => Promise<{

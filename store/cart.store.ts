@@ -1,8 +1,13 @@
 import { OrderItem, OrderItemInput } from '@/types/order.types';
 import { IProduct } from '@/types/product.types';
 import { atom } from 'jotai';
-import { currentUserAtom } from './user.store';
-import { cudOrderAtom, itemsAtom, loadingOrderAtom } from './order.store';
+import { currentUserAtom } from './auth.store';
+import {
+  cudOrderAtom,
+  itemsAtom,
+  loadingOrderAtom,
+  productItemsAtom
+} from './order.store';
 import { splitAtom, atomWithStorage } from 'jotai/utils';
 
 interface IUpdateItem {
@@ -53,13 +58,13 @@ export const addToCart = (
 export const localCartAtom = atomWithStorage<OrderItem[]>('localCart', []);
 
 export const cartAtom = atom(get =>
-  get(currentUserAtom) ? get(itemsAtom) : get(localCartAtom)
+  get(currentUserAtom) ? get(productItemsAtom) : get(localCartAtom)
 );
 
 export const cartLengthAtom = atom(get => get(cartAtom).length);
 
 export const cartTotalAtom = atom<number>(get =>
-  (get(cartAtom) || []).reduce(
+  (get(currentUserAtom) ? get(itemsAtom) : get(localCartAtom)).reduce(
     (total, item) => total + (item?.count || 0) * (item.unitPrice || 0),
     0
   )

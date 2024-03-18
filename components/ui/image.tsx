@@ -32,6 +32,8 @@ export const useImage = (props: ImageProps) => {
     ...rest
   } = props;
   const fixedSrc = readFile(src || '');
+
+  console.log(src);
   const [isImageLoading, setIsImageLoading] = useState(true);
   const [srcI, setSrcI] = useState(fixedSrc || fallBack || PLACEHOLDER);
   const handleComplete = () => setIsImageLoading(false);
@@ -57,10 +59,15 @@ export const useImage = (props: ImageProps) => {
 const Image = (props: ImageProps) => {
   const { className, sizes, ...rest } = props;
   const { updatedProps, srcI, handleComplete, isImageLoading } = useImage(rest);
+  const getLoader = () => {
+    if (srcI.includes('//:localhost') || srcI.startsWith('/')) return undefined;
+    return cloudflareLoader;
+  };
+
   return (
     <NextImage
       {...updatedProps}
-      loader={!srcI.startsWith('/') ? cloudflareLoader : undefined}
+      loader={getLoader()}
       onLoad={handleComplete}
       unoptimized={PLACEHOLDER === srcI}
       className={cn(

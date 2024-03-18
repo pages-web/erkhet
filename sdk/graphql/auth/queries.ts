@@ -26,9 +26,18 @@ const userDetail = gql`
 const currentConfig = gql`
   query CurrentConfig {
     currentConfig {
-      token
       erxesAppToken
       paymentIds
+      deliveryConfig
+      name
+      description
+      pdomain
+      uiOptions {
+        logo
+        colors
+        favIcon
+        bgImage
+      }
     }
   }
 `;

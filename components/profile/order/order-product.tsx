@@ -10,6 +10,8 @@ const OrderProduct = ({
   count,
   unitPrice
 }: OrderItem) => {
+  const name = productName?.split('-')[1];
+  const code = productName?.split('-')[0];
   return (
     <div className="overflow-hidden flex p-2 border-b last-of-type:border-b-0 gap-2 md:gap-0">
       <Image
@@ -21,12 +23,13 @@ const OrderProduct = ({
       />
 
       <div className="flex justify-between flex-1 p-2 md:p-6 flex-wrap text-sm md:text-base gap-2 md:gap-0">
-        <div className="space-y-2">
-          <h3 className="font-medium">{productName}</h3>
+        <div>
+          <div className="text-sm text-neutral-500">#{code}</div>
+          <h3 className="font-medium capitalize mb-1">{name || productName}</h3>
           <Badge>{status}</Badge>
         </div>
         <div>
-          <div className="flex gap-4">
+          <div className="flex gap-4 pt-5">
             <Price amount={unitPrice + ''} />
             <Badge variant="secondary">x{count}</Badge>
             <Price amount={unitPrice * count + ''} className="font-semibold" />

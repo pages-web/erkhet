@@ -5,7 +5,7 @@ import {
   currentUserAtom,
   loadingUserAtom,
   refetchCurrentUserAtom
-} from '@/store/user.store';
+} from '@/store/auth.store';
 import { useEffect } from 'react';
 import { toast } from 'sonner';
 

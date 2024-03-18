@@ -1,6 +1,6 @@
 'use client';
 
-import { currentUserAtom, loadingUserAtom } from '@/store/user.store';
+import { currentUserAtom, loadingUserAtom } from '@/store/auth.store';
 import { useAtomValue } from 'jotai';
 import { Loader2Icon } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';

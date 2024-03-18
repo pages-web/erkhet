@@ -11,3 +11,20 @@ export interface Customer {
   isEmailVerified?: boolean;
   isPhoneVerified?: boolean;
 }
+
+export interface IConfig {
+  erxesAppToken: string;
+  paymentIds: string[];
+  deliveryConfig: {
+    productId?: string;
+  };
+  uiOptions?: {
+    logo: string;
+    colors: {
+      primary?: string;
+      secondary?: string;
+      third?: string;
+    };
+    favIcon: string;
+  };
+}

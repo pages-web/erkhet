@@ -89,7 +89,7 @@ export const QrContainer = ({
     <div className="p-4">
       <div className="relative aspect-square mx-auto max-w-80">
         <div className="border rounded-lg absolute inset-0"></div>
-        <div className="w-full h-full bg-white rounded-3xl absolute inset-0">
+        <div className="w-full h-full bg-background rounded-3xl absolute inset-0">
           {children}
         </div>
       </div>

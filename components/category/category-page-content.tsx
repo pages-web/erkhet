@@ -27,7 +27,7 @@ const CategoryPageContent = ({
       <div className="md:flex gap-6">
         <CategorySidebar>{sidebar}</CategorySidebar>
         <div className="flex-1">
-          <div className="flex justify-between items-center py-3 mb-2 sticky md:py-0 md:static top-0 z-50 bg-white">
+          <div className="flex justify-between items-center py-3 mb-2 sticky md:py-0 md:static top-0 z-50 bg-background">
             <span className="font-bold md:text-lg">
               {totalProducts} Products
             </span>

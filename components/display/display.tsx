@@ -93,7 +93,7 @@ const Display = ({ ...attributes }: DisplayProps) => {
                 <p className="text-base block text-center md:text-left mb-4">
                   {description}
                 </p>
-                <Button className="!bg-black" asChild>
+                <Button className="bg-primary" asChild>
                   <Link href="/category">{buttonText}</Link>
                 </Button>
               </div>

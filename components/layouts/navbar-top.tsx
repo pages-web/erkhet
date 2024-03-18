@@ -1,13 +1,17 @@
 import Link from 'next/link';
 import { Separator } from '../ui/separator';
 import CategoryNavContainer from '@/containers/products/category-nav';
+import { getConfig } from '@/sdk/queries/auth';
+import Image from 'next/image';
 
-export function NavbarTop({
+export async function NavbarTop({
   children,
   ...rest
 }: {
   children: React.ReactNode;
 }) {
+  const { config } = await getConfig();
+  const { logo } = config?.uiOptions || {};
   return (
     <header
       className={
@@ -15,19 +19,22 @@ export function NavbarTop({
       }
       {...rest}
     >
-      <div className="flex gap-[clamp(1rem,3vw,3rem)] items-center w-full md:h-[60px] md:sticky top-0 container pt-5 md:pt-0">
-        <Link
-          href="/"
-          aria-label="SF Homepage"
-          className="h-6 md:h-7 -mt-1.5 text-2xl"
-        >
-          LOGO
+      <div className="flex gap-[clamp(1rem,3vw,3rem)] items-center w-full md:h-[60px] md:sticky top-0 container pt-1 md:pt-0">
+        <Link href="/" aria-label="SF Homepage" className="h-12 text-2xl">
+          <Image
+            src={logo}
+            height={100}
+            width={200}
+            priority
+            alt=""
+            className="object-contain h-12 w-auto object-left"
+          />
         </Link>
         {children}
       </div>
 
       <div className="hidden md:block bg-primary sticky top-[60px]">
-        <Separator className="bg-white/10" />
+        <Separator className="bg-background/10" />
         <div className="container py-0.5 flex">
           <CategoryNavContainer />
         </div>

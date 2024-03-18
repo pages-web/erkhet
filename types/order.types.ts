@@ -1,4 +1,4 @@
-import { Customer, CustomerType } from './customer.types';
+import { Customer, CustomerType } from './auth.types';
 import { IProduct } from './product.types';
 
 export type IOrderItemStatus = 'new' | 'done' | 'confirm';
@@ -116,6 +116,7 @@ export interface IDeliveryInfo {
   haveBaby: boolean;
   callBefore: boolean;
   onlyAfternoon: boolean;
+  companyName?: string;
 }
 
 export interface IOrder extends IOrderCommon {
@@ -126,6 +127,7 @@ export interface IOrder extends IOrderCommon {
   cashAmount?: number;
   mobileAmount?: number;
   directDiscount?: number;
+  billType: IBillType;
   registerNumber?: string;
   deliveryInfo?: IDeliveryInfo | null;
   description?: string;

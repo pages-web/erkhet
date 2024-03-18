@@ -64,7 +64,7 @@ const BottomNav = () => {
             >
               <Badge
                 variant="outline"
-                className="absolute right-1/2 top-2 bg-white p-0 h-4 min-w-4 rounded-lg justify-center text-xs text-center leading-none translate-x-5"
+                className="absolute right-1/2 top-2 bg-background p-0 h-4 min-w-4 rounded-lg justify-center text-xs text-center leading-none translate-x-5"
               >
                 <CartCount />
               </Badge>

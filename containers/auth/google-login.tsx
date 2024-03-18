@@ -31,7 +31,7 @@ const GoogleLogin = () => {
     return `${rootUrl}?${qs.toString()}`;
   };
   return (
-    <Button size="lg" className="w-full" variant="outline" asChild>
+    <Button size="lg" className="w-full text-primary" variant="outline" asChild>
       <Link href={getGoogleUrl('/auth/login')}>
         <GoogleIcon />
         Login with Google
@@ -42,11 +42,9 @@ const GoogleLogin = () => {
 
 const GoogleIcon = () => (
   <svg
-    stroke="currentColor"
-    fill="currentColor"
     strokeWidth="0"
     viewBox="0 0 488 512"
-    className="h-4 w-4 stroke-[1.5px] -ml-1 mr-2 "
+    className="h-4 w-4 stroke-[1.5px] -ml-1 mr-2 fill-primary "
     height="1em"
     width="1em"
     xmlns="http://www.w3.org/2000/svg"

@@ -30,12 +30,12 @@ const CartTrigger = () => {
           setOpenSheet(true);
           setOpen(true);
         }}
-        className="relative"
+        className="relative shadow-none"
       >
         <ShoppingCartIcon className="h-5 w-5" />
         <Badge
           variant="outline"
-          className="absolute right-0 top-0 bg-white p-0 h-4 min-w-4 rounded-lg justify-center text-xs text-center leading-none"
+          className="absolute right-0 top-0 bg-background p-0 h-4 min-w-4 rounded-lg justify-center text-xs text-center leading-none"
         >
           <CartCount />
         </Badge>

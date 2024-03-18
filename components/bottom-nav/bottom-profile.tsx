@@ -1,7 +1,7 @@
 import { usePathname } from 'next/navigation';
 import { type LucideIcon } from 'lucide-react';
 import { BottomNavItem } from './bottom-nav';
-import { currentUserAtom } from '@/store/user.store';
+import { currentUserAtom } from '@/store/auth.store';
 import { useAtomValue } from 'jotai';
 
 const BottomProfile = ({ Icon }: { Icon: LucideIcon }) => {

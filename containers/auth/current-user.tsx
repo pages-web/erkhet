@@ -2,7 +2,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { readFile } from '@/lib/utils';
-import { useCurrentUser } from '@/sdk/queries/auth';
+import { useCurrentUser } from '@/sdk/queries/auth.client';
 import { UserIcon, Loader2Icon } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect } from 'react';
@@ -45,7 +45,7 @@ const CurrentUser = () => {
     <Button
       size="icon"
       variant={'ghost'}
-      className="hover:bg-white/10 hover:text-white"
+      className="hover:bg-background/10 hover:text-white"
       asChild
     >
       <Link href="/login">
