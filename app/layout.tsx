@@ -45,19 +45,21 @@ export default async function RootLayout({ children }: RootLayoutProps) {
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="icon" href={uiOptions?.favIcon} />
-        <style>{`
+        {!!colors && (
+          <style>{`
          :root {
-           --primary: ${hexToHsl(colors.primary)};
+           --primary: ${hexToHsl(colors?.primary)};
            --secondary: ${hexToHsl(
-             getSimilarColorWithOpacity(colors.primary, 0.1)
+             getSimilarColorWithOpacity(colors?.primary, 0.1)
            )};
            --accent: ${hexToHsl(
              getSimilarColorWithOpacity(colors.primary, 0.2)
            )};
-           --background: ${hexToHsl(colors.third)};
-           --card: ${hexToHsl(colors.third)};
+           --background: ${hexToHsl(colors?.third)};
+           --card: ${hexToHsl(colors?.third)};
           }
         `}</style>
+        )}
       </head>
       <body
         className={cn(
