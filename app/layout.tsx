@@ -44,7 +44,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="icon" href={uiOptions.favIcon} />
+        <link rel="icon" href={uiOptions?.favIcon} />
         <style>{`
          :root {
            --primary: ${hexToHsl(colors.primary)};
