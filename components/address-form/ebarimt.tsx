@@ -57,13 +57,13 @@ const Ebarimt = ({
                   <FormControl>
                     <RadioGroupItem value="1" />
                   </FormControl>
-                  <FormLabel className="font-normal">Хувь хүн</FormLabel>
+                  <FormLabel className="font-medium">Хувь хүн</FormLabel>
                 </FormItem>
                 <FormItem className="flex items-center space-x-3 space-y-0">
                   <FormControl>
                     <RadioGroupItem value="3" />
                   </FormControl>
-                  <FormLabel className="font-normal">Байгуулга</FormLabel>
+                  <FormLabel className="font-medium">Байгуулга</FormLabel>
                 </FormItem>
               </RadioGroup>
             </FormControl>

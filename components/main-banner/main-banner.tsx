@@ -16,7 +16,7 @@ const MainBanner = () => {
             <Picture
               fill
               quality={100}
-              sizes={'100vw'}
+              sizes={`(max-width: 1536px) 100vw, 1536px`}
               desktop="https://d1f6qhhrbg3j8a.cloudfront.net/img/240854/original/Tsagaan_sar_2024_web_banner.jpg"
               mobile="https://cdn.cody.mn/img/250012/800x0xwebp/mobile_banner_converse.jpg?h=b7bbe137c87a60956ebf41796360de7121b5d856"
               className="object-center object-cover"

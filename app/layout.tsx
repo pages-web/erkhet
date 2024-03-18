@@ -31,7 +31,7 @@ export const metadata = {
 export async function generateMetadata(): Promise<Metadata> {
   const { config } = await getConfig();
   const { pdomain, name, description, uiOptions } = config || {};
-  console.log(pdomain);
+
   return {
     metadataBase: new URL(pdomain),
     title: name,

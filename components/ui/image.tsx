@@ -33,7 +33,6 @@ export const useImage = (props: ImageProps) => {
   } = props;
   const fixedSrc = readFile(src || '');
 
-  console.log(src);
   const [isImageLoading, setIsImageLoading] = useState(true);
   const [srcI, setSrcI] = useState(fixedSrc || fallBack || PLACEHOLDER);
   const handleComplete = () => setIsImageLoading(false);

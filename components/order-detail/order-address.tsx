@@ -16,18 +16,18 @@ const OrderAddress = () => {
       <Separator />
       <CardContent className="flex items-center md:justify-between text-sm flex-wrap md:flex-nowrap gap-4 py-4">
         <div>
-          <div className="text-black/60">Хүргэлтийн мэдээлэл</div>
+          <div className="text-foreground/60">Хүргэлтийн мэдээлэл</div>
           <div className="font-medium">
             {city}, {district} дүүрэг, {street} хороо, {detail}
           </div>
         </div>
 
         <div>
-          <div className="text-black/60">Утас</div>
+          <div className="text-foreground/60">Утас</div>
           <div className="font-medium">{phone}</div>
         </div>
         <div>
-          <div className="text-black/60">Цахим хаяг</div>
+          <div className="text-foreground/60">Цахим хаяг</div>
           <div className="font-medium">{email}</div>
         </div>
       </CardContent>
