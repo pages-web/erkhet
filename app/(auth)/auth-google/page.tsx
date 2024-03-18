@@ -1,24 +1,10 @@
-import { useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
-import { Loading } from '@/components/ui/loading';
-import { useGoogleLogin } from '@/sdk/hooks/auth';
+import { Suspense } from 'react';
+import AuthGoogle from './auth-google';
 
-const AuthGoogle = () => {
-  const code = useSearchParams().get('code');
-  const { googleLogin, clientPortalId } = useGoogleLogin();
+const AuthGooglePage = () => (
+  <Suspense>
+    <AuthGoogle />
+  </Suspense>
+);
 
-  useEffect(() => {
-    if (code) {
-      googleLogin({
-        variables: {
-          code,
-          clientPortalId
-        }
-      });
-    }
-  }, [code, googleLogin]);
-
-  return <Loading className="py-20" />;
-};
-
-export default AuthGoogle;
+export default AuthGooglePage;

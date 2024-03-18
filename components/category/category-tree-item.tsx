@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { Button } from '../ui/button';
-import { ICategory } from '../../types/product.types';
+import { ICategory } from '@/types/products.types';
 import { ArrowLeftIcon } from '@radix-ui/react-icons';
 import { cn } from '@/lib/utils';
 import { useSearchParams } from 'next/navigation';

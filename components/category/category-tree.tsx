@@ -1,4 +1,4 @@
-import { ICategory } from '@/types/product.types';
+import { ICategory } from '@/types/products.types';
 import { CategoryTreeItem } from './category-tree-item';
 import CategoryFilter from './category-filter';
 

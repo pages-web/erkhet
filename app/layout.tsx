@@ -20,14 +20,6 @@ interface RootLayoutProps {
   children: React.ReactNode;
 }
 
-export const metadata = {
-  description:
-    'High-performance ecommerce store built with Next.js, Vercel, and Erxes.',
-  openGraph: {
-    type: 'website'
-  }
-};
-
 export async function generateMetadata(): Promise<Metadata> {
   const { config } = await getConfig();
   const { pdomain, name, description, uiOptions } = config || {};

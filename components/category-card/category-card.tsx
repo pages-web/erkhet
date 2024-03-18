@@ -1,4 +1,4 @@
-import { ICategory } from '@/types/product.types';
+import { ICategory } from '@/types/products.types';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -14,18 +14,18 @@ const items = [
   {
     name: 'New',
     image: '/images/new-card.png',
-    order: '/category',
+    order: '/category'
   },
   {
     name: 'Men',
     image: '/images/men-card.png',
-    order: '/category',
+    order: '/category'
   },
   {
     name: 'Women',
     image: '/images/women-card.png',
-    order: '/category',
-  },
+    order: '/category'
+  }
 ];
 
 export function CategoryCard({ ...attributes }: CategoryCardProps) {
