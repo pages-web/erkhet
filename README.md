@@ -36,7 +36,7 @@ Client Portal - g odoogoor zowhon newtreh zoriulaltaar ashiglaj baigaa. Tsaashda
 - Delivery-iig defaul type bolgoh
 - olon pos ashiglaj baigaa bol begin number tohiruulj ogch bolno
 - uldegdel tootsoh bol branch songoj ogoh
-- pos domain songoh (SEO-toi holbootoi bolohoor zaaval songoj ogoorei. Jishee ni: https://www.erxes.io )
+- pos domain songoh (SEO-toi holbootoi bolohoor zaaval songoj ogoorei. Jishee ni: https://www.erxes.io )⚠️⚠️
 
 ### 2. Payment
 
@@ -56,7 +56,7 @@ Client Portal - g odoogoor zowhon newtreh zoriulaltaar ashiglaj baigaa. Tsaashda
 
 ### 5. UI Options
 
-- logo oruulana (ali boloh yrohii mobile detail uud ni sain ylgarch haragdahaar, deed dood hajuu taluuddaa whitespace baikhgu transparent zurag oruulna)
+- logo oruulana (ali boloh yrohii mobile detail uud ni sain ylgarch haragdahaar, deed dood hajuu taluuddaa whitespace baikhgu transparent zurag oruulna) ⚠️⚠️
 - fav icon oruulah (16x16 eswel 32x32 mas yronhii detail bagatai .fav eswel .png orgotgoltei baina)
 - background image (Share hiih ued haragah zurag default)
 
