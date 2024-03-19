@@ -25,7 +25,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const { pdomain, name, description, uiOptions } = config || {};
 
   return {
-    metadataBase: new URL(pdomain),
+    metadataBase: new URL(pdomain || 'www.erxes.io'),
     title: name,
     description,
     openGraph: {
