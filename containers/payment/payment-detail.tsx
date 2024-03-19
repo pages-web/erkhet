@@ -27,8 +27,8 @@ const PaymentDetail = () => {
     reset,
     data
   } = useCreateInvoice({
-    posName: name,
-    appToken: erxesAppToken
+    posName: name || '',
+    appToken: erxesAppToken || ''
   });
 
   const kind = payments?.find((p: IPayment) => p._id === selectedMethod)?.kind;

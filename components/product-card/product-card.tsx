@@ -4,7 +4,7 @@ import Image from '../ui/image';
 import { Button } from '../ui/button';
 import { ShoppingCartIcon } from 'lucide-react';
 import { IProduct } from '../../types/product.types';
-import ProductCardAdd from './product-card-add';
+import ProductCardAdd from './product-card-add.client';
 
 const ProductCard = ({
   className,

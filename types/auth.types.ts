@@ -13,8 +13,10 @@ export interface Customer {
 }
 
 export interface IConfig {
+  name: string;
   erxesAppToken: string;
   paymentIds: string[];
+  checkRemainder: boolean;
   deliveryConfig: {
     productId?: string;
   };

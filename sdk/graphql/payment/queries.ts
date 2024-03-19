@@ -1,15 +1,5 @@
 import { gql } from '@apollo/client';
 
-const paymentConfig = gql`
-  query GetPaymentConfig {
-    currentConfig {
-      erxesAppToken
-      paymentIds
-      name
-    }
-  }
-`;
-
 const payment = gql`
   query Payments {
     payments {
@@ -23,6 +13,6 @@ const payment = gql`
   }
 `;
 
-const queries = { paymentConfig, payment };
+const queries = { payment };
 
 export default queries;

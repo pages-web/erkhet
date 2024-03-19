@@ -158,12 +158,23 @@ const productDetail = gql`
   }
 `;
 
+const productReview = gql`
+  query Productreview($productId: String!) {
+    productreview(productId: $productId) {
+      average
+      length
+      productId
+    }
+  }
+`;
+
 const queries = {
   productCategories,
   products,
   productsCount,
   productSimilarities,
   productDetail,
-  productsMeta
+  productsMeta,
+  productReview
 };
 export default queries;

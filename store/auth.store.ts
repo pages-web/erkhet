@@ -15,3 +15,5 @@ export const deliveryItemIdAtom = atom(get => {
   const { productId: deliveryProductId } = config?.deliveryConfig || {};
   return deliveryProductId;
 });
+
+export const checkRemainderAtom = atom(get => get(configAtom)?.checkRemainder);

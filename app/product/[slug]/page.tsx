@@ -14,6 +14,7 @@ import { IPageProps } from '@/types';
 import { IAttachment } from '@/types/products.types';
 import { Metadata } from 'next/types';
 import { notFound } from 'next/navigation';
+import { Suspense } from 'react';
 
 export async function generateMetadata({
   params
@@ -139,7 +140,9 @@ const Product = async ({ params }: IPageProps) => {
         </div>
         <div className="mt-28 mb-20">
           <div className="my-4 text-lg">Reccomended Products</div>
-          <RecommendedProducts />
+          <Suspense>
+            <RecommendedProducts categoryId={category?._id} productId={_id} />
+          </Suspense>
         </div>
       </BreadcrumbsLayout>
     </>

@@ -10,10 +10,17 @@ const ConfigProvider = ({
   config
 }: React.PropsWithChildren & { config: IConfig }) => {
   const setConfig = useSetAtom(configAtom);
-  const { deliveryConfig, erxesAppToken, paymentIds } = config || {};
+  const { deliveryConfig, erxesAppToken, paymentIds, name, checkRemainder } =
+    config || {};
 
   useLayoutEffect(() => {
-    setConfig({ deliveryConfig, erxesAppToken, paymentIds });
+    setConfig({
+      deliveryConfig,
+      erxesAppToken,
+      paymentIds,
+      name,
+      checkRemainder
+    });
   }, []);
 
   return <>{children}</>;

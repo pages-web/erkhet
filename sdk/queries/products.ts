@@ -105,3 +105,17 @@ export const getBreadcrumbs: GetBreadcrumbs = (order, categories) => {
     })
     .filter(cat => cat !== null) as Breadcrumb[];
 };
+
+type GetProductReview = (params?: CommonParams) => Promise<{
+  review: { average: number; length: number; productId: string };
+  error_msg: string | undefined;
+}>;
+
+export const getProductReview: GetProductReview = async params => {
+  const { data, error } = await getClient().query({
+    query: queries.productReview,
+    variables: params?.variables
+  });
+  const { productreview: review } = data || {};
+  return { review, error_msg: error?.message };
+};

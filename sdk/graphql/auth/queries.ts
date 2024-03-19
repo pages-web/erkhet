@@ -32,6 +32,7 @@ const currentConfig = gql`
       name
       description
       pdomain
+      checkRemainder
       uiOptions {
         logo
         colors

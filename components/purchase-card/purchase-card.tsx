@@ -3,13 +3,13 @@ import { Card, CardContent, CardFooter, CardHeader } from '../ui/card';
 import { Badge } from '../ui/badge';
 import { PackageIcon, ShieldCheckIcon, Tag, WarehouseIcon } from 'lucide-react';
 import Price from '../price/price';
-import Rate from '../ui/rate';
 import { Separator } from '../ui/separator';
-import { CounterButton, Counter } from '../counter/counter';
 import AddToCart from './AddToCart.client';
 import Link from 'next/link';
 import { Button } from '../ui/button';
 import { cn } from '@/lib/utils';
+import Remainder from './remainder.client';
+import ProductReview from './productReview';
 
 const PurchaseCard = ({
   name,
@@ -20,7 +20,7 @@ const PurchaseCard = ({
 }: IProductDetail) => {
   const product = { name, unitPrice, _id, remainder, attachment };
   return (
-    <Card className="md:sticky md:top-20 ">
+    <Card className="md:sticky md:top-28">
       <CardHeader>
         <div>
           <Badge className="bg-indigo-600 h-auto py-1 md:py-1.5 px-2 md:px-3 text-sm">
@@ -47,23 +47,8 @@ const PurchaseCard = ({
             className="text-base text-neutral-500 line-through"
           />
         </div>
-        <div className="flex items-center pt-2">
-          <Rate rate={4} />
-          <span className="ml-2 text-sm text-neutral-500">( 5 )</span>
-        </div>
-        <div className="flex items-center pt-2">
-          {remainder ? (
-            <>
-              Таны сонгосон бараа агуулахад:
-              <Badge className="mx-2 bg-green-700">
-                {remainder || 0}ш
-              </Badge>{' '}
-              байна.
-            </>
-          ) : (
-            <>Таны сонгосон бараа агуулахад дууссан байна.</>
-          )}
-        </div>
+        <ProductReview productId={product._id} />
+        <Remainder remainder={remainder} />
       </CardHeader>
       <CardContent className="md:py-0">
         <Separator />
