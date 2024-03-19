@@ -36,7 +36,7 @@ Client Portal - g odoogoor zowhon newtreh zoriulaltaar ashiglaj baigaa. Tsaashda
 - Delivery-iig defaul type bolgoh
 - olon pos ashiglaj baigaa bol begin number tohiruulj ogch bolno
 - uldegdel tootsoh bol branch songoj ogoh
-- pos domain songoh (SEO-toi holbootoi bolohoor zaaval songoj ogoorei)
+- pos domain songoh (SEO-toi holbootoi bolohoor zaaval songoj ogoorei. Jishee ni: https://www.erxes.io )
 
 ### 2. Payment
 
