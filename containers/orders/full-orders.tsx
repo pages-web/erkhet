@@ -22,7 +22,13 @@ const FullOrders = () => {
 
   if (loading) return <Loading className="py-40" />;
 
-  if (!fullOrders?.length) return <CartEmpty />;
+  if (!fullOrders?.length)
+    return (
+      <div className="py-12 flex-col flex items-center">
+        <CartEmpty />
+        <div>You don't have any orders</div>
+      </div>
+    );
 
   return (
     <>
