@@ -22,7 +22,6 @@ export const createUrl = (
 export const READ_FILE = '/read-file?key=';
 
 export const readFile = (url: string = '') => {
-  if (url.includes('://localhost')) return url;
   if (url.includes(READ_FILE)) {
     const apiUrl = url.split(READ_FILE)[0];
     return url.replace(apiUrl, process.env.NEXT_PUBLIC_MAIN_API_DOMAIN || '');

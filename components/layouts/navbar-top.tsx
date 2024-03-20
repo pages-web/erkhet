@@ -26,6 +26,7 @@ export async function NavbarTop({
             height={100}
             width={256}
             quality={100}
+            skipAnimation
             priority
             alt=""
             className="object-contain h-12 w-auto object-left"

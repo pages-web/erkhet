@@ -1,8 +1,6 @@
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import Image from '../ui/image';
-import { Button } from '../ui/button';
-import { ShoppingCartIcon } from 'lucide-react';
 import { IProduct } from '../../types/product.types';
 import ProductCardAdd from './product-card-add.client';
 
@@ -18,17 +16,19 @@ const ProductCard = ({
         className
       )}
     >
+      {' '}
       <div className="relative">
         <Link
           href={`/product/${_id}`}
-          className="relative block w-full pb-[100%]"
+          className="relative block w-full overflow-hidden pb-[100%]"
         >
           <Image
             src={attachment?.url || ''}
             alt=""
-            className="object-cover rounded-md aspect-square w-full h-full"
-            fill
-            sizes="(max-width: 768px) 50vw, 190px"
+            className="rounded-md aspect-square w-full h-full absolute inset-0"
+            width={192}
+            height={192}
+            quality={100}
           />
         </Link>
       </div>

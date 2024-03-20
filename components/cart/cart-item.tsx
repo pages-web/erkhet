@@ -1,20 +1,19 @@
 import Link from 'next/link';
 import Image from '../ui/image';
-import { type Atom, useAtomValue, useSetAtom } from 'jotai';
+import { type Atom, useAtomValue } from 'jotai';
 import { OrderItem } from '@/types/order.types';
-import { selectAtom } from 'jotai/utils';
 import CartItemDelete from './cart-item-delete';
 import CartItemCounter from './cart-item-counter';
-import { useCallback, useMemo } from 'react';
 
 const CartItem = ({
   cartItemAtom,
-  setOpenSheet,
+  setOpenSheet
 }: {
   cartItemAtom: Atom<OrderItem>;
   setOpenSheet: (open: boolean) => void;
 }) => {
-  const { _id, productName, unitPrice, count } = useAtomValue(cartItemAtom);
+  const { _id, productName, unitPrice, count, productImgUrl } =
+    useAtomValue(cartItemAtom);
 
   return (
     <li className="flex w-full flex-col border-b border-neutral-300">
@@ -32,8 +31,8 @@ const CartItem = ({
               className="h-full w-full object-cover"
               width={64}
               height={64}
-              alt={''}
-              src={''}
+              alt={productName}
+              src={productImgUrl}
             />
           </div>
 

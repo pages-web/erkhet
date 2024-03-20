@@ -14,7 +14,7 @@ const CategorySidebar = ({ children }: React.PropsWithChildren) => {
   if (isDesktop)
     return (
       <div className="w-[303px]">
-        <div className="sticky top-20 min-h-[900px]">{children}</div>
+        <div className="sticky md:top-28 min-h-[900px]">{children}</div>
       </div>
     );
 
