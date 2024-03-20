@@ -31,7 +31,15 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title: name,
       description,
-      images: [uiOptions?.logo],
+      images: [
+        {
+          url: uiOptions?.logo,
+          width: 800,
+          height: 600,
+          alt: name
+        }
+      ],
+      url: pdomain,
       type: 'website'
     }
   };

@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import NextImage, { ImageProps as NextImageProps } from 'next/image';
 
 import { cn, readFile } from '@/lib/utils';

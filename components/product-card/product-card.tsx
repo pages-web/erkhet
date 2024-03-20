@@ -33,7 +33,10 @@ const ProductCard = ({
         </Link>
       </div>
       <div className="border-t p-2 border-neutral-200 text-sm">
-        <Link href={`/product/${_id}`} className="hover:text-primary">
+        <Link
+          href={`/product/${_id}`}
+          className="hover:text-primary line-clamp-1"
+        >
           {name}
         </Link>
         <span

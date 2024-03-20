@@ -7,11 +7,11 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger
 } from '@/components/ui/navigation-menu';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, ChevronRightIcon } from 'lucide-react';
 import { Button } from '../ui/button';
 import { ICategory } from '@/types/products.types';
 import Link from 'next/link';
-import { useState, PropsWithChildren } from 'react';
+import { useState } from 'react';
 
 export function CategoryNav({
   categories,
@@ -36,9 +36,13 @@ export function CategoryNav({
       <NavigationMenuList>
         {(primaryCategories || []).map(({ _id, name, order }) => (
           <NavigationMenuItem key={_id} value={_id}>
-            <NavigationMenuTrigger>{name}</NavigationMenuTrigger>
+            <NavigationMenuTrigger>
+              <Link href={{ pathname: '/category', query: { order: order } }}>
+                {name}
+              </Link>
+            </NavigationMenuTrigger>
             <NavigationMenuContent className="md:w-full">
-              <div className="p-4 text-sm">
+              <div className="p-4 text-sm pb-8">
                 <LinkItem
                   order={order}
                   className="font-normal"
@@ -46,13 +50,13 @@ export function CategoryNav({
                 >
                   {name} <ChevronRight className="h-4 w-4 ml-1" />
                 </LinkItem>
-                <ul className="grid grid-cols-4 w-full">
+                <ul className="grid grid-cols-3 xl:grid-cols-4 w-full gap-3">
                   {getChildren(_id).map(cat => (
                     <li key={cat._id}>
                       <h4 className="font-medium py-1 px-4">{cat.name}</h4>
                       {getChildren(cat._id).map(c => (
                         <LinkItem
-                          className="flex h-7 font-normal"
+                          className="flex h-6 py-0 font-normal justify-start"
                           key={c._id}
                           order={c.order}
                           onClick={onLinkClick}
@@ -61,11 +65,12 @@ export function CategoryNav({
                         </LinkItem>
                       ))}
                       <LinkItem
-                        className="flex h-7 font-normal"
+                        className="flex h-6 py-0 font-normal justify-start"
                         order={cat.order}
                         onClick={onLinkClick}
                       >
                         All {cat.name}
+                        <ChevronRightIcon className="h-4 w-4 ml-1 mt-px" />
                       </LinkItem>
                     </li>
                   ))}
@@ -89,7 +94,7 @@ const LinkItem = ({
   order: string;
   className: string;
 }) => (
-  <Button variant="link" className={className} asChild>
+  <Button variant="link" asChild className={className}>
     <Link
       href={{ pathname: '/category', query: { order: order } }}
       onClick={onClick}

@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { Separator } from '../ui/separator';
 import CategoryNavContainer from '@/containers/products/category-nav';
 import { getConfig } from '@/sdk/queries/auth';
-import Image from 'next/image';
+import Image from '@/components/ui/image';
 
 export async function NavbarTop({
   children,
@@ -24,7 +24,8 @@ export async function NavbarTop({
           <Image
             src={logo}
             height={100}
-            width={200}
+            width={256}
+            quality={100}
             priority
             alt=""
             className="object-contain h-12 w-auto object-left"
