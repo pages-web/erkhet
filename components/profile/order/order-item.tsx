@@ -5,8 +5,8 @@ import { IOrder } from '@/types/order.types';
 import Link from 'next/link';
 import { format } from 'date-fns';
 import { cn, getOrderStatus, readFile } from '@/lib/utils';
-import { cloudflareLoader } from '@/components/ui/picture';
 import OrderStatus from '@/components/order-detail/order-status';
+import cloudflareLoader from '@/lib/image-loader';
 
 const OrderItem = ({
   number,

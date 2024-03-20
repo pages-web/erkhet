@@ -8,7 +8,6 @@ export default function cloudflareLoader({
   width,
   quality
 }: ImageLoaderProps) {
-  console.log(src, width, quality);
   const params = [`width=${width}`, `quality=${quality || 75}`, 'format=auto'];
   return `https://erxes.io/cdn-cgi/image/${params.join(',')}/${src.trim()}`;
 }
