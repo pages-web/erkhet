@@ -22,7 +22,12 @@ const Image = ({
   const [srcI, setSrcI] = useState(fixedSrc || PLACEHOLDER);
   const [loading, setLoading] = useState(true);
   const getLoader = () => {
-    if (srcI.includes('//:localhost') || srcI.startsWith('/')) return undefined;
+    if (
+      srcI.includes('//:localhost') ||
+      srcI.startsWith('/') ||
+      srcI.endsWith('/public')
+    )
+      return undefined;
     return cloudflareLoader;
   };
 
