@@ -9,9 +9,7 @@ import { CommonImageProps } from './image';
 
 export function cloudflareLoader({ src, width, quality }: ImageLoaderProps) {
   const params = [`width=${width}`, `quality=${quality || 75}`, 'format=auto'];
-  return `https://erxes.io/cdn-cgi/image/${params.join(
-    ','
-  )}/${src.trim()}`.replaceAll('%20', '');
+  return `https://erxes.io/cdn-cgi/image/${params.join(',')}/${src.trim()}`;
 }
 
 const Picture = (
