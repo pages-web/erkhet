@@ -45,8 +45,8 @@ const Gallery = ({ attachments = [] }: { attachments: IAttachment[] }) => {
             <CarouselItem className="relative aspect-square pl-0">
               <Image
                 src={attachment?.url || ''}
-                height={768}
-                width={768}
+                height={1024}
+                width={1024}
                 quality={100}
                 alt=""
                 className="absolute inset-0 h-full w-full"
@@ -74,8 +74,8 @@ const Gallery = ({ attachments = [] }: { attachments: IAttachment[] }) => {
             >
               <Image
                 src={item?.url || ''}
-                height={64}
-                width={64}
+                height={164}
+                width={164}
                 alt=""
                 className="h-full w-full"
               />

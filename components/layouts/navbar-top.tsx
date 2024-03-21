@@ -20,11 +20,11 @@ export async function NavbarTop({
       {...rest}
     >
       <div className="flex gap-[clamp(1rem,3vw,3rem)] items-center w-full md:h-[60px] md:sticky top-0 container pt-1 md:pt-0">
-        <Link href="/" aria-label="SF Homepage" className="h-12 text-2xl">
+        <Link href="/" aria-label="SF Homepage" className="h-12 w-40 text-2xl">
           <Image
             src={logo}
             height={100}
-            width={256}
+            width={128}
             quality={100}
             skipAnimation
             priority

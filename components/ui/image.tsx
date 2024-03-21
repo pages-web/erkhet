@@ -16,28 +16,34 @@ const Image = ({
   sizes,
   className,
   skipAnimation,
+  quality,
   ...restProps
 }: ImageProps) => {
   const fixedSrc = readFile(src || '');
   const [srcI, setSrcI] = useState(fixedSrc || PLACEHOLDER);
   const [loading, setLoading] = useState(true);
   const getLoader = () => {
-    if (
-      srcI.includes('//:localhost') ||
-      srcI.startsWith('/') ||
-      srcI.endsWith('/public')
-    )
-      return undefined;
+    if (srcI.includes('//:localhost') || srcI.startsWith('/')) return undefined;
     return cloudflareLoader;
   };
 
   const handleComplete = () => setLoading(false);
   const onError = () => setSrcI(PLACEHOLDER);
   const fill = (!width && !height) || undefined;
+  const fromCF = srcI.includes('https://imagedelivery.net/');
   return (
     <NextImage
       {...restProps}
-      src={srcI}
+      quality={quality}
+      src={
+        fromCF
+          ? cloudflareLoader({
+              src: srcI,
+              width: parseInt(width?.toString() || '500'),
+              quality: parseInt(quality?.toString() || '75')
+            })
+          : srcI
+      }
       loader={getLoader()}
       onLoad={handleComplete}
       onError={onError}
@@ -45,6 +51,7 @@ const Image = ({
       fill={fill}
       width={width}
       height={height}
+      unoptimized={fromCF}
       className={cn(
         'object-cover duration-700 ease-in-out',
         !skipAnimation && loading

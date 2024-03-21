@@ -26,8 +26,8 @@ const ProductCard = ({
             src={attachment?.url || ''}
             alt=""
             className="rounded-md aspect-square w-full h-full absolute inset-0"
-            width={192}
-            height={192}
+            width={320}
+            height={320}
             quality={100}
           />
         </Link>

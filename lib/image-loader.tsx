@@ -8,6 +8,15 @@ export default function cloudflareLoader({
   width,
   quality
 }: ImageLoaderProps) {
-  const params = [`width=${width}`, `quality=${quality || 75}`, 'format=auto'];
-  return `https://erxes.io/cdn-cgi/image/${params.join(',')}/${src.trim()}`;
+  const params = [`width=${width}`, 'format=avif'];
+  const trimmedSrc = src.trim();
+
+  if (trimmedSrc.startsWith('https://imagedelivery.net/')) {
+    return `${trimmedSrc.slice(0, -6)}${params.join(',')}`;
+  }
+
+  const q = `quality=${quality || 75}`;
+  return `https://erxes.io/cdn-cgi/image/${params
+    .concat([q])
+    .join(',')}/${trimmedSrc}`;
 }
