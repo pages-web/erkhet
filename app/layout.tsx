@@ -20,6 +20,8 @@ interface RootLayoutProps {
   children: React.ReactNode;
 }
 
+export const revalidate = 300;
+
 export async function generateMetadata(): Promise<Metadata> {
   const { config } = await getConfig();
   const { pdomain, name, description, uiOptions } = config || {};

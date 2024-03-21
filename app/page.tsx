@@ -5,6 +5,8 @@
 import { getConfig } from '@/sdk/queries/auth';
 import { Metadata } from 'next/types';
 
+export const revalidate = 300;
+
 export async function generateMetadata(): Promise<Metadata> {
   const { config } = await getConfig();
 

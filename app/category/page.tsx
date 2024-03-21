@@ -25,6 +25,8 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
+export const revalidate = 300;
+
 const Category = async ({ searchParams }: IPageProps) => {
   const { order, page, q, sort } = searchParams;
   const { categories, getParent, primaryCategories } = await getCategories();

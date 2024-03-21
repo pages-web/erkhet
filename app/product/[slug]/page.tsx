@@ -16,6 +16,8 @@ import { Metadata } from 'next/types';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 
+export const revalidate = 300;
+
 export async function generateMetadata({
   params
 }: {

@@ -10,8 +10,9 @@ import {
 } from '@/types/products.types';
 import type { LinkProps } from 'next/link';
 import { Breadcrumb } from '@/components/breadcrumb/breadcrumb';
+import { cache } from 'react';
 
-export const getCategories: GetCategories = async params => {
+export const getCategories: GetCategories = cache(async params => {
   const { data, error } = await getClient().query({
     query: queries.productCategories,
     variables: params?.variables
@@ -30,7 +31,7 @@ export const getCategories: GetCategories = async params => {
     primaryCategories,
     getParent
   };
-};
+});
 
 type GetProducts = (params?: CommonParams) => Promise<{
   products: IProduct[];
@@ -43,7 +44,7 @@ type GetProductsMeta = (params?: CommonParams) => Promise<{
   error_msg: string | undefined;
 }>;
 
-export const getProducts: GetProducts = async params => {
+export const getProducts: GetProducts = cache(async params => {
   const { perPage, page, sortField, sortDirection, ...variables } =
     params?.variables || {};
   const { data, error } = await getClient().query({
@@ -60,7 +61,7 @@ export const getProducts: GetProducts = async params => {
     count: count?.data?.poscProductsTotalCount,
     error_msg: error?.message
   };
-};
+});
 
 export const getProductsMeta: GetProductsMeta = async params => {
   const { data, error } = await getClient().query({
@@ -78,18 +79,18 @@ type GetProductDetail = (params?: CommonParams) => Promise<{
   error_msg: string | undefined;
 }>;
 
-export const getProductDetail: GetProductDetail = async params => {
+export const getProductDetail: GetProductDetail = cache(async params => {
   const { data, error } = await getClient().query({
     query: queries.productDetail,
     variables: params?.variables
   });
   const { poscProductDetail: product } = data || {};
   return { product, error_msg: error?.message };
-};
+});
 
 type GetBreadcrumbs = (order: string, categories: ICategory[]) => Breadcrumb[];
 
-export const getBreadcrumbs: GetBreadcrumbs = (order, categories) => {
+export const getBreadcrumbs: GetBreadcrumbs = cache((order, categories) => {
   return order
     .split('/')
     .map(code => {
@@ -104,18 +105,18 @@ export const getBreadcrumbs: GetBreadcrumbs = (order, categories) => {
       };
     })
     .filter(cat => cat !== null) as Breadcrumb[];
-};
+});
 
 type GetProductReview = (params?: CommonParams) => Promise<{
   review: { average: number; length: number; productId: string };
   error_msg: string | undefined;
 }>;
 
-export const getProductReview: GetProductReview = async params => {
+export const getProductReview: GetProductReview = cache(async params => {
   const { data, error } = await getClient().query({
     query: queries.productReview,
     variables: params?.variables
   });
   const { productreview: review } = data || {};
   return { review, error_msg: error?.message };
-};
+});
