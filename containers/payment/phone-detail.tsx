@@ -9,7 +9,6 @@ import {
   FormMessage
 } from '@/components/ui/form';
 import { LoadingIcon } from '@/components/ui/loading';
-import PhoneNumber from '@/components/ui/phone-number';
 import { phoneZod } from '@/lib/zod';
 import { currentUserAtom } from '@/store/auth.store';
 import { zodResolver } from '@hookform/resolvers/zod';
