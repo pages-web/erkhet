@@ -56,7 +56,7 @@ const AddToCart = (product: IProduct) => {
         ) : (
           <ShoppingCartIcon className="h-5 w-5 mr-2" />
         )}
-        Add to cart
+        Сагслах
       </Button>
     </div>
   );

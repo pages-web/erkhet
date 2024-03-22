@@ -13,7 +13,7 @@ const BottomProfile = ({ Icon }: { Icon: LucideIcon }) => {
       Icon={Icon}
       path={currentUser ? '/profile' : '/login'}
       pathname={pathname}
-      label={currentUser ? 'Profile' : 'Login'}
+      label={currentUser ? 'Профайл' : 'Нэвтрэх'}
     />
   );
 };

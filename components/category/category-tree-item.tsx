@@ -30,7 +30,7 @@ export function CategoryTreeItem({
         >
           {parent && <ArrowLeftIcon className="text-neutral-600 h-4 w-4" />}
           <span className="text-base md:text-sm capitalize flex items-center">
-            {name || 'All Products'}
+            {name || 'Дэлгүүр'}
           </span>
         </span>
       </Link>

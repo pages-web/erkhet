@@ -9,16 +9,12 @@ export interface IPaymentOption {
   _id: string;
   name: string;
   kind: string;
-  //   config: {
-  //     [key: string]: string;
-  //   };
 }
 
 const PaymentType = ({
   selected,
   _id,
-  kind,
-  name
+  kind
 }: IPaymentOption & { selected: boolean }) => {
   return (
     <div className="relative">

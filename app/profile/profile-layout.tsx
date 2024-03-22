@@ -31,23 +31,23 @@ const ProfileLayout = ({
 
 const sidebarNavItems = [
   {
-    title: 'Profile',
+    title: 'Хувийн мэдээлэл',
     href: '/profile'
   },
   {
-    title: 'Orders',
+    title: 'Захиалгууд',
     href: '/profile/orders'
   },
   {
-    title: 'Wishlist',
+    title: 'Хүслийн жагсаалт',
     href: '/profile/wishlist'
   },
   {
-    title: 'Viewed',
+    title: 'Үзсэн',
     href: '/profile/viewed'
   },
   {
-    title: 'Log out',
+    title: 'Гарах',
     href: '/logout'
   }
 ];

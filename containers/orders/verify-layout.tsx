@@ -13,11 +13,11 @@ const VerifyLayout = ({ children }: React.PropsWithChildren) => {
     return (
       <div className="flex items-center justify-center flex-col pt-24 pb-32 col-span-12">
         <MapPinOffIcon className="h-12 w-12" strokeWidth={1.3} />
-        <h2 className="mt-8 text-xl sm:text-2xl font-bold">Address is empty</h2>
+        <h2 className="mt-8 text-xl sm:text-2xl font-bold">Хаяг хоосон</h2>
         <Button variant="secondary" className="mt-4" asChild>
           <Link href={'/address'}>
             <ArrowLeftIcon className="h-5 w-5 mr-2" />
-            Back to Address
+            Хаяг оруулах
           </Link>
         </Button>
       </div>

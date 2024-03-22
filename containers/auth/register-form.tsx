@@ -25,8 +25,8 @@ import { passwordZod, phoneZod } from '@/lib/zod';
 import { LoadingIcon } from '@/components/ui/loading';
 
 const formSchema = z.object({
-  firstName: z.string().min(1, { message: 'First name is required' }),
-  lastName: z.string(),
+  firstName: z.string().min(1, { message: 'Нэрээ оруулна уу' }),
+  lastName: z.string().optional(),
   email: z.string().email(),
   phone: phoneZod,
   password: passwordZod

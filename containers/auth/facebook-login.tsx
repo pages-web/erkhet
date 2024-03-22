@@ -66,7 +66,7 @@ const FacebookLogin = () => {
             strokeWidth={0.1}
           />
         )}
-        Login with Facebook
+        Facebook-ээр нэвтрэх
       </Button>
     </>
   );

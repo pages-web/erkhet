@@ -65,7 +65,7 @@ const ForgotForm = () => {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>Цахим хаяг</FormLabel>
               <FormControl>
                 <Input
                   placeholder="john@doe.com"

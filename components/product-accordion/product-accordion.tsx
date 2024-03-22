@@ -4,12 +4,12 @@ import {
   Accordion,
   AccordionItem,
   AccordionTrigger,
-  AccordionContent,
+  AccordionContent
 } from '../ui/accordion';
 import Rate from '../ui/rate';
 
 const ProductAccordion = ({
-  description,
+  description
 }: {
   description?: string;
   _id: string;
@@ -19,7 +19,7 @@ const ProductAccordion = ({
       {!!description && (
         <AccordionItem value="item-1">
           <AccordionTrigger className="text-xl font-semibold">
-            Product Details
+            Бүтээгдэхүүний дэлгэрэнгүй мэдээлэл
           </AccordionTrigger>
           <AccordionContent>
             <div dangerouslySetInnerHTML={{ __html: description }} />
@@ -28,7 +28,7 @@ const ProductAccordion = ({
       )}
       <AccordionItem value="item-2">
         <AccordionTrigger className="text-xl font-semibold">
-          Customer Reviews
+          Үнэлгээ, сэтгэгдэл
         </AccordionTrigger>
         <AccordionContent>
           <div className="space-y-4">

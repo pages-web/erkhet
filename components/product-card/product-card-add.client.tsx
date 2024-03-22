@@ -52,7 +52,7 @@ const ProductCardAdd = (product: IProduct) => {
       onClick={handleClick}
     >
       <ShoppingCartIcon className="h-4 w-4 mr-1" strokeWidth={2.5} />
-      Add
+      Сагслах
     </Button>
   );
 };

@@ -82,7 +82,7 @@ const Ebarimt = ({
                 <FormLabel>Регистерийн дугаар</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Регистерийн дугаараа оруулана уу"
+                    placeholder="Регистерийн дугаараа оруулна уу"
                     {...field}
                     onChange={e => {
                       setRegisterNumber(e.target.value);

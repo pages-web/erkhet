@@ -9,11 +9,11 @@ const Logout = () => {
   return (
     <Button
       className="justify-start"
-      variant="ghost"
+      variant="link"
       disabled={loading}
       onClick={logout}
     >
-      {loading && <LoadingIcon />} Log out
+      {loading && <LoadingIcon />} Гарах
     </Button>
   );
 };

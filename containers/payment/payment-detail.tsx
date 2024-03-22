@@ -67,7 +67,7 @@ const PaymentDetail = () => {
             <div className="text-neutral-500 text-xs md:text-md">
               {isQr
                 ? 'Qr кодыг уншуулж төлбөрөө төлнө үү'
-                : 'Бүртгэлтэй утасны дугаараа оруулана уу'}
+                : 'Бүртгэлтэй утасны дугаараа оруулна уу'}
             </div>
           </div>
         </div>

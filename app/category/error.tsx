@@ -16,16 +16,9 @@ export default function Error({
   }, [error]);
 
   return (
-    <div className="container py-20">
-      <h2>Something went wrong!</h2>
-      <Button
-        onClick={
-          // Attempt to recover by trying to re-render the segment
-          () => reset()
-        }
-      >
-        Try again
-      </Button>
+    <div className="container py-32 flex justify-center">
+      <h2>Алдаа гарлаа.</h2>
+      <Button onClick={() => reset()}>Дахин оролдох</Button>
     </div>
   );
 }

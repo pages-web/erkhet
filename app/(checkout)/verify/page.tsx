@@ -13,7 +13,7 @@ import VerifyLayout from '@/containers/orders/verify-layout';
 
 const Verify = () => {
   return (
-    <CheckoutLayout title="Баталгаажуулах" backTitle="Back" backUrl="/address">
+    <CheckoutLayout title="Баталгаажуулах" backTitle="Буцах" backUrl="/address">
       <VerifyLayout>
         <div className="md:grid md:grid-cols-12 md:gap-x-6">
           <div className="col-span-7">

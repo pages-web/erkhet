@@ -28,13 +28,11 @@ const CheckoutRoute = ({ children }: React.PropsWithChildren) => {
         <div className="w-48 h-48">
           <CartEmpty />
         </div>
-        <h2 className="mt-8 text-xl sm:text-2xl font-bold">
-          Your cart is empty
-        </h2>
+        <h2 className="mt-8 text-xl sm:text-2xl font-bold">Сагс хоосон</h2>
         <Button variant="secondary" className="mt-4" asChild>
           <Link href={'/category'}>
             <ArrowLeftIcon className="h-5 w-5 mr-2" />
-            Back to products
+            Дэлгүүр лүү буцах
           </Link>
         </Button>
       </div>

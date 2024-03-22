@@ -34,7 +34,7 @@ const GoogleLogin = () => {
     <Button size="lg" className="w-full text-primary" variant="outline" asChild>
       <Link href={getGoogleUrl('/auth/login')}>
         <GoogleIcon />
-        Login with Google
+        Google-ээр нэвтрэх
       </Link>
     </Button>
   );

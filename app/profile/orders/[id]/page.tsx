@@ -4,7 +4,7 @@ import OrderDetailContent from '@/components/order-detail/order-detail';
 
 const OrderDetail = ({ params }: IPageProps) => {
   return (
-    <ProfileLayout title="Order Detail" description="order detail information">
+    <ProfileLayout title="Захиалгын мэдээлэл" description="">
       <div className="space-y-8">
         <OrderDetailContent id={params.id} />
       </div>

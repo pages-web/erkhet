@@ -25,7 +25,7 @@ const Cart = () => {
     <Sheet open={openSheet} onOpenChange={op => setOpenSheet(op)}>
       <SheetContent className="flex flex-col">
         <SheetHeader className="flex-row justify-between items-center space-y-0">
-          <SheetTitle>My Cart</SheetTitle>
+          <SheetTitle>Таны сагс</SheetTitle>
           <SheetClose asChild>
             <Button variant="ghost" size={'icon'} className="-mr-2">
               <XIcon className="h-5 w-5" />
@@ -46,16 +46,16 @@ const Cart = () => {
             </div>
             <div className="text-sm text-neutral-500 dark:text-neutral-400">
               <div className="mb-3 flex items-center justify-between border-b border-neutral-200 pb-1 pt-1">
-                <p>Shipping</p>
-                <p className="text-right">Calculated at checkout</p>
+                <p>Хүргэлт</p>
+                <p className="text-right">Нийт үнэ дээр нэмэгдсэн</p>
               </div>
               <div className="flex items-center justify-between border-b border-neutral-200 pb-1 pt-1">
-                <p>Total</p>
+                <p>Нийт үнэ</p>
                 <CartTotal />
               </div>
             </div>
             <Button size="lg" asChild onClick={() => setOpenSheet(false)}>
-              <Link href={'/cart'}>Proceed to Checkout</Link>
+              <Link href="/cart">Худалдан авах</Link>
             </Button>
           </>
         ) : (
@@ -63,7 +63,7 @@ const Cart = () => {
             <div className="h-28 w-28">
               <CartEmpty />
             </div>
-            <p className="font-semibold">Your cart is empty</p>
+            <p className="font-semibold">Сагс хоосон байна</p>
           </div>
         )}
       </SheetContent>

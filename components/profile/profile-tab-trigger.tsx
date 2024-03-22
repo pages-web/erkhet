@@ -48,28 +48,28 @@ const ProfileTabsList = () => {
         Icon={User2Icon}
         description={firstName || '-'}
       >
-        Info
+        Хувийн мэдээлэл
       </ProfileTabTrigger>
       <ProfileTabTrigger
         value="phone"
         Icon={Smartphone}
-        description={!loading && isPhoneVerified ? 'Verified' : '-'}
+        description={!loading && isPhoneVerified ? 'Баталгаажсан' : '-'}
       >
-        Phone
+        Гар утас
       </ProfileTabTrigger>
       <ProfileTabTrigger
         value="email"
         Icon={MailIcon}
-        description={!loading && isEmailVerified ? 'Verified' : '-'}
+        description={!loading && isEmailVerified ? 'Баталгаажсан' : '-'}
       >
-        Email
+        Цахим хаяг
       </ProfileTabTrigger>
       <ProfileTabTrigger
         value="password"
         Icon={LockIcon}
-        description="Change password"
+        description="Шинэчлэх"
       >
-        Password
+        Нууц үг
       </ProfileTabTrigger>
     </TabsList>
   );

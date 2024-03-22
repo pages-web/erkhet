@@ -2,7 +2,10 @@ import ProfileLayout from '../profile-layout';
 
 const Wishlist = () => {
   return (
-    <ProfileLayout title="Wishlist" description="Products you like">
+    <ProfileLayout
+      title="Хүслийн жагсаалт"
+      description="Танд таалагдсан бүтээгдэхүүнүүд"
+    >
       Enter
     </ProfileLayout>
   );

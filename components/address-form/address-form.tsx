@@ -107,7 +107,7 @@ const AddressForm = () => {
         <OrderSummary className="col-span-5 md:sticky md:top-20 h-fit">
           <Button className="w-full" size="lg" disabled={loading}>
             {loading && <LoadingIcon />}
-            Submit
+            Үргэлжлүүлэх
           </Button>
         </OrderSummary>
       </form>

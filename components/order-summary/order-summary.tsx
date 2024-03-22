@@ -22,9 +22,9 @@ const OrderSummary = ({
   return (
     <Card className={className}>
       <CardHeader className="flex-row space-y-0 justify-between items-center md:py-4">
-        <CardTitle className="md:text-lg">Order Summary</CardTitle>
+        <CardTitle className="md:text-lg">Төлбөрийн мэдээлэл</CardTitle>
         <div className="font-semibold">
-          (Items: <CartCount />)
+          (Бүтээгдэхүүн: <CartCount />)
         </div>
       </CardHeader>
       <CardContent className="py-0 md:py-0 space-y-2">
@@ -40,7 +40,7 @@ const OrderSummary = ({
       <CardFooter className="flex-col gap-4 md:pb-6 md:pt-3">
         <Separator />
         <div className="text-lg md:text-xl font-bold flex justify-between w-full">
-          <p>Total</p>
+          <p>Нийт төлөх дүн</p>
           <CartTotal />
         </div>
         <Separator />

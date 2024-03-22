@@ -69,7 +69,7 @@ export function CategoryNav({
                         order={cat.order}
                         onClick={onLinkClick}
                       >
-                        All {cat.name}
+                        Бүх {cat.name}
                         <ChevronRightIcon className="h-4 w-4 ml-1 mt-px" />
                       </LinkItem>
                     </li>

@@ -11,7 +11,7 @@ const CategorySideBarMobile = ({ children }: React.PropsWithChildren) => {
     <Sheet open={open} onOpenChange={op => setOpen(op)}>
       <SheetContent side="left" className="pt-3">
         <div className="flex items-center justify-between pb-4">
-          <h2 className="font-bold mt-1 text-xl">Cart</h2>
+          <h2 className="font-bold mt-1 text-xl">Шүүлт</h2>
           <SheetClose asChild>
             <Button size="icon" variant="ghost">
               <XIcon className="h-6 w-6" />

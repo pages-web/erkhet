@@ -65,7 +65,7 @@ const Category = async ({ searchParams }: IPageProps) => {
       )}
     >
       <CategoryPageContent
-        title={activeCategory?.name || 'Products'}
+        title={activeCategory?.name || 'Дэлгүүр'}
         products={products}
         totalProducts={count}
         searchParams={searchParams}

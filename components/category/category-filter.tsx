@@ -16,7 +16,7 @@ const CategoryFilter = () => {
   return (
     <div>
       <span className="block py-2 px-4 mb-4 bg-neutral-100 typography-headline-6 font-bold text-neutral-900 uppercase tracking-widest md:rounded-md">
-        Sort by
+        Эрэмблэх
       </span>
       <Select
         defaultValue={'newToOld'}
@@ -26,7 +26,7 @@ const CategoryFilter = () => {
         }
       >
         <SelectTrigger className="w-full h-11">
-          <SelectValue placeholder="Sort" />
+          <SelectValue placeholder="Эрэмблэх" />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="newToOld">Шинэ нь эхэндээ</SelectItem>

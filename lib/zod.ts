@@ -7,8 +7,8 @@ export const phoneZod = z
 
 export const passwordZod = z
   .string()
+  .min(1, { message: 'Нууц үгээ оруулна уу' })
   .regex(
     /^(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
-    'Password must contain at least one lowercase letter, one uppercase letter, and be at least 8 characters long.'
-  )
-  .min(1, { message: 'Password is required' });
+    'Нууц үг нь дор хаяж нэг жижиг үсэг, нэг том үсэг оруулсан 8 тэмдэгтээс бүрдэх ёстой.'
+  );

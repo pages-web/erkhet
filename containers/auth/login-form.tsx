@@ -21,9 +21,12 @@ import { useLogin } from '@/sdk/hooks/auth';
 const formSchema = z.object({
   login: z
     .string()
-    .regex(/^[^\s@]+@[^\s@]+\.[^\s@]+|[0-9]{6,}$/, 'Invalid phone or email')
-    .min(1, { message: 'Email is required' }),
-  password: z.string().min(1, { message: 'Password is required' })
+    .min(1, { message: 'Нэвтрэх нэрээ оруулна уу' })
+    .regex(
+      /^[^\s@]+@[^\s@]+\.[^\s@]+|[0-9]{6,}$/,
+      'Буруу утас эсвэл цахим хаяг'
+    ),
+  password: z.string().min(1, { message: 'Нууц үгээ оруулна уу' })
 });
 
 const LoginForm = () => {
@@ -51,17 +54,14 @@ const LoginForm = () => {
           name="login"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>Нэвтрэх нэр</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="john@doe.com"
+                  placeholder="цахим хаяг эсвэл утас"
                   {...field}
                   autoComplete="username"
                 />
               </FormControl>
-              {/* <FormDescription>
-                Please enter your registered email
-              </FormDescription> */}
               <FormMessage />
             </FormItem>
           )}
@@ -86,13 +86,12 @@ const LoginForm = () => {
               <FormControl>
                 <Password {...field} autoComplete="current-password" />
               </FormControl>
-              {/* <FormDescription>Please enter your password</FormDescription> */}
               <FormMessage />
             </FormItem>
           )}
         />
         <Button type="submit" className="w-full" size="lg" disabled={loading}>
-          Login
+          Нэвтрэх
         </Button>
       </form>
     </Form>

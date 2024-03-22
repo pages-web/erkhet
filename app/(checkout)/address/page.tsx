@@ -3,7 +3,7 @@ import AddressForm from '@/components/address-form/address-form';
 
 const Checkout = () => {
   return (
-    <CheckoutLayout title="Checkout" backTitle="Back" backUrl="/cart">
+    <CheckoutLayout title="Захиалгын хаяг" backTitle="Буцах" backUrl="/cart">
       <AddressForm />
     </CheckoutLayout>
   );

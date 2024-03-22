@@ -19,27 +19,27 @@ import CartCount from '../cart/cart-count';
 
 const getItems = (cartLineItemsCount?: number) => [
   {
-    label: 'home',
+    label: 'Эхлэл',
     Icon: HomeIcon,
     path: '/'
   },
   {
-    label: 'products',
+    label: 'Дэлгүүр',
     Icon: MenuIcon,
     path: '/category'
   },
   {
-    label: 'search',
+    label: 'Хайх',
     Icon: SearchIcon,
     path: '/search'
   },
   {
-    label: 'cart',
+    label: 'Сагс',
     Icon: ShoppingCart,
     path: '/cart'
   },
   {
-    label: 'profile',
+    label: 'Профайл',
     Icon: User2Icon,
     path: '/profile'
   }

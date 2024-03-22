@@ -29,8 +29,8 @@ const useLoginCallback = () => {
         sessionStorage.setItem('refetchToken', refetchToken || '');
         triggerRefetchUser(true);
         setLoadingUser(true);
-        toast.success('Hello Dear', {
-          description: 'You successfully logged in'
+        toast.success('Сайн байна уу?', {
+          description: 'Та амжилттай нэвтэрлээ'
         });
 
         router.push(from ? from : '/');
@@ -93,7 +93,7 @@ export const useUserEdit = () => {
   const [editUser, { loading }] = useMutation(mutations.userEdit, {
     onCompleted() {
       setRefetchUser(true);
-      toast.success('Personal information updated');
+      toast.success('Хувийн мэдээлэл шинэчлэгдсэн');
     },
     onError
   });

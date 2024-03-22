@@ -5,7 +5,6 @@ import { IOrder } from '@/types/order.types';
 import Link from 'next/link';
 import { format } from 'date-fns';
 import { cn, getOrderStatus, readFile } from '@/lib/utils';
-import OrderStatus from '@/components/order-detail/order-status';
 import cloudflareLoader from '@/lib/image-loader';
 
 const OrderItem = ({
@@ -27,7 +26,7 @@ const OrderItem = ({
       <Link href={`/profile/orders/${_id}`}>
         <div className="flex flex-1 items-start md:items-center">
           <div className="text-left space-y-0.5 w-5/12">
-            <div className="text-black/60">Code</div>
+            <div className="text-black/60">Захиалгын дугаар</div>
             <h2 className="md:text-base">{number}</h2>
           </div>
           <div className="text-right md:text-left space-y-0.5 w-7/12">
@@ -47,7 +46,7 @@ const OrderItem = ({
             >
               <AvatarImage
                 src={cloudflareLoader({
-                  src: readFile(item.productImgUrl || ''),
+                  src: item.productImgUrl || '',
                   width: 60,
                   quality: 100
                 })}
@@ -59,7 +58,7 @@ const OrderItem = ({
           ))}
         </div>
         <div className="text-right md:w-2/12 md:mr-4">
-          <div className="text-black/60">Total Amount</div>
+          <div className="text-black/60">Захиалгын дүн</div>
           <Price className=" text-base" amount={totalAmount + ''} />
         </div>
       </Link>

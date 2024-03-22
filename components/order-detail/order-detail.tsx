@@ -28,7 +28,7 @@ const OrderDetail = ({ id }: { id: string }) => {
   if (loading) return <Loading className="py-32" />;
 
   if (!orderDetail)
-    return <div className="py-32 text-center">Order not found</div>;
+    return <div className="py-32 text-center">Захиалга олдсонгүй</div>;
 
   return (
     <OrderDetailContext.Provider value={orderDetail}>

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from '../ui/image';
 import { IProduct } from '../../types/product.types';
 import ProductCardAdd from './product-card-add.client';
+import Price from '../price/price';
 
 const ProductCard = ({
   className,
@@ -16,7 +17,6 @@ const ProductCard = ({
         className
       )}
     >
-      {' '}
       <div className="relative">
         <Link
           href={`/product/${_id}`}
@@ -44,7 +44,7 @@ const ProductCard = ({
           className="block py-2 font-bold"
           data-testid="product-card-vertical-price"
         >
-          {(unitPrice || '').toLocaleString()} ₮
+          <Price amount={unitPrice + ''} />
         </span>
         <ProductCardAdd {...product} />
       </div>

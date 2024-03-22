@@ -3,8 +3,8 @@ import { Separator } from '../ui/separator';
 import { useDetail } from './order-detail';
 
 const OrderUser = () => {
-  const { deliveryInfo, billType } = useDetail();
-  const { lastName, firstName, phone, email } = deliveryInfo || {};
+  const { deliveryInfo, billType, registerNumber } = useDetail();
+  const { lastName, firstName, phone, email, companyName } = deliveryInfo || {};
 
   return (
     <Card>
@@ -32,9 +32,11 @@ const OrderUser = () => {
           <div className="font-medium">{email}</div>
         </div>
         <div>
-          <div className="text-black/60">Хувь хүн</div>
+          <div className="text-black/60">
+            {billType === '3' ? 'Байгуулга' : 'Хувь хүн'}
+          </div>
           <div className="font-medium">
-            {billType === '3' ? 'Байгуулга' : '-'}
+            {billType === '3' ? `${companyName} (${registerNumber})` : '-'}
           </div>
         </div>
       </CardContent>

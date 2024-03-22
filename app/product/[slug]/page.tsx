@@ -95,8 +95,8 @@ const Product = async ({ params }: IPageProps) => {
   const { categories } = await getCategories();
 
   const breadcrumbs: Breadcrumb[] = [
-    { name: 'Home', link: '/' },
-    { name: 'All Products', link: '/category' }
+    { name: 'Эхлэл', link: '/' },
+    { name: 'Дэлгүүр', link: '/category' }
   ];
 
   const dynamicBreadcrumbs = getBreadcrumbs(category?.order || '', categories);
@@ -141,7 +141,7 @@ const Product = async ({ params }: IPageProps) => {
           </section>
         </div>
         <div className="mt-28 mb-20">
-          <div className="my-4 text-lg">Reccomended Products</div>
+          <div className="my-4 text-lg">Танд санал болгох</div>
           <Suspense>
             <RecommendedProducts categoryId={category?._id} productId={_id} />
           </Suspense>

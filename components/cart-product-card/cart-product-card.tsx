@@ -61,7 +61,7 @@ const CartProductCard = ({
             onClick={() => changeCartItem({ _id, count: 0 })}
             disabled={loading}
           >
-            Remove
+            Хасах
           </Button>
           <span className="font-bold md:ml-auto md:order-1 text-sm md:text-lg">
             <Price amount={unitPrice + ''} />

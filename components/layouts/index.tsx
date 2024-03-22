@@ -20,7 +20,7 @@ const DefaultLayout = ({ children }: React.PropsWithChildren) => {
           asChild
         >
           <Link href={'/category'}>
-            Products
+            Дэлгүүр
             <ChevronDownIcon className="h-4 w-4 ml-1" />
           </Link>
         </Button>
