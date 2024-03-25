@@ -15,6 +15,8 @@ export const getBranchDetail = cache(async () => {
   const { config } = await getConfig();
   const { erxesAppToken, branchId, name } = config || {};
 
+  if (!branchId) return { name };
+
   const { data, error } = await getClient().query({
     query: queries.branchDetail,
     variables: {

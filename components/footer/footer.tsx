@@ -11,52 +11,60 @@ const Footer = async () => {
   const { email, phoneNumber, links, address, coordinate } = branchDetail || {};
   return (
     <footer>
-      <div className="bg-neutral-100">
-        <div className="container py-6 grid md:grid-cols-4">
-          <Col title="Бидний тухай">
-            <FooterLink href="/about">Бидний тухай</FooterLink>
-          </Col>
-          <Col title="Туслах цэс">
-            <FooterLink href="/terms-of-service">
-              Үйлчилгээний нөхцөл
-            </FooterLink>
-            <FooterLink href="/terms-of-service">Нууцлалын бодлого</FooterLink>
-          </Col>
-          <Col title="Холбоо барих">
-            <FooterLink href={'mailto: ' + email}>
-              <MailIcon className="h-5 w-5 mr-2" />
-              {email}
-            </FooterLink>
-            <FooterLink href={'tel: ' + phoneNumber}>
-              <PhoneCallIcon className="h-5 w-5 mr-2" />
-              {(phoneNumber || '').toString()}
-            </FooterLink>
-            <Col title="Биднийг дагаарай">
-              <div className="flex items-center pb-2 gap-1 -ml-2">
-                {Object.keys(links || {}).map(link => (
-                  <SocialLink
-                    href={(links || {})[link] || ''}
-                    icon={link}
-                    key={link}
-                  >
-                    {link}
-                  </SocialLink>
-                ))}
-              </div>
+      {!!branchDetail && (
+        <div className="bg-neutral-100">
+          <div className="container py-6 grid md:grid-cols-4">
+            <Col title="Бидний тухай">
+              <FooterLink href="/about">Бидний тухай</FooterLink>
             </Col>
-          </Col>
-          <Col title="Хаяг">
-            <FooterLink
-              href={`https://www.google.com/maps/@${coordinate.longitude},${coordinate.latitude}`}
-              target="_blank"
-              className="items-start -mt-1 h-auto"
-            >
-              <MapPinIcon className="flex-none h-5 w-5 mt-1" />
-              <span className="ml-2 text-wrap">{address}</span>
-            </FooterLink>
-          </Col>
+            <Col title="Туслах цэс">
+              <FooterLink href="/terms-of-service">
+                Үйлчилгээний нөхцөл
+              </FooterLink>
+              <FooterLink href="/terms-of-service">
+                Нууцлалын бодлого
+              </FooterLink>
+            </Col>
+            <Col title="Холбоо барих">
+              {!!email && (
+                <FooterLink href={'mailto: ' + email}>
+                  <MailIcon className="h-5 w-5 mr-2" />
+                  {email}
+                </FooterLink>
+              )}
+              {!!phoneNumber && (
+                <FooterLink href={'tel: ' + phoneNumber}>
+                  <PhoneCallIcon className="h-5 w-5 mr-2" />
+                  {(phoneNumber || '').toString()}
+                </FooterLink>
+              )}
+              <Col title="Биднийг дагаарай">
+                <div className="flex items-center pb-2 gap-1 -ml-2">
+                  {Object.keys(links || {}).map(link => (
+                    <SocialLink
+                      href={(links || {})[link] || ''}
+                      icon={link}
+                      key={link}
+                    >
+                      {link}
+                    </SocialLink>
+                  ))}
+                </div>
+              </Col>
+            </Col>
+            <Col title="Хаяг">
+              <FooterLink
+                href={`https://www.google.com/maps/@${coordinate?.longitude},${coordinate?.latitude}`}
+                target="_blank"
+                className="items-start -mt-1 h-auto"
+              >
+                <MapPinIcon className="flex-none h-5 w-5 mt-1" />
+                <span className="ml-2 text-wrap">{address || ''}</span>
+              </FooterLink>
+            </Col>
+          </div>
         </div>
-      </div>
+      )}
       <div className="bg-primary text-neutral-300 py-4 text-sm pb-32 md:py-4">
         <div className="container flex items-center justify-between">
           <div>

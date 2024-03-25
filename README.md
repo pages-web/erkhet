@@ -6,11 +6,18 @@
 
 1. `/settings/permissions` - oroh
 2. create user group towch deer darj shine user group uusgene.
-3. New Permission towch deer darj Show Payments, Create Invoice erhuudiig tus bur uusgesen user groupt onooj uusgeneee.
+3. New Permission towch deer darj "Show Payments", "Create Invoice", "Show a branch" erhuudiig tus bur uusgesen user groupt onooj uusgeneee.
 4. `/settings/apps` - oroh
 5. Add new app towch deer darj user group hesegt uusgesen
    groupeee songood, no expire - gesnig checkleed app-token uusgene.
 6. Pos Config -> payment config hesegt uusgesen app-tokenoo oruulnaa
+
+# Branch uusgeh
+
+1. `/settings/team` - oroh
+2. branch nemeh towch deer darch branch uusgene. (
+   website hesegt instagramm url ee oruulaarai. busad talbaruudiig uldeehgui sain boglono uu
+   )
 
 # Payment plugin tohirgoo
 
@@ -35,7 +42,7 @@ Client Portal - g odoogoor zowhon newtreh zoriulaltaar ashiglaj baigaa. Tsaashda
 - isOnline idevhijuuleh
 - Delivery-iig defaul type bolgoh
 - olon pos ashiglaj baigaa bol begin number tohiruulj ogch bolno
-- uldegdel tootsoh bol branch songoj ogoh
+- Deer uusgesen branch aa songono
 - pos domain songoh (SEO-toi holbootoi bolohoor zaaval songoj ogoorei. Jishee ni: https://www.erxes.io )⚠️⚠️
 
 ### 2. Payment
