@@ -51,8 +51,8 @@ const Category = async ({ searchParams }: IPageProps) => {
     categories.filter(category => category.parentId === activeCategory._id);
 
   const breadcrumbs = [
-    { name: 'Home', link: '/' },
-    { name: 'All Products', link: '/category' as LinkProps['href'] }
+    { name: 'Эхлэл', link: '/' },
+    { name: 'Дэлгүүр', link: '/category' as LinkProps['href'] }
   ];
 
   const dynamicBreadcrumbs =

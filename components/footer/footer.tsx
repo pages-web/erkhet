@@ -1,93 +1,125 @@
-import { cn } from '@/lib/utils';
-import { bottomLinks, categories, contactOptions, socialMedia } from '@/mocks';
-import Link from 'next/link';
 import { Button } from '../ui/button';
-import { Separator } from '../ui/separator';
+import { getBranchDetail } from '@/sdk/queries/auth';
+import Link, { type LinkProps } from 'next/link';
+import { cn } from '@/lib/utils';
+import { MailIcon, MapPinIcon, PhoneCallIcon } from 'lucide-react';
+import ErxesLogo from './erxes-logo';
+import { icons } from './icons';
 
-const Footer = ({ className = '' }: { className?: string }) => {
+const Footer = async () => {
+  const { branchDetail, name } = await getBranchDetail();
+  const { email, phoneNumber, links, address, coordinate } = branchDetail || {};
   return (
-    <footer className={cn('pt-10 bg-neutral-100 pb-14 md:pb-0', className)}>
-      <div className="grid gap-5 justify-center grid-cols-2 md:grid-cols-4 pb-10 container">
-        {categories.map(({ key, subcategories }) => (
-          <div key={key} className="min-w-[25%] xs:min-w-[50%] flex flex-col">
-            <p className="font-semibold leading-7 text-neutral-900 text-lg pb-2 capitalize">
-              {key}
-            </p>
-            {subcategories?.map(({ link, key: subcategoryKey }) => (
-              <Button
-                key={subcategoryKey}
-                variant="link"
-                className="justify-start px-0 capitalize text-sm font-normal text-neutral-600"
-                size="sm"
-                asChild
-              >
-                <Link href={link}>{subcategoryKey}</Link>
-              </Button>
-            ))}
-          </div>
-        ))}
+    <footer>
+      <div className="bg-neutral-100">
+        <div className="container py-6 grid md:grid-cols-4">
+          <Col title="Бидний тухай">
+            <FooterLink href="/about">Бидний тухай</FooterLink>
+          </Col>
+          <Col title="Туслах цэс">
+            <FooterLink href="/terms-of-service">
+              Үйлчилгээний нөхцөл
+            </FooterLink>
+            <FooterLink href="/terms-of-service">Нууцлалын бодлого</FooterLink>
+          </Col>
+          <Col title="Холбоо барих">
+            <FooterLink href={'mailto: ' + email}>
+              <MailIcon className="h-5 w-5 mr-2" />
+              {email}
+            </FooterLink>
+            <FooterLink href={'tel: ' + phoneNumber}>
+              <PhoneCallIcon className="h-5 w-5 mr-2" />
+              {(phoneNumber || '').toString()}
+            </FooterLink>
+            <Col title="Биднийг дагаарай">
+              <div className="flex items-center pb-2 gap-1 -ml-2">
+                {Object.keys(links || {}).map(link => (
+                  <SocialLink
+                    href={(links || {})[link] || ''}
+                    icon={link}
+                    key={link}
+                  >
+                    {link}
+                  </SocialLink>
+                ))}
+              </div>
+            </Col>
+          </Col>
+          <Col title="Хаяг">
+            <FooterLink
+              href={`https://www.google.com/maps/@${coordinate.longitude},${coordinate.latitude}`}
+              target="_blank"
+              className="items-start -mt-1 h-auto"
+            >
+              <MapPinIcon className="flex-none h-5 w-5 mt-1" />
+              <span className="ml-2 text-wrap">{address}</span>
+            </FooterLink>
+          </Col>
+        </div>
       </div>
-      <Separator />
-      <div className="py-10 lg:flex container">
-        {contactOptions.map(({ icon, link, details, key }) => (
-          <div
-            key={key}
-            className="mx-auto my-4 text-center flex flex-col items-center"
-          >
-            {icon}
+      <div className="bg-primary text-neutral-300 py-4 text-sm pb-32 md:py-4">
+        <div className="container flex items-center justify-between">
+          <div>
+            © {new Date().getFullYear()} <span>{name}</span>
+          </div>
+          <div className="inline-flex items-center group">
             <Button
+              className="px-1 text-primary-foreground hover:no-underline font-normal h-7"
               variant="link"
               asChild
-              className="mb-2 py-1 mt-1 font-semibold text-lg capitalize"
             >
-              <Link href={link}>{key}</Link>
+              <Link href="https://erxes.mn/">
+                Powered by
+                <ErxesLogo className="ml-1 h-7 w-14 fill-primary-foreground" />
+              </Link>
             </Button>
-            {details?.map(option => (
-              <p className="text-sm leading-5" key={option}>
-                {option}
-              </p>
-            ))}
           </div>
-        ))}
-      </div>
-      <div className="bg-primary" data-testid="section-bottom">
-        <div className="container text-sm leading-5 text-white justify-end py-10 lg:flex">
-          <div className="flex justify-center gap-6 lg:self-start">
-            {socialMedia.map(({ icon, label, link }) => (
-              <Button
-                asChild
-                key={label}
-                size="icon"
-                variant={'ghost'}
-                className="hover:bg-background/10 hover:text-white"
-              >
-                <Link href={link} title={label}>
-                  {icon}
-                </Link>
-              </Button>
-            ))}
-          </div>
-          <div className="flex justify-center gap-6 my-6 lg:ml-auto lg:my-0">
-            {bottomLinks.map(({ link, key }) => (
-              <Button
-                key={key}
-                asChild
-                variant="link"
-                className="text-white hover:text-white capitalize text-sm px-0"
-              >
-                <Link href={link}>{key}</Link>
-              </Button>
-            ))}
-          </div>
-          <p className="flex items-center justify-center leading-5 text-center text-sm text-white/50 font-body md:ml-6">
-            {companyName}
-          </p>
         </div>
       </div>
     </footer>
   );
 };
 
-export const companyName = `© ${new Date().getFullYear()} Erxes Inc`;
+const Col = ({
+  title,
+  children
+}: React.PropsWithChildren & { title: string }) => {
+  return (
+    <div className="">
+      <h3 className="font-semibold pt-4 pb-2 capitalize">{title}</h3>
+      {children}
+    </div>
+  );
+};
+
+const FooterLink = (
+  props: React.PropsWithChildren &
+    LinkProps & { className?: string; target?: string }
+) => (
+  <Button
+    asChild
+    className={cn(
+      'px-0 h-8 flex justify-start text-neutral-600 hover:text-primary',
+      props.className
+    )}
+    variant="link"
+  >
+    <Link {...props} />
+  </Button>
+);
+
+const SocialLink = (
+  props: React.PropsWithChildren &
+    LinkProps & { className?: string; icon: string }
+) => (
+  <Button
+    asChild
+    className={cn('text-xl shadow-none', props.className)}
+    size="icon"
+    variant="ghost"
+  >
+    <Link {...props}>{icons[props.icon as keyof typeof icons]}</Link>
+  </Button>
+);
 
 export default Footer;

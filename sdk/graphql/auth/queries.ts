@@ -33,6 +33,7 @@ const currentConfig = gql`
       description
       pdomain
       checkRemainder
+      branchId
       uiOptions {
         logo
         colors
@@ -43,6 +44,26 @@ const currentConfig = gql`
   }
 `;
 
-const queries = { currentUser, currentConfig, userDetail };
+const branchDetail = gql`
+  query branchDetail($id: String!) {
+    branchDetail(_id: $id) {
+      _id
+      title
+      address
+      phoneNumber
+      email
+      links
+      coordinate {
+        longitude
+        latitude
+      }
+      image {
+        url
+      }
+    }
+  }
+`;
+
+const queries = { currentUser, currentConfig, userDetail, branchDetail };
 
 export default queries;
