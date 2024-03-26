@@ -5,6 +5,7 @@ import CategorySidebarTrigger from './category-sidebar-trigger';
 import ProductCard from '../product-card/product-card';
 import ProductPagination from '../product-pagination/product-pagination';
 import { IPageProps } from '@/types';
+import ProductsContainer from '../product-card/products-container';
 
 export interface CategoryPageContentProps extends PropsWithChildren {
   title: string;
@@ -33,11 +34,11 @@ const CategoryPageContent = ({
             </span>
             <CategorySidebarTrigger />
           </div>
-          <section className="grid grid-cols-2 gap-4 md:gap-6 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 mb-10 md:mb-5">
+          <ProductsContainer>
             {products.map(product => (
               <ProductCard key={product._id} {...product} />
             ))}
-          </section>
+          </ProductsContainer>
           <ProductPagination
             searchParams={searchParams}
             totalProducts={totalProducts}

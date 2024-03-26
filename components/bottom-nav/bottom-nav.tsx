@@ -8,7 +8,7 @@ import {
   ShoppingCart,
   User2Icon
 } from 'lucide-react';
-import { Button } from '../ui/button';
+import { Button, ButtonProps } from '../ui/button';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -16,6 +16,8 @@ import BottomProfile from './bottom-profile';
 import { memo } from 'react';
 import { Badge } from '@/components/ui/badge';
 import CartCount from '../cart/cart-count';
+import { useSetAtom } from 'jotai';
+import { cartSheetAtom } from '@/store';
 
 const getItems = (cartLineItemsCount?: number) => [
   {
@@ -47,6 +49,7 @@ const getItems = (cartLineItemsCount?: number) => [
 
 const BottomNav = () => {
   const pathname = usePathname();
+  const openCart = useSetAtom(cartSheetAtom);
   return (
     <div className="z-50 w-full fixed bottom-0 left-0 flex flex-row items-stretch md:hidden bg-primary">
       {getItems().map(({ label, Icon, path }) => {
@@ -58,9 +61,11 @@ const BottomNav = () => {
             <BottomNavItem
               label={label}
               Icon={Icon}
-              path={path}
               pathname={pathname}
+              path={pathname}
+              onClick={() => openCart(true)}
               key={label}
+              className="bg-primary hover:bg-primary"
             >
               <Badge
                 variant="outline"
@@ -91,8 +96,10 @@ export const BottomNavItem = memo(
     path,
     pathname,
     label,
-    Icon
-  }: React.PropsWithChildren & {
+    Icon,
+    onClick,
+    className
+  }: ButtonProps & {
     path: string;
     label: string;
     Icon: LucideIcon;
@@ -101,11 +108,13 @@ export const BottomNavItem = memo(
     return (
       <Button
         className={cn(
-          'flex-col h-auto w-full gap-1 rounded-none px-0 pb-1.5 pt-3 relative',
-          path === pathname && 'bg-slate-800'
+          'flex-col h-auto w-full gap-1 rounded-none px-0 pb-1.5 pt-3 relative hover:bg-slate-800',
+          path === pathname && 'bg-slate-800',
+          className
         )}
         key={label}
         asChild
+        onClick={onClick}
       >
         <Link href={path}>
           <Icon className="h-6 w-6" strokeWidth={1.8} />

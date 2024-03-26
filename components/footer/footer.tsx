@@ -56,7 +56,10 @@ const Footer = async () => {
               <FooterLink
                 href={`https://www.google.com/maps/@${coordinate?.longitude},${coordinate?.latitude}`}
                 target="_blank"
-                className="items-start -mt-1 h-auto"
+                className={cn(
+                  'items-start -mt-1 h-auto',
+                  (address || '').length < 20 && 'items-center'
+                )}
               >
                 <MapPinIcon className="flex-none h-5 w-5 mt-1" />
                 <span className="ml-2 text-wrap">{address || ''}</span>
