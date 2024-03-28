@@ -1,5 +1,6 @@
 import type { QueryOptions } from '@apollo/client';
 import { IProduct } from './product.types';
+import { CommonParams, IAttachment } from '.';
 
 export interface CustomField {
   field: string;
@@ -11,8 +12,6 @@ export interface Group {
   fieldId: string;
   title: string;
 }
-
-export type IAttachment = { url?: string } | null;
 
 export interface IProductDetail extends IProduct {
   attachmentMore?: IAttachment[];
@@ -35,9 +34,6 @@ export interface ICategory {
   code: string;
 }
 
-export interface CommonParams {
-  variables?: QueryOptions['variables'];
-}
 export type IGetParent = (parentId: string) => ICategory | undefined;
 
 export type GetCategories = (params?: CommonParams) => Promise<{

@@ -5,12 +5,12 @@ import {
   GetCategories,
   IProductDetail,
   IGetParent,
-  CommonParams,
   ICategory
 } from '@/types/products.types';
 import type { LinkProps } from 'next/link';
 import { Breadcrumb } from '@/components/breadcrumb/breadcrumb';
 import { cache } from 'react';
+import { CommonParams } from '@/types';
 
 export const getCategories: GetCategories = cache(async params => {
   const { data, error } = await getClient().query({

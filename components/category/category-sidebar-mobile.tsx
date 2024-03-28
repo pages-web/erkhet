@@ -9,7 +9,7 @@ const CategorySideBarMobile = ({ children }: React.PropsWithChildren) => {
 
   return (
     <Sheet open={open} onOpenChange={op => setOpen(op)}>
-      <SheetContent side="left" className="pt-3">
+      <SheetContent side="left" className="pt-3 max-h-screen overflow-y-auto">
         <div className="flex items-center justify-between pb-4">
           <h2 className="font-bold mt-1 text-xl">Шүүлт</h2>
           <SheetClose asChild>
