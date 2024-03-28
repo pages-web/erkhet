@@ -11,7 +11,7 @@ import {
   getProductDetail
 } from '@/sdk/queries/products';
 import { IPageProps } from '@/types';
-import { IAttachment } from '@/types/products.types';
+import { IAttachment } from '@/types';
 import { Metadata } from 'next/types';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';

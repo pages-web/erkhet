@@ -9,7 +9,7 @@ import {
 } from '../ui/carousel';
 import { memo, useCallback, useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
-import { IAttachment } from '@/types/products.types';
+import { IAttachment } from '@/types';
 
 const Gallery = ({ attachments = [] }: { attachments: IAttachment[] }) => {
   const [emblaMainApi, setApi] = useState<CarouselApi>();
