@@ -108,8 +108,8 @@ export const BottomNavItem = memo(
     return (
       <Button
         className={cn(
-          'flex-col h-auto w-full gap-1 rounded-none px-0 pb-1.5 pt-3 relative hover:bg-slate-800',
-          path === pathname && 'bg-slate-800',
+          'flex-col h-auto w-full gap-1 rounded-none px-0 pb-1.5 pt-3 relative hover:bg-active',
+          path === pathname && 'bg-active',
           className
         )}
         key={label}
