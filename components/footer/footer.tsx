@@ -21,9 +21,7 @@ const Footer = async () => {
               <FooterLink href="/terms-of-service">
                 Үйлчилгээний нөхцөл
               </FooterLink>
-              <FooterLink href="/terms-of-service">
-                Нууцлалын бодлого
-              </FooterLink>
+              <FooterLink href="/privacy-policy">Нууцлалын бодлого</FooterLink>
             </Col>
             <Col title="Холбоо барих">
               {!!email && (
