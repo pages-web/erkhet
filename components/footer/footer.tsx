@@ -40,7 +40,7 @@ const Footer = async () => {
               )}
               <Col title="Биднийг дагаарай">
                 <div className="flex items-center pb-2 gap-1 -ml-2">
-                  {Object.keys(links || {}).map(link => (
+                  {Object.keys(links || {}).map((link) => (
                     <SocialLink
                       href={(links || {})[link] || ''}
                       icon={link}
@@ -57,7 +57,7 @@ const Footer = async () => {
                 href={`https://www.google.com/maps/@${coordinate?.longitude},${coordinate?.latitude}`}
                 target="_blank"
                 className={cn(
-                  'items-start -mt-1 h-auto',
+                  'items-start -mt-1 h-auto whitespace-normal',
                   (address || '').length < 20 && 'items-center'
                 )}
               >
@@ -93,7 +93,7 @@ const Footer = async () => {
 
 const Col = ({
   title,
-  children
+  children,
 }: React.PropsWithChildren & { title: string }) => {
   return (
     <div className="">
