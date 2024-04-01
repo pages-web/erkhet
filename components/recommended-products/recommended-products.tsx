@@ -5,24 +5,27 @@ import {
   CarouselContent,
   CarouselItem,
   CarouselPrevious,
-  CarouselNext
+  CarouselNext,
 } from '../ui/carousel';
 
 const RecommendedProducts = async ({
   categoryId,
-  productId
+  productId,
 }: {
   categoryId?: string;
-  productId: string;
+  productId?: string;
 }) => {
   const { products } = await getProducts({
-    variables: { categoryId, perPage: 12, isKiosk: true }
+    variables: { categoryId, perPage: 12, isKiosk: true },
   });
-  const exceptCurrent = products.filter(product => product._id !== productId);
+  const exceptCurrent = products.filter((product) => product._id !== productId);
+
+  if (!exceptCurrent.length) return null;
+
   return (
     <Carousel opts={{ containScroll: 'keepSnaps', dragFree: true }}>
       <CarouselContent>
-        {exceptCurrent.map(product => (
+        {exceptCurrent.map((product) => (
           <CarouselItem className="basis-[300px]">
             <ProductCard {...product} key={product._id} />
           </CarouselItem>
