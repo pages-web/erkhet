@@ -1,4 +1,3 @@
-import type { QueryOptions } from '@apollo/client';
 import { IProduct } from './product.types';
 import { CommonParams, IAttachment } from '.';
 
