@@ -5,4 +5,5 @@ export interface IArticle {
   content: string;
   image?: IAttachment;
   attachments?: IAttachment[];
+  summary?: string;
 }

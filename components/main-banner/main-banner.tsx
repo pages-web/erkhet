@@ -1,31 +1,62 @@
+import { getKbArticles } from '@/sdk/queries/kb';
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
-  CarouselPrevious
+  CarouselPrevious,
 } from '../ui/carousel';
-// import Picture from '../ui/picture';
+import { IArticle } from '@/types/kb.types';
+import Link from 'next/link';
+import Image from '../ui/image';
 
-const MainBanner = () => {
+const MainBanner = async () => {
+  const { articles } = await getKbArticles({
+    variables: {
+      categoryIds: [process.env.KB_BANNERS],
+    },
+  });
+
+  if (!(articles || []).length) return null;
+
   return (
-    <div className="container">
-      <Carousel className="mt-3 mb-4 md:mt-4 md:mb-8">
+    <div className="md:container">
+      <Carousel className=" mb-4 md:mt-4 md:mb-8">
         <CarouselContent className="ml-0">
-          <CarouselItem className="relative aspect-[7/3] md:aspect-[80/23] flex-basis-[1] rounded-2xl overflow-hidden">
-            {/* <Picture
-              fill
-              sizes={`(max-width: 1536px) 100vw, 1536px`}
-              desktop="https://d1f6qhhrbg3j8a.cloudfront.net/img/240854/original/Tsagaan_sar_2024_web_banner.jpg"
-              mobile="https://cdn.cody.mn/img/250012/800x0xwebp/mobile_banner_converse.jpg?h=b7bbe137c87a60956ebf41796360de7121b5d856"
-              className="object-center object-cover"
-            /> */}
-          </CarouselItem>
+          {articles.map((article) => (
+            <BannerItem key={article._id} {...article} />
+          ))}
         </CarouselContent>
         <CarouselPrevious className="left-8 hidden md:inline-flex" />
         <CarouselNext className="right-8 hidden md:inline-flex" />
       </Carousel>
     </div>
+  );
+};
+
+const BannerItem = ({ _id, image, summary, attachments }: IArticle) => {
+  return (
+    <CarouselItem className="flex-basis-[1] pl-0" key={_id}>
+      <Link
+        className="relative aspect-[4/5] md:aspect-[13/5] md:rounded-2xl overflow-hidden block"
+        href={summary || '/'}
+      >
+        <Image
+          src={image?.url}
+          alt=""
+          width={1536}
+          height={600}
+          className="absolute object-cover inset-0 object-center hidden md:block"
+        />
+        <Image
+          src={(attachments || [])[0]?.url || ''}
+          alt=""
+          width={1536}
+          height={600}
+          className="absolute object-cover inset-0 object-center md:hidden"
+        />
+      </Link>
+    </CarouselItem>
   );
 };
 

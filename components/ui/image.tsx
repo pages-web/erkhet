@@ -5,6 +5,7 @@ import NextImage, { ImageProps as NextImageProps } from 'next/image';
 import { cn, readFile } from '@/lib/utils';
 import cloudflareLoader from '@/lib/image-loader';
 import { useState } from 'react';
+import { useMediaQuery } from '@/hooks/use-media-query';
 
 const PLACEHOLDER = '/images/placeholder-1.png';
 
@@ -27,6 +28,22 @@ const Image = ({
     return cloudflareLoader;
   };
 
+  const isDesktop = useMediaQuery('(min-width: 768px)');
+  const isTablet = useMediaQuery('(min-width: 480px)');
+
+  //  TODO: use srcSet etc.
+  const getWidth = () => {
+    if (isDesktop) return width?.toString();
+
+    const widthNum = parseInt(width?.toString() || '0');
+
+    if (isTablet && widthNum > 768) return '768';
+
+    if (widthNum > 480) return '480';
+
+    return widthNum.toString();
+  };
+
   const handleComplete = () => setLoading(false);
   const onError = () => setSrcI(PLACEHOLDER);
   const fill = (!width && !height) || undefined;
@@ -39,8 +56,8 @@ const Image = ({
         fromCF
           ? cloudflareLoader({
               src: srcI,
-              width: parseInt(width?.toString() || '500'),
-              quality: parseInt(quality?.toString() || '75')
+              width: parseInt(getWidth() || '480'),
+              quality: parseInt(quality?.toString() || '75'),
             })
           : srcI
       }

@@ -20,7 +20,7 @@ const Page = async ({ params }: IPageProps) => {
   return (
     <div
       dangerouslySetInnerHTML={{ __html: article.content }}
-      className="container py-4"
+      className="container py-4 min-h-[40vw]"
     />
   );
 };
