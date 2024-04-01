@@ -13,7 +13,7 @@ import { Metadata } from 'next/types';
 
 export const fontSans = FontSans({
   subsets: ['latin'],
-  variable: '--font-sans'
+  variable: '--font-sans',
 });
 
 interface RootLayoutProps {
@@ -38,12 +38,12 @@ export async function generateMetadata(): Promise<Metadata> {
           url: uiOptions?.logo,
           width: 800,
           height: 600,
-          alt: name
-        }
+          alt: name,
+        },
       ],
       url: pdomain,
-      type: 'website'
-    }
+      type: 'website',
+    },
   };
 }
 
@@ -51,6 +51,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
   const { config } = await getConfig();
   const { uiOptions } = config || {};
   const { colors } = uiOptions || {};
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>

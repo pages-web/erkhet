@@ -32,6 +32,7 @@ export interface ICategory {
   order: string;
   parentId: string;
   code: string;
+  attachment: IAttachment;
 }
 
 export type IGetParent = (parentId: string) => ICategory | undefined;

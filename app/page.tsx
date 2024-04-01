@@ -1,4 +1,5 @@
-// import { CategoryCard } from '@/components/category-card/category-card';
+import { CategoryCard } from '@/components/category-card/category-card';
+import Display from '@/components/display/display-new';
 // import Display from '@/components/display/display';
 // import { Heading } from '@/components/heading/heading';
 import MainBanner from '@/components/main-banner/main-banner';
@@ -13,8 +14,8 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: config.name + ' - Нүүр хуудас',
     openGraph: {
-      title: config.name + ' - Нүүр хуудас'
-    }
+      title: config.name + ' - Нүүр хуудас',
+    },
   };
 }
 
@@ -22,6 +23,8 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       <MainBanner />
+      <CategoryCard />
+      <Display />
     </div>
   );
 }

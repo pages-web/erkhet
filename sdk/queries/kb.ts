@@ -1,6 +1,6 @@
 import { CommonParams } from '@/types';
 import { cache } from 'react';
-import { IArticle } from '@/types/kb.types';
+import { IArticle, IKBCategoryDetail } from '@/types/kb.types';
 import { getClient } from '../ssClient';
 import { queries } from '../graphql/kb';
 import { getConfig } from './auth';
@@ -13,6 +13,11 @@ export type GetKbArticleDetail = (params?: CommonParams) => Promise<{
 export type GetKbArticles = (params?: CommonParams) => Promise<{
   error_msg: string | undefined;
   articles: IArticle[];
+}>;
+
+export type GetKbCategoryDetail = (params?: CommonParams) => Promise<{
+  error_msg: string | undefined;
+  category: IKBCategoryDetail;
 }>;
 
 export const getKbArticleDetail: GetKbArticleDetail = cache(async (params) => {
@@ -51,6 +56,26 @@ export const getKbArticles: GetKbArticles = cache(async (params) => {
 
   return {
     articles,
+    error_msg: error?.message,
+  };
+});
+
+export const kbCategoryDetail: GetKbCategoryDetail = cache(async (params) => {
+  const { config } = await getConfig();
+  const { data, error } = await getClient().query({
+    query: queries.kbCategory,
+    variables: params?.variables,
+    context: {
+      headers: {
+        'erxes-app-token': config?.erxesAppToken,
+      },
+    },
+  });
+
+  const { knowledgeBaseCategoryDetail: category } = data || {};
+
+  return {
+    category,
     error_msg: error?.message,
   };
 });

@@ -13,7 +13,9 @@ const productCategories = gql`
       ${commonFields}
       order
       parentId
-      isRoot
+      attachment {
+        url
+      }
     }
   }
 `;
@@ -175,6 +177,6 @@ const queries = {
   productSimilarities,
   productDetail,
   productsMeta,
-  productReview
+  productReview,
 };
 export default queries;

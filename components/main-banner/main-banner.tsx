@@ -47,12 +47,14 @@ const BannerItem = ({ _id, image, summary, attachments }: IArticle) => {
           width={1536}
           height={600}
           className="absolute object-cover inset-0 object-center hidden md:block"
+          skipAnimation
         />
         <Image
           src={(attachments || [])[0]?.url || ''}
           alt=""
           width={1536}
           height={600}
+          skipAnimation
           className="absolute object-cover inset-0 object-center md:hidden"
         />
       </Link>

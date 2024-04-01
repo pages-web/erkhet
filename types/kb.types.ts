@@ -6,4 +6,12 @@ export interface IArticle {
   image?: IAttachment;
   attachments?: IAttachment[];
   summary?: string;
+  title: string;
+}
+
+export interface IKBCategoryDetail {
+  _id: string;
+  title: string;
+  description?: string;
+  articles: IArticle[];
 }

@@ -36,6 +36,25 @@ const articles = gql`
   }
 `;
 
-const queries = { articleDetail, articles };
+const kbCategory = gql`
+  query knowledgeBaseCategoryDetail($_id: String!) {
+    knowledgeBaseCategoryDetail(_id: $_id) {
+      _id
+      title
+      description
+      articles {
+        _id
+        title
+        summary
+        content
+        image {
+          url
+        }
+      }
+    }
+  }
+`;
+
+const queries = { articleDetail, articles, kbCategory };
 
 export default queries;

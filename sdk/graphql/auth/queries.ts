@@ -34,6 +34,7 @@ const currentConfig = gql`
       pdomain
       checkRemainder
       branchId
+      initialCategoryIds
       uiOptions {
         logo
         colors
