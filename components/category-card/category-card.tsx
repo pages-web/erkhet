@@ -40,8 +40,7 @@ export async function CategoryCard({ ...attributes }: CategoryCardProps) {
     <>
       <Heading title="Онцлох ангилалууд" className="md:mt-16 md:mb-8" />
       <div
-        className="container mb-16 flex flex-nowrap md:flex-wrap md:justify-center overflow-x-scroll no-scrollbar"
-        data-testid="category-card"
+        className="container mb-10 md:mb-16 flex flex-nowrap md:flex-wrap md:justify-center overflow-x-scroll no-scrollbar"
         {...attributes}
       >
         {(config.initialCategoryIds || []).map((_id: string) => (

@@ -17,7 +17,7 @@ const MainBanner = async () => {
     },
   });
 
-  if (!(articles || []).length) return null;
+  if (!(articles || []).length) return <div className="mt-6 md:mt-12" />;
 
   return (
     <div className="md:container">

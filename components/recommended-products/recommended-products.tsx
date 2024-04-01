@@ -26,8 +26,8 @@ const RecommendedProducts = async ({
     <Carousel opts={{ containScroll: 'keepSnaps', dragFree: true }}>
       <CarouselContent>
         {exceptCurrent.map((product) => (
-          <CarouselItem className="basis-[300px]">
-            <ProductCard {...product} key={product._id} />
+          <CarouselItem className="basis-[300px]" key={product._id}>
+            <ProductCard {...product} />
           </CarouselItem>
         ))}
       </CarouselContent>

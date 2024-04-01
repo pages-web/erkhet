@@ -3,11 +3,16 @@ import DisplayItem from './display-item';
 import { kbCategoryDetail } from '@/sdk/queries/kb';
 
 const DisplayNew = async () => {
+  if (!process.env.KB_DISPLAY) return null;
+
   const { category } = await kbCategoryDetail({
     variables: {
       _id: process.env.KB_DISPLAY,
     },
   });
+
+  if (!category) return null;
+
   return (
     <>
       <Heading
