@@ -33,8 +33,8 @@ const CurrentUser = () => {
             alt={currentUser.firstName}
           />
           <AvatarFallback>
-            {firstName[0]}
-            {lastName[0]}
+            {(firstName || 'P')[0]}
+            {(lastName || '')[0]}
           </AvatarFallback>
         </Link>
       </Avatar>
