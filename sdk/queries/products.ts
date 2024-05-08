@@ -26,7 +26,12 @@ export const getCategories: GetCategories = cache(async params => {
     (category: ICategory) => !getParent(category.parentId)
   );
   return {
-    categories,
+    categories:
+      primaryCategories.length === 1
+        ? categories.filter(
+            (cat: ICategory) => cat._id !== primaryCategories[0]._id
+          )
+        : categories,
     error_msg: error?.message,
     primaryCategories:
       primaryCategories.length === 1
