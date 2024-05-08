@@ -39,7 +39,6 @@ const currentConfig = gql`
         logo
         colors
         favIcon
-        bgImage
       }
     }
   }
