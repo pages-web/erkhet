@@ -1,10 +1,11 @@
 import Link from 'next/link';
 import Image from '../ui/image';
 import { getCategories } from '@/sdk/queries/products';
+import { cn } from '@/lib/utils';
 
-const CategoryItem = async ({ id }: { id: string }) => {
+const CategoryItem = async ({ id, length }: { id: string; length: number }) => {
   const { categories } = await getCategories();
-  const category = categories.find((cat) => cat._id === id);
+  const category = categories.find(cat => cat._id === id);
 
   if (!category) return null;
 
@@ -28,7 +29,12 @@ const CategoryItem = async ({ id }: { id: string }) => {
           />
         </div>
         <div className="flex justify-center">
-          <p className="mt-4 font-semibold no-underline text-base group-hover:underline group-hover:text-primary group-hover:font-normal group-active:text-primary group-active:font-normal">
+          <p
+            className={cn(
+              'mt-4 font-semibold no-underline text-base group-hover:underline group-hover:text-primary group-hover:font-normal group-active:text-primary max-w-40 text-center',
+              length > 5 && 'font-medium text-sm'
+            )}
+          >
             {name}
           </p>
         </div>

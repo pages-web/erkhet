@@ -3,6 +3,7 @@ import { Separator } from '../ui/separator';
 import CategoryNavContainer from '@/containers/products/category-nav';
 import { getConfig } from '@/sdk/queries/auth';
 import Image from '@/components/ui/image';
+import { Suspense } from 'react';
 
 export async function NavbarTop({
   children,
@@ -42,7 +43,9 @@ export async function NavbarTop({
       <div className="hidden md:block bg-primary sticky top-[60px]">
         <Separator className="bg-background/10" />
         <div className="container py-0.5 flex">
-          <CategoryNavContainer />
+          <Suspense>
+            <CategoryNavContainer />
+          </Suspense>
         </div>
       </div>
     </header>

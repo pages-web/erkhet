@@ -97,9 +97,9 @@ const getSort = (sortValue?: string | string[]) => {
     case 'oldToNew':
       return { sortField: 'createdAt', sortDirection: 1 };
     case 'priceUp':
-      return { sortField: 'unitPrice', sortDirection: -1 };
-    case 'priceDown':
       return { sortField: 'unitPrice', sortDirection: 1 };
+    case 'priceDown':
+      return { sortField: 'unitPrice', sortDirection: -1 };
     default:
       return { sortField: 'createdAt', sortDirection: -1 };
   }

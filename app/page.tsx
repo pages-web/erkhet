@@ -20,8 +20,8 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: config.name + ' - Нүүр хуудас',
     openGraph: {
-      title: config.name + ' - Нүүр хуудас',
-    },
+      title: config.name + ' - Нүүр хуудас'
+    }
   };
 }
 
@@ -31,14 +31,9 @@ export default function Home() {
       <MainBanner />
       <CategoryCard />
       <Display />
-      <div className="container flex items-end justify-between">
+      <div className="container flex items-center justify-between">
         <Heading title="Сүүлд нэмэгдсэн" className=" text-left md:mb-5" />
-        <Button
-          asChild
-          variant="outline"
-          className="mb-3 md:mb-5 hidden md:inline-flex"
-          size="lg"
-        >
+        <Button asChild variant="link" className="mb-3 md:mb-5">
           <Link href="/category">
             Цааш үзэх
             <ChevronRight className="h-5 w-5 ml-1 -mr-2" strokeWidth={1.5} />

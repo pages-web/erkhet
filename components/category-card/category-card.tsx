@@ -17,18 +17,18 @@ const items = [
   {
     name: 'New',
     image: '/images/new-card.png',
-    order: '/category',
+    order: '/category'
   },
   {
     name: 'Men',
     image: '/images/men-card.png',
-    order: '/category',
+    order: '/category'
   },
   {
     name: 'Women',
     image: '/images/women-card.png',
-    order: '/category',
-  },
+    order: '/category'
+  }
 ];
 
 export async function CategoryCard({ ...attributes }: CategoryCardProps) {
@@ -44,7 +44,11 @@ export async function CategoryCard({ ...attributes }: CategoryCardProps) {
         {...attributes}
       >
         {(config.initialCategoryIds || []).map((_id: string) => (
-          <CategoryItem id={_id} key={_id} />
+          <CategoryItem
+            id={_id}
+            key={_id}
+            length={config.initialCategoryIds.length}
+          />
         ))}
       </div>
     </>

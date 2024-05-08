@@ -32,12 +32,16 @@ const Login = () => {
           </Suspense>
           <Separator />
           <div className="space-y-3">
-            <Suspense>
-              <FacebookLogin />
-            </Suspense>
-            <Suspense>
-              <GoogleLogin />
-            </Suspense>
+            {process.env.NEXT_PUBLIC_FACEBOOK_ID && (
+              <Suspense>
+                <FacebookLogin />
+              </Suspense>
+            )}
+            {process.env.NEXT_PUBLIC_GOOGLE_ID && (
+              <Suspense>
+                <GoogleLogin />
+              </Suspense>
+            )}
           </div>
         </div>
       </div>
