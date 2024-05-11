@@ -17,10 +17,16 @@ const articleDetail = gql`
 `;
 
 const articles = gql`
-  query Articles($page: Int, $perPage: Int, $categoryIds: [String]) {
+  query Articles(
+    $page: Int
+    $perPage: Int
+    $codes: [String]
+    $categoryIds: [String]
+  ) {
     knowledgeBaseArticles(
       page: $page
       perPage: $perPage
+      codes: $codes
       categoryIds: $categoryIds
     ) {
       _id
@@ -55,6 +61,14 @@ const kbCategory = gql`
   }
 `;
 
-const queries = { articleDetail, articles, kbCategory };
+const kbCategoryId = gql`
+  query knowledgeBaseCategoryId($_id: String!) {
+    knowledgeBaseCategoryDetail(_id: $_id) {
+      _id
+    }
+  }
+`;
+
+const queries = { articleDetail, articles, kbCategory, kbCategoryId };
 
 export default queries;

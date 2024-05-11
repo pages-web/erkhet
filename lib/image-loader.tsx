@@ -10,7 +10,6 @@ export default function cloudflareLoader({
 }: ImageLoaderProps) {
   const params = [`width=${width}`, 'format=avif'];
   const trimmedSrc = src.trim();
-
   if (trimmedSrc.startsWith('https://imagedelivery.net/')) {
     return `${trimmedSrc.slice(0, -6)}${params.join(',')}`;
   }

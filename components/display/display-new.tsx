@@ -3,12 +3,10 @@ import DisplayItem from './display-item';
 import { kbCategoryDetail } from '@/sdk/queries/kb';
 
 const DisplayNew = async () => {
-  if (!process.env.KB_DISPLAY) return null;
-
   const { category } = await kbCategoryDetail({
     variables: {
-      _id: process.env.KB_DISPLAY,
-    },
+      _id: 'display'
+    }
   });
 
   if (!category) return null;
@@ -25,7 +23,7 @@ const DisplayNew = async () => {
         </div>
       )}
       <div className="space-y-4 md:space-y-0 md:gap-4 md:grid grid-cols-3 container mb-8 md:mb-12">
-        {category.articles.map((article) => (
+        {category.articles.map(article => (
           <DisplayItem key={article._id} {...(article || {})} />
         ))}
       </div>

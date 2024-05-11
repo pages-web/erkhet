@@ -1,21 +1,17 @@
-import { getKbArticles } from '@/sdk/queries/kb';
+import { getKbArticlesByCode } from '@/sdk/queries/kb';
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
-  CarouselPrevious,
+  CarouselPrevious
 } from '../ui/carousel';
 import { IArticle } from '@/types/kb.types';
 import Link from 'next/link';
 import Image from '../ui/image';
 
 const MainBanner = async () => {
-  const { articles } = await getKbArticles({
-    variables: {
-      categoryIds: [process.env.KB_BANNERS],
-    },
-  });
+  const { articles } = await getKbArticlesByCode('main-banner');
 
   if (!(articles || []).length) return <div className="mt-6 md:mt-12" />;
 
@@ -23,7 +19,7 @@ const MainBanner = async () => {
     <div className="md:container">
       <Carousel className=" mb-4 md:mt-4 md:mb-8">
         <CarouselContent className="ml-0">
-          {articles.map((article) => (
+          {articles.map(article => (
             <BannerItem key={article._id} {...article} />
           ))}
         </CarouselContent>
