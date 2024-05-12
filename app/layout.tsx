@@ -105,10 +105,3 @@ export default async function RootLayout({ children }: RootLayoutProps) {
     </html>
   );
 }
-
-//  --border: ${hexToHsl(
-//    getSimilarColorWithOpacity(colors.primary, 0.3)
-//  )};
-//  --input: ${hexToHsl(
-//    getSimilarColorWithOpacity(colors.primary, 0.2)
-//  )};
