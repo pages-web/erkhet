@@ -1,9 +1,6 @@
 import Link from 'next/link';
-import { Separator } from '../ui/separator';
-import CategoryNavContainer from '@/containers/products/category-nav';
 import { getConfig } from '@/sdk/queries/auth';
 import Image from '@/components/ui/image';
-import { Suspense } from 'react';
 
 export async function NavbarTop({
   children,
@@ -11,7 +8,6 @@ export async function NavbarTop({
 }: React.PropsWithChildren) {
   const { config } = await getConfig();
   const { logo } = config?.uiOptions || {};
-  console.log(logo);
   return (
     <header
       className=" z-50 sticky w-full top-0 left-0 md:shadow-sm py-4 bg-white"
