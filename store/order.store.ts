@@ -2,13 +2,13 @@ import { IDeliveryInfo, IOrder, IBillType } from '@/types/order.types';
 import { atom } from 'jotai';
 import { focusAtom } from 'jotai-optics';
 import { splitAtom } from 'jotai/utils';
-import { cartTotalAtom } from './cart.store';
+import { cartAtom, cartTotalAtom } from './cart.store';
 import { currentUserAtom, deliveryItemIdAtom } from './auth.store';
 
 export const defaultOrderItem = {
   items: [],
   deliveryInfo: null,
-  description: ''
+  description: '',
 };
 export const activeOrderAtom = atom<
   | IOrder
@@ -24,20 +24,20 @@ export const activeOrderAtom = atom<
   deliveryInfo: null,
   description: '',
   billType: '1',
-  registerNumber: ''
+  registerNumber: '',
 });
 
-export const orderParamsAtom = atom(get => {
+export const orderParamsAtom = atom((get) => {
   const {
-    items,
     registerNumber,
     billType,
     description,
     deliveryInfo,
     branchId,
     _id,
-    saleStatus
+    saleStatus,
   } = get(activeOrderAtom) as IOrder;
+  const items = get(cartAtom);
   const totalAmount = get(cartTotalAtom);
   const customerId = get(currentUserAtom)?.erxesCustomerId;
   const deliveryProductId = get(deliveryItemIdAtom);
@@ -45,23 +45,24 @@ export const orderParamsAtom = atom(get => {
   return {
     _id,
     items: items
-      .filter(item => item.productId !== deliveryProductId)
+      .filter((item) => item.productId !== deliveryProductId)
       .map(({ _id, count, productId, unitPrice }) => ({
         _id,
         count,
         productId,
-        unitPrice
+        unitPrice,
       })),
     totalAmount,
     type: 'delivery',
     customerId,
+    customerType: 'visitor',
     registerNumber,
     billType,
     origin: 'kiosk',
     deliveryInfo,
     description,
     branchId,
-    saleStatus
+    saleStatus,
   };
 });
 
@@ -69,47 +70,47 @@ export const initialLoadingOrderAtom = atom<boolean>(true);
 export const loadingOrderAtom = atom<boolean>(false);
 
 export const cudOrderAtom = atom<boolean>(false);
-
-export const itemsAtom = focusAtom(activeOrderAtom, optic =>
+export const activeOrderIdAtom = atom<string>('');
+export const itemsAtom = focusAtom(activeOrderAtom, (optic) =>
   optic.prop('items')
 );
 
 export const filterDeliveryProduct = (
   items: IOrder['items'],
   deliveryProductId?: string
-) => items.filter(item => item.productId !== deliveryProductId);
+) => items.filter((item) => item.productId !== deliveryProductId);
 
 export const getDeliveryProduct = (
   items: IOrder['items'],
   deliveryProductId?: string
-) => items.find(item => item.productId === deliveryProductId);
+) => items.find((item) => item.productId === deliveryProductId);
 
-export const productItemsAtom = atom(get =>
+export const productItemsAtom = atom((get) =>
   filterDeliveryProduct(get(itemsAtom), get(deliveryItemIdAtom))
 );
 
-export const deliveryItemAtom = atom(get =>
+export const deliveryItemAtom = atom((get) =>
   getDeliveryProduct(get(itemsAtom), get(deliveryItemIdAtom))
 );
 
-export const billTypeAtom = focusAtom(activeOrderAtom, optic =>
+export const billTypeAtom = focusAtom(activeOrderAtom, (optic) =>
   optic.prop('billType')
 );
 
-export const registerNumberAtom = focusAtom(activeOrderAtom, optic =>
+export const registerNumberAtom = focusAtom(activeOrderAtom, (optic) =>
   optic.prop('registerNumber')
 );
 
-export const deliveryInfoAtom = focusAtom(activeOrderAtom, optic =>
+export const deliveryInfoAtom = focusAtom(activeOrderAtom, (optic) =>
   optic.prop('deliveryInfo')
 );
 
-export const descriptionAtom = focusAtom(activeOrderAtom, optic =>
+export const descriptionAtom = focusAtom(activeOrderAtom, (optic) =>
   optic.prop('description')
 );
 
 export const changeDeliveryInfoAtom = atom(
-  get => get(loadingOrderAtom),
+  (get) => get(loadingOrderAtom),
   (
     get,
     set,
@@ -135,7 +136,7 @@ export const changeDeliveryInfoAtom = atom(
       `,
       deliveryInfo: v,
       billType,
-      registerNumber: billType === '3' ? registerNumber : ''
+      registerNumber: billType === '3' ? registerNumber : '',
     };
 
     if (
@@ -144,7 +145,7 @@ export const changeDeliveryInfoAtom = atom(
       get(billTypeAtom) !== billType
     ) {
       set(cudOrderAtom, true);
-      set(activeOrderAtom, prev => ({ ...(prev as IOrder), ...params }));
+      set(activeOrderAtom, (prev) => ({ ...(prev as IOrder), ...params }));
     }
   }
 );

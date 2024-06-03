@@ -149,6 +149,25 @@ query OrderDetail($id: String, $customerId: String) {
   }
 `;
 
+const donateOrderDetail = gql`
+  query DonateOrderDetail($id: String, $customerId: String) {
+    orderDetail(_id: $id, customerId: $customerId) {
+      _id
+      totalAmount
+      number
+      paidDate
+      items {
+        _id
+        unitPrice
+        count
+        productId
+      }
+      description
+      deliveryInfo
+    }
+  }
+`;
+
 const invoices = `
   query Invoices($contentType: String, $contentTypeId: String) {
     invoices(contentType: $contentType, contentTypeId: $contentTypeId) {
@@ -187,7 +206,8 @@ const queries = {
   fullOrders,
   orderDetail,
   invoices,
-  addresses
+  addresses,
+  donateOrderDetail,
 };
 
 export default queries;

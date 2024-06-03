@@ -1,49 +1,52 @@
 import { type OperationVariables, useMutation } from '@apollo/client';
 import { mutations } from '../graphql/payment';
-import { useDetail } from '@/components/order-detail/order-detail';
 import { useAtomValue } from 'jotai';
 import { selectedMethodAtom } from '@/store/payment.store';
 import { onError } from '@/lib/utils';
+import { useDonate } from '@/containers/donate/donate';
+import { deliveryInfoAtom } from '@/store/donate.store';
 
 const useCreateInvoice = ({
   appToken,
-  posName
+  posName,
 }: {
   appToken: string;
   posName: string;
 }) => {
   const context = {
     headers: {
-      'erxes-app-token': appToken
-    }
+      'erxes-app-token': appToken,
+    },
   };
 
+  const deliveryInfo = useAtomValue(deliveryInfoAtom);
+
   const selectedPaymentId = useAtomValue(selectedMethodAtom);
-  const { totalAmount, _id, customer, customerType, number, deliveryInfo } =
-    useDetail();
+  const { detail } = useDonate();
 
   const [createInvoice, { reset, data, loading }] = useMutation(
     mutations.createInvoice,
     {
       context,
-      onError
+      onError,
     }
   );
 
   const handleCreateInvoice = (variables?: OperationVariables) =>
     createInvoice({
       variables: {
-        amount: totalAmount,
+        amount: detail?.totalAmount,
         contentType: 'pos:orders',
-        contentTypeId: _id,
-        customerId: customer?._id || 'empty',
-        customerType: customerType || 'customer',
-        description: `${number} - ${posName.toUpperCase()} - ${_id}`,
+        contentTypeId: detail?._id,
+        customerType: 'customer',
+        description: `${detail?.number} - ${posName.toUpperCase()} - ${
+          detail?._id
+        }`,
         data: { posToken: process.env.NEXT_PUBLIC_POS_TOKEN },
         selectedPaymentId: selectedPaymentId,
         phone: deliveryInfo?.phone,
-        ...variables
-      }
+        ...variables,
+      },
     });
 
   const { invoiceCreate } = data || {};

@@ -24,7 +24,7 @@ export const READ_FILE = '/read-file?key=';
 export const ERXES_SASS = 'erxes-saas/';
 
 export const readFile = (url: string = '') => {
-  if (url.startsWith(ERXES_SASS))
+  if (!url.startsWith('/') && !url.startsWith('http'))
     return process.env.NEXT_PUBLIC_MAIN_API_DOMAIN + READ_FILE + url;
 
   if (url.includes(READ_FILE)) {
@@ -41,7 +41,7 @@ export const formatNum = (num: number | string, splitter?: string): string => {
     const options = splitter
       ? {
           minimumFractionDigits: 2,
-          maximumFractionDigits: 2
+          maximumFractionDigits: 2,
         }
       : undefined;
 

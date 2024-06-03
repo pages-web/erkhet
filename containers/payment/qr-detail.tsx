@@ -21,7 +21,7 @@ const QrDetail = ({
   status,
   qrCode,
   id,
-  urls
+  urls,
 }: {
   errorDescription?: string;
   status: string;
@@ -34,7 +34,7 @@ const QrDetail = ({
       <div className="max-h-[60vh] overflow-auto pb-14">
         <QrContainer error={errorDescription}>
           {qrCode ? (
-            <Image
+            <img
               src={qrCode}
               className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2"
               height={256}
@@ -50,7 +50,7 @@ const QrDetail = ({
         </QrContainer>
         {!!urls?.length && (
           <div className="pt-4 grid grid-cols-3 gap-4 md:hidden">
-            {urls.map(url => (
+            {urls.map((url) => (
               <Button
                 className="text-xs flex flex-col gap-1 items-center justify-center px-2 py-3 shadow border border-border/10 h-auto rounded-md"
                 variant={'ghost'}
@@ -73,10 +73,9 @@ const QrDetail = ({
             ))}
           </div>
         )}
-        <DialogFooter className="sm:justify-center gap-2 pt-4 block md:flex space-y-2 md:space-y-0">
-          <BackButton />
+        <div className="pt-4">
           <CheckPayment id={id} />
-        </DialogFooter>
+        </div>
       </div>
     </div>
   );
@@ -85,7 +84,7 @@ const QrDetail = ({
 export const QrContainer = ({
   children,
   loading,
-  error
+  error,
 }: React.PropsWithChildren & { loading?: boolean; error?: string }) => (
   <>
     <div className="p-4">
@@ -113,12 +112,12 @@ export const QrContainer = ({
       </Alert>
     )}
     {loading && (
-      <DialogFooter className="sm:justify-center gap-2 pt-4 block md:flex space-y-2 md:space-y-0">
+      <div className="pt-4">
         <BackButton disabled />
         <Button size="lg" className="flex-1 w-full" disabled>
           Төлбөр шалгах
         </Button>
-      </DialogFooter>
+      </div>
     )}
   </>
 );

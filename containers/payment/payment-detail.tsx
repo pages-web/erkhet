@@ -25,10 +25,10 @@ const PaymentDetail = () => {
     handleCreateInvoice,
     loading: loadingAction,
     reset,
-    data
+    data,
   } = useCreateInvoice({
     posName: name || '',
-    appToken: erxesAppToken || ''
+    appToken: erxesAppToken || '',
   });
 
   const kind = payments?.find((p: IPayment) => p._id === selectedMethod)?.kind;
@@ -50,39 +50,13 @@ const PaymentDetail = () => {
   const { errorDescription, status, apiResponse, idOfProvider, _id } =
     data || {};
 
+  if (!kind) return null;
+
   return (
     <>
-      <DialogHeader className="flex-row gap-4 items-center justify-between my-2 md:mt-0">
-        <div className="flex items-center gap-4">
-          <Image
-            src={`/images/payments/${kind}.png`}
-            className="object-contain rounded-lg flex-none"
-            height={36}
-            width={36}
-          />
-          <div className="text-left">
-            <div className="font-medium capitalize leading-none mb-0.5">
-              {kind}
-            </div>
-            <div className="text-neutral-500 text-xs md:text-md">
-              {isQr
-                ? 'Qr кодыг уншуулж төлбөрөө төлнө үү'
-                : 'Бүртгэлтэй утасны дугаараа оруулна уу'}
-            </div>
-          </div>
-        </div>
-        {!loadingAction && !!status && (
-          <Badge
-            variant="outline"
-            className="p-2 px-4 rounded-xl bg-yellow-100, border-amber-200 text-yellow-500"
-          >
-            {status}
-          </Badge>
-        )}
-      </DialogHeader>
       {isQr &&
         (loadingAction ? (
-          <QrContainer loading />
+          <Loading />
         ) : (
           (!!apiResponse?.qrData ||
             (isQr && (errorDescription || apiResponse?.error))) && (
@@ -103,10 +77,6 @@ const PaymentDetail = () => {
           data={data}
           errorDescription={errorDescription}
         />
-      )}
-
-      {loadingAction && (
-        <Loading className="absolute inset-0 bg-background/40" />
       )}
     </>
   );

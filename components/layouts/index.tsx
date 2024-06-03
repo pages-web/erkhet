@@ -1,43 +1,54 @@
-import { ChevronDownIcon } from '@radix-ui/react-icons';
 import { NavbarTop } from './navbar-top';
-import { Button } from '../ui/button';
-import Search from '../search/search';
-import BottomNav from '../bottom-nav/bottom-nav';
-import ScrollToTop from '../scroll-to-top/scroll-to-top';
-import Footer from '../footer/footer';
-import Link from 'next/link';
-import CartTrigger from '../cart/cart-trigger';
-import CurrentUser from '@/containers/auth/current-user';
-import { Suspense } from 'react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import Image from '@/components/ui/image';
+import { Card, CardContent } from '@/components/ui/card';
+import { getKbArticleDetail } from '@/sdk/queries/kb';
 
-const DefaultLayout = ({ children }: React.PropsWithChildren) => {
+const DefaultLayout = async ({ children }: React.PropsWithChildren) => {
+  const { article } = await getKbArticleDetail({
+    variables: {
+      id: 'donate',
+    },
+  });
   return (
     <>
-      <NavbarTop>
-        <Button
-          variant="ghost"
-          className="hover:bg-background/10 hover:text-white hidden md:inline-flex"
-          asChild
-        >
-          <Link href={'/category'}>
-            Дэлгүүр
-            <ChevronDownIcon className="h-4 w-4 ml-1" />
-          </Link>
-        </Button>
-        <Suspense fallback={<div className="hidden md:block flex-1" />}>
-          <Search className="hidden md:block flex-1 max-w-2xl mr-auto" />
-        </Suspense>
-        <nav className="hidden md:flex md:flex-row md:flex-nowrap gap-4">
-          <CartTrigger />
-          <CurrentUser />
-        </nav>
-      </NavbarTop>
-      {children}
-      <ScrollToTop />
-      <Suspense>
-        <BottomNav />
-      </Suspense>
-      <Footer />
+      <NavbarTop />
+      <div className="min-h-screen">
+        <div className="aspect-[14/6] max-h-[700px] relative w-full">
+          <Image
+            sizes="100vw"
+            src={article?.image?.url}
+            quality={99}
+            priority
+          />
+        </div>
+        <div className="container">
+          <div className="flex gap-6 -mt-16">
+            <Card className="flex-auto bg-white relative">
+              <CardContent>
+                <Tabs defaultValue="account">
+                  <TabsList className="grid w-full grid-cols-2">
+                    <TabsTrigger value="account">Details</TabsTrigger>
+                    <TabsTrigger value="password">Updates</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="account">
+                    <div
+                      dangerouslySetInnerHTML={{ __html: article.content }}
+                      className="space-y-4 py-4"
+                    />
+                  </TabsContent>
+                  <TabsContent value="password"></TabsContent>
+                </Tabs>
+              </CardContent>
+            </Card>
+            <div>
+              <Card className="w-[500px] bg-white flex-none relative">
+                {children}
+              </Card>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 };
