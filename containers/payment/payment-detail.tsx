@@ -41,8 +41,7 @@ const PaymentDetail = () => {
       variables: { invoiceId: _id },
       skip: !_id,
       onData(options) {
-        const { invoiceUpdated } = (options.data as any) || {};
-        console.log(options);
+        const { invoiceUpdated } = options.data.data || {};
         if (invoiceUpdated?.status === 'paid') {
           refetch();
         }
