@@ -21,11 +21,18 @@ import {
 import { useAtom, useSetAtom } from 'jotai';
 import { createContext, useContext, useEffect } from 'react';
 import DonateInfo from './info';
-import { CardContent, CardFooter } from '@/components/ui/card';
+import {
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Loading } from '@/components/ui/loading';
 import PaymentMethods from '../payment/payment-methods';
 import PaymentDetail from '../payment/payment-detail';
 import { ORDER_STATUSES } from '@/lib/constants';
+import Steps from '@/components/choose-products/steps';
+import { toast } from 'sonner';
 
 type DonateProps = React.PropsWithChildren & {
   loading: boolean;
@@ -57,11 +64,19 @@ export function useDonate() {
   return context;
 }
 
+export type ValidateProduct = (
+  func: (params: any) => void,
+  params?: any
+) => void;
+
 const Donate = ({ products }: { products: IProduct[] }) => {
   const [view, setView] = useAtom(donateViewAtom);
   const [donateOrderId, setDonateOrderId] = useAtom(donateOrderIdAtom);
   const [donateItem, setDonateItem] = useAtom(donateItemAtom);
   const setDeliveryInfo = useSetAtom(deliveryInfoAtom);
+  const unitProduct = products.find(
+    (product) => product.unitPrice === 1
+  ) as IProduct;
   const { data, loading, refetch, subscribeToMore } = useQuery(
     queries.donateOrderDetail,
     {
@@ -132,16 +147,28 @@ const Donate = ({ products }: { products: IProduct[] }) => {
   });
 
   if (loading) {
-    return (
-      <>
-        <CardContent>
-          <Loading />
-        </CardContent>
-        <CardFooter />
-      </>
-    );
+    return <></>;
   }
+
   if (data?.orderDetail.paidDate) return <div>Thank you!</div>;
+
+  const validateProduct: ValidateProduct = (func, params) => {
+    if (!donateItem) {
+      setView('');
+      return toast.error('Мөнгөн дүнгээ оруулана уу');
+    }
+
+    if (
+      unitProduct &&
+      donateItem.productId === unitProduct._id &&
+      donateItem.count < 100
+    ) {
+      setView('');
+      return toast.error('Хамгийн багадаа 100₮ оруулана уу');
+    }
+
+    return func(params);
+  };
 
   return (
     <DonateContext.Provider
@@ -152,16 +179,40 @@ const Donate = ({ products }: { products: IProduct[] }) => {
         detail: data?.orderDetail,
       }}
     >
-      {view === '' && <ChooseProducts products={products} />}
-      {view === 'info' && <DonateInfo />}
-      {view === 'payment' && (
+      <CardHeader className="flex items-center justify-between flex-row ">
+        <CardTitle>Хандив өгөх</CardTitle>
+        <Steps
+          description={data?.orderDetail?.description}
+          validateProduct={validateProduct}
+        />
+      </CardHeader>
+      {loading ? (
         <>
           <CardContent>
-            <PaymentMethods />
+            <Loading />
           </CardContent>
-          <CardFooter className="flex-col">
-            <PaymentDetail />
-          </CardFooter>
+          <CardFooter />
+        </>
+      ) : (
+        <>
+          {view === '' && (
+            <ChooseProducts
+              products={products}
+              unitProduct={unitProduct}
+              validateProduct={validateProduct}
+            />
+          )}
+          {view === 'info' && <DonateInfo />}
+          {view === 'payment' && (
+            <>
+              <CardContent className="py-0 md:py-0">
+                <PaymentMethods />
+              </CardContent>
+              <CardFooter className="flex-col">
+                <PaymentDetail />
+              </CardFooter>
+            </>
+          )}
         </>
       )}
     </DonateContext.Provider>

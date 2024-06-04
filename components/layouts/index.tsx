@@ -14,18 +14,19 @@ const DefaultLayout = async ({ children }: React.PropsWithChildren) => {
     <>
       <NavbarTop />
       <div className="min-h-screen">
-        <div className="aspect-[14/6] max-h-[700px] relative w-full">
+        <div className="aspect-square md:aspect-[14/6] max-h-[700px] relative w-full">
           <Image
             sizes="100vw"
             src={article?.image?.url}
             quality={99}
             priority
+            className="object-left md:object-center"
           />
         </div>
         <div className="container">
-          <div className="flex gap-6 -mt-16">
+          <div className="flex flex-col-reverse lg:flex-row gap-6 -mt-16">
             <Card className="flex-auto bg-white relative">
-              <CardContent>
+              <CardContent className="pt-2">
                 <Tabs defaultValue="account">
                   <TabsList className="grid w-full grid-cols-2">
                     <TabsTrigger value="account">Details</TabsTrigger>
@@ -42,7 +43,7 @@ const DefaultLayout = async ({ children }: React.PropsWithChildren) => {
               </CardContent>
             </Card>
             <div>
-              <Card className="w-[500px] bg-white flex-none relative">
+              <Card className="lg:w-[500px] bg-white flex-none relative">
                 {children}
               </Card>
             </div>

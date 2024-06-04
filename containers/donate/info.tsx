@@ -24,12 +24,14 @@ import { LoadingIcon } from '@/components/ui/loading';
 
 const formSchema = z.object({
   name: z.string().min(2, {
-    message: 'Name must be at least 2 characters.',
+    message: 'Нэрээ бүтнээр нь оруулана уу',
   }),
   phone: phoneZod,
-  email: z.string().email(),
   source: z.string().min(4, {
-    message: 'Source  must be at least 4 characters.',
+    message: 'Эx үүсвэрийн мэдээлэл ээ 4-өөс дээш үсгээр илэрхийлнэ үү',
+  }),
+  eb_id: z.string().length(12, {
+    message: 'Иргэний бүртгэлийн дугаараа зөв оруулана уу',
   }),
 });
 
@@ -47,7 +49,7 @@ const DonateInfo = () => {
     action({
       variables: {
         ...variables,
-        description: `${values.name} ${values.email} ${values.phone} ${values.source}`,
+        description: `${values.name} ${values.phone} ${values.source}`,
         deliveryInfo: values,
       },
     });
@@ -62,9 +64,9 @@ const DonateInfo = () => {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Name</FormLabel>
+                <FormLabel>Таны нэр</FormLabel>
                 <FormControl>
-                  <Input placeholder="shadcn" {...field} />
+                  <Input placeholder="Бат" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -75,22 +77,9 @@ const DonateInfo = () => {
             name="phone"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Phone</FormLabel>
+                <FormLabel>Утасны дугаар</FormLabel>
                 <FormControl>
-                  <Input placeholder="00000000" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input placeholder="john@nmma.co" {...field} />
+                  <Input placeholder="0000 0000" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -101,12 +90,25 @@ const DonateInfo = () => {
             name="source"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Source</FormLabel>
+                <FormLabel>Xандивын эх үүсвэр</FormLabel>
                 <FormControl>
-                  <Input placeholder="shadcn" {...field} />
+                  <Input placeholder="цалин, халамж гэх мэт" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="eb_id"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Иргэний бүртгэлийн дугаар</FormLabel>
+                <FormControl>
+                  <Input placeholder="0000 0000 0000" {...field} />
                 </FormControl>
                 <FormDescription>
-                  This is your public display name.
+                  Ибаримт дээр харагддаг 12 оронтой тоо.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -114,7 +116,7 @@ const DonateInfo = () => {
           />
           <Button type="submit" size="lg" className="w-full" disabled={loading}>
             {loading && <LoadingIcon />}
-            Submit
+            Үргэлжлүүлэх
           </Button>
         </form>
       </Form>

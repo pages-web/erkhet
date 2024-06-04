@@ -9,7 +9,7 @@ const Card = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      '-mx-2 md:mx-0 md:rounded-xl border-x-0 md:border-x border bg-card text-card-foreground md:shadow',
+      'mx-0 rounded-xl border bg-card text-card-foreground md:shadow',
       className
     )}
     {...props}
@@ -89,5 +89,5 @@ export {
   CardFooter,
   CardTitle,
   CardDescription,
-  CardContent
+  CardContent,
 };

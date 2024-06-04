@@ -1,5 +1,3 @@
-import ChooseProducts from '@/components/choose-products/choose-products';
-import { CardHeader, CardTitle } from '@/components/ui/card';
 import Donate from '@/containers/donate/donate';
 import { getConfig } from '@/sdk/queries/auth';
 import { getProducts } from '@/sdk/queries/products';
@@ -19,12 +17,5 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Home() {
   const { products } = await getProducts();
 
-  return (
-    <>
-      <CardHeader>
-        <CardTitle>Donate</CardTitle>
-      </CardHeader>
-      <Donate products={products} />
-    </>
-  );
+  return <Donate products={products} />;
 }

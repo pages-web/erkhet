@@ -2,8 +2,8 @@ import { z } from 'zod';
 
 export const phoneZod = z
   .string()
-  .regex(/^\d{8}$/, 'Invalid Phone number')
-  .min(1, { message: 'Phone is required' });
+  .regex(/^\d{8}$/, 'Утасны дугаар буруу байна')
+  .min(1, { message: 'Утасны дугаараа заавал оруулана уу' });
 
 export const passwordZod = z
   .string()

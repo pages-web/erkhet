@@ -154,6 +154,7 @@ const donateOrderDetail = gql`
     orderDetail(_id: $id, customerId: $customerId) {
       _id
       totalAmount
+      mobileAmount
       number
       paidDate
       items {

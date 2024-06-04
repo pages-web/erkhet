@@ -4,27 +4,31 @@ import { CardContent, CardFooter } from '../ui/card';
 import { Label } from '../ui/label';
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
 import { useState } from 'react';
-import { useAtom, useAtomValue, useSetAtom } from 'jotai';
-import { cartAtom } from '@/store/cart.store';
+import { useAtom } from 'jotai';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
-import { cudOrderAtom, loadingOrderAtom } from '@/store/order.store';
 import { LoadingIcon } from '../ui/loading';
 import { donateItemAtom } from '@/store/donate.store';
-import { useDonate } from '@/containers/donate/donate';
+import { useDonate, ValidateProduct } from '@/containers/donate/donate';
 
-const ChooseProducts = ({ products }: { products: IProduct[] }) => {
+const ChooseProducts = ({
+  products,
+  unitProduct,
+  validateProduct,
+}: {
+  products: IProduct[];
+  unitProduct?: IProduct;
+  validateProduct: ValidateProduct;
+}) => {
   const { loading, action } = useDonate();
-  const unitItem = products.find(
-    (product) => product.unitPrice === 1
-  ) as IProduct;
+
   const [item, setItem] = useAtom(donateItemAtom);
   const [customAmount, setCustomAmount] = useState<undefined | number | string>(
     undefined
   );
 
   const radioValue =
-    item?.productId !== unitItem?._id ? item?.productId || '' : undefined;
+    item?.productId !== unitProduct?._id ? item?.productId || '' : undefined;
 
   const radioValueChange = (value: string) => {
     const { _id, unitPrice } =
@@ -41,17 +45,17 @@ const ChooseProducts = ({ products }: { products: IProduct[] }) => {
   };
 
   const handleCustomValueChange = (value: string) => {
-    setItem({
-      _id: Math.random().toString(),
-      productId: unitItem._id,
-      count: Number(value),
-      unitPrice: 1,
-    });
+    if (Number(value) < 0) return null;
+    !!unitProduct &&
+      setItem({
+        _id: Math.random().toString(),
+        productId: unitProduct._id,
+        count: Number(value),
+        unitPrice: 1,
+      });
   };
 
-  const handleSubmit = () => {
-    action();
-  };
+  const handleSubmit = () => validateProduct(action);
 
   return (
     <>
@@ -87,14 +91,15 @@ const ChooseProducts = ({ products }: { products: IProduct[] }) => {
               </div>
             ))}
         </RadioGroup>
-        {!!unitItem && (
+        {!!unitProduct && (
           <div className="mt-6">
-            <Label className="pb-2 block">Custom Amount</Label>
+            <Label className="pb-2 block">Өөр дүн</Label>
             <Input
               type="number"
               value={customAmount}
               className="font-bold"
-              placeholder="Custom Amount ₮"
+              placeholder="Өөр дүн ₮"
+              min={1}
               onChange={(e) => handleCustomValueChange(e.target.value)}
             />
           </div>
@@ -107,7 +112,7 @@ const ChooseProducts = ({ products }: { products: IProduct[] }) => {
           onClick={handleSubmit}
           disabled={loading}
         >
-          {loading && <LoadingIcon />} Donate
+          {loading && <LoadingIcon />} Хандив өгөх
         </Button>
       </CardFooter>
     </>
