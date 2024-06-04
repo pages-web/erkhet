@@ -184,7 +184,7 @@ const Donate = ({ products }: { products: IProduct[] }) => {
                 <PaymentMethods />
               </CardContent>
               <CardFooter className="flex-col">
-                <PaymentDetail refetch={refetch} />
+                <PaymentDetail />
                 <Button
                   type="button"
                   variant="secondary"

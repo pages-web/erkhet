@@ -1,27 +1,22 @@
-import { DialogFooter, DialogHeader } from '@/components/ui/dialog';
 import { handleMethodAtom } from '@/store/payment.store';
-import { useAtom, useAtomValue } from 'jotai';
-import Image from '@/components/ui/image';
-import { Button } from '@/components/ui/button';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { InfoIcon } from 'lucide-react';
+import { useAtomValue } from 'jotai';
 import { usePaymentConfig } from '@/sdk/queries/payment';
 import useCreateInvoice from '@/sdk/hooks/payment';
 import { IPayment } from '@/types/payment.types';
 import { Loading } from '@/components/ui/loading';
 import { useEffect } from 'react';
-import QrDetail, { QrContainer } from './qr-detail';
+import QrDetail from './qr-detail';
 import PhoneDetail from './phone-detail';
-import { Badge } from '@/components/ui/badge';
 import { gql, useSubscription } from '@apollo/client';
-import { refetchQueries } from '../../../../erxes/packages/plugin-grants-ui/src/configs/containers/List';
+import { useDonate } from '../donate/donate';
 
 const QR_PAYMENTS = ['qpay', 'monpay', 'pocket', 'qpayQuickqr'];
 const PHONE_PAYMENTS = ['socialpay', 'storepay'];
 
-const PaymentDetail = ({ refetch }: { refetch: () => void }) => {
+const PaymentDetail = () => {
   const selectedMethod = useAtomValue(handleMethodAtom);
   const { name, payments, erxesAppToken, loading } = usePaymentConfig();
+  const { refetch } = useDonate();
 
   const {
     handleCreateInvoice,
@@ -48,6 +43,7 @@ const PaymentDetail = ({ refetch }: { refetch: () => void }) => {
       onData(options) {
         const { invoiceUpdated } = (options.data as any) || {};
         if (invoiceUpdated?.status === 'paid') {
+          refetch();
         }
       },
     }
