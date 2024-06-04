@@ -225,6 +225,7 @@ const Donate = ({ products }: { products: IProduct[] }) => {
                       phone: '',
                       eb_id: '',
                       source: '',
+                      description: '',
                     });
                   }}
                 >

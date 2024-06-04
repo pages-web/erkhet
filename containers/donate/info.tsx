@@ -41,18 +41,26 @@ const DonateInfo = () => {
   const [deliveryInfo, setDeliveryInfo] = useAtom(deliveryInfoAtom);
   const setView = useSetAtom(donateViewAtom);
 
+  const { description, ...defaultValues } = deliveryInfo;
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: deliveryInfo,
+    defaultValues,
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    setDeliveryInfo(values);
+    const description = `${values.name} ${values.phone} ${values.source} ${values.eb_id}`;
+
+    setDeliveryInfo({ ...values, description });
+
     action({
       variables: {
         ...variables,
-        description: `${values.name} ${values.phone} ${values.source}`,
-        deliveryInfo: values,
+        description,
+        deliveryInfo: {
+          ...values,
+          description,
+        },
       },
     });
   }

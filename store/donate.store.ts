@@ -13,4 +13,5 @@ export const deliveryInfoAtom = atom<{
   phone: string;
   source: string;
   eb_id: string;
-}>({ name: '', phone: '', eb_id: '', source: '' });
+  description: string;
+}>({ name: '', phone: '', eb_id: '', source: '', description: '' });
