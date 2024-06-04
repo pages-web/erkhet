@@ -33,10 +33,12 @@ const DefaultLayout = async ({ children }: React.PropsWithChildren) => {
                     <TabsTrigger value="password">Updates</TabsTrigger>
                   </TabsList>
                   <TabsContent value="account">
-                    <div
-                      dangerouslySetInnerHTML={{ __html: article.content }}
-                      className="space-y-4 py-4"
-                    />
+                    {article?.content && (
+                      <div
+                        dangerouslySetInnerHTML={{ __html: article.content }}
+                        className="space-y-4 py-4"
+                      />
+                    )}
                   </TabsContent>
                   <TabsContent value="password"></TabsContent>
                 </Tabs>
