@@ -30,7 +30,7 @@ const QrDetail = ({
   urls: { name: string; logo: string; link: string }[];
 }) => {
   return (
-    <div className="relative">
+    <div className="relative w-full">
       <div className="max-h-[60vh] overflow-auto pb-14">
         <QrContainer error={errorDescription}>
           {qrCode ? (
@@ -95,25 +95,16 @@ export const QrContainer = ({
         </div>
       </div>
     </div>
-    {error ? (
+    {error && (
       <Alert variant="destructive">
         <InfoIcon className="h-4 w-4 rotate-180" />
         <AlertTitle>Алдаа гарлаа</AlertTitle>
         <AlertDescription className="text-xs">{error}</AlertDescription>
       </Alert>
-    ) : (
-      <Alert variant="warning">
-        <InfoIcon className="h-4 w-4" />
-        <AlertDescription className="text-xs">
-          Төлбөр төлөгдсөний дараа таны захиалга идэвхэждэг болохыг анхаараарай!
-          Та өөрийн банкны аппликейшныг ашиглан QR кодыг уншуулж төлбөр төлөх
-          боломжтой
-        </AlertDescription>
-      </Alert>
     )}
     {loading && (
       <div className="pt-4">
-        <BackButton disabled />
+        {/* <BackButton disabled /> */}
         <Button size="lg" className="flex-1 w-full" disabled>
           Төлбөр шалгах
         </Button>

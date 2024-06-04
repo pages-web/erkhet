@@ -60,20 +60,6 @@ const PhoneDetail = ({
     handleCreate(values);
   }
 
-  if (!error && !errorDescription && text)
-    return (
-      <div className="py-6 flex flex-col items-center gap-4">
-        <CheckCircle2Icon className="h-14 w-14 text-green-500 animate-bounce" />
-        <Alert variant="default">
-          <InfoIcon className="h-4 w-4" />
-          <AlertDescription>
-            Төлбөрийн нэхэмжлэхийг {kind} -рүү илгээсэн тул та эхний төлөлтөө
-            хийж захиалгаа баталгаажуулна уу.
-          </AlertDescription>
-        </Alert>
-      </div>
-    );
-
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -118,22 +104,12 @@ const PhoneDetail = ({
           />
         </div>
 
-        {error || errorDescription ? (
+        {(error || errorDescription) && (
           <Alert variant="destructive">
             <InfoIcon className="h-4 w-4 rotate-180" />
             <AlertTitle>Алдаа гарлаа</AlertTitle>
             <AlertDescription className="text-xs">
               {error || errorDescription}
-            </AlertDescription>
-          </Alert>
-        ) : (
-          <Alert variant="warning">
-            <InfoIcon className="h-4 w-4" />
-            <AlertDescription className="text-xs">
-              Та <span className="capitalize">{kind}</span>-д бүртгэлтэй утасны
-              дугаараа оруулан хүсэлт илгээн үүссэн нэхэмжлэхийн дагуу худалдан
-              авалтаа баталгаажуулснаар бараа бүтээгдэхүүн, үйлчилгээгээ авах
-              боломжтой.
             </AlertDescription>
           </Alert>
         )}

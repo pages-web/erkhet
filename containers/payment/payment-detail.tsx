@@ -13,11 +13,13 @@ import { useEffect } from 'react';
 import QrDetail, { QrContainer } from './qr-detail';
 import PhoneDetail from './phone-detail';
 import { Badge } from '@/components/ui/badge';
+import { gql, useSubscription } from '@apollo/client';
+import { refetchQueries } from '../../../../erxes/packages/plugin-grants-ui/src/configs/containers/List';
 
 const QR_PAYMENTS = ['qpay', 'monpay', 'pocket', 'qpayQuickqr'];
 const PHONE_PAYMENTS = ['socialpay', 'storepay'];
 
-const PaymentDetail = () => {
+const PaymentDetail = ({ refetch }: { refetch: () => void }) => {
   const selectedMethod = useAtomValue(handleMethodAtom);
   const { name, payments, erxesAppToken, loading } = usePaymentConfig();
 
@@ -30,6 +32,26 @@ const PaymentDetail = () => {
     posName: name || '',
     appToken: erxesAppToken || '',
   });
+
+  const { errorDescription, status, apiResponse, idOfProvider, _id } =
+    data || {};
+
+  useSubscription(
+    gql`
+      subscription invoiceUpdated($invoiceId: String!) {
+        invoiceUpdated(_id: $invoiceId)
+      }
+    `,
+    {
+      variables: { invoiceId: _id },
+      skip: !_id,
+      onData(options) {
+        const { invoiceUpdated } = (options.data as any) || {};
+        if (invoiceUpdated?.status === 'paid') {
+        }
+      },
+    }
+  );
 
   const kind = payments?.find((p: IPayment) => p._id === selectedMethod)?.kind;
 
@@ -45,18 +67,15 @@ const PaymentDetail = () => {
     }
   }, [selectedMethod]);
 
-  if (loading) return <Loading className="py-32" />;
+  if (loading) return null;
 
-  const { errorDescription, status, apiResponse, idOfProvider, _id } =
-    data || {};
-
-  if (!kind) return null;
+  if (loading || !kind) return null;
 
   return (
     <>
       {isQr &&
         (loadingAction ? (
-          <Loading />
+          <Loading className="pt-32 pb-24" />
         ) : (
           (!!apiResponse?.qrData ||
             (isQr && (errorDescription || apiResponse?.error))) && (

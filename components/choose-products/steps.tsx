@@ -3,17 +3,23 @@ import { useAtom, useAtomValue } from 'jotai';
 import { Button } from '../ui/button';
 import { donateItemAtom, donateViewAtom } from '@/store/donate.store';
 import { toast } from 'sonner';
-import { ValidateProduct } from '@/containers/donate/donate';
+import { useDonate, ValidateProduct } from '@/containers/donate/donate';
+import { useEffect } from 'react';
 
 const Steps = ({
-  description,
   validateProduct,
 }: {
   description?: string;
   validateProduct: ValidateProduct;
 }) => {
-  const item = useAtomValue(donateItemAtom);
+  const { detail } = useDonate();
   const [view, setView] = useAtom(donateViewAtom);
+
+  useEffect(() => {
+    if (detail?.paidDate) {
+      setView('success');
+    }
+  }, [detail?.paidDate]);
 
   return (
     <div className="flex gap-2">
@@ -22,12 +28,14 @@ const Steps = ({
         variant={view === '' ? 'default' : 'outline'}
         className="h-4 w-4 px-0 rounded-full"
         onClick={() => setView('')}
+        disabled={!!detail?.paidDate}
       />
       <Button
         size="sm"
         variant={view === 'info' ? 'default' : 'outline'}
         className="h-4 w-4 px-0 rounded-full"
         onClick={() => validateProduct(() => setView('info'))}
+        disabled={!!detail?.paidDate}
       />
       <Button
         size="sm"
@@ -35,13 +43,14 @@ const Steps = ({
         className="h-4 w-4 px-0 rounded-full"
         onClick={() => {
           validateProduct(() => {
-            if (!description) {
+            if (!detail?.description) {
               toast.error('Мэдээлэлээ оруулана уу');
               return setView('info');
             }
             setView('payment');
           });
         }}
+        disabled={!!detail?.paidDate}
       />
       <Button
         size="sm"

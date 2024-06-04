@@ -17,10 +17,11 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { phoneZod } from '@/lib/zod';
-import { useAtom } from 'jotai';
-import { deliveryInfoAtom } from '@/store/donate.store';
+import { useAtom, useSetAtom } from 'jotai';
+import { deliveryInfoAtom, donateViewAtom } from '@/store/donate.store';
 import { useDonate } from './donate';
 import { LoadingIcon } from '@/components/ui/loading';
+import { ArrowLeftIcon } from 'lucide-react';
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -38,6 +39,7 @@ const formSchema = z.object({
 const DonateInfo = () => {
   const { loading, action, variables } = useDonate();
   const [deliveryInfo, setDeliveryInfo] = useAtom(deliveryInfoAtom);
+  const setView = useSetAtom(donateViewAtom);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -117,6 +119,17 @@ const DonateInfo = () => {
           <Button type="submit" size="lg" className="w-full" disabled={loading}>
             {loading && <LoadingIcon />}
             Үргэлжлүүлэх
+          </Button>
+          <Button
+            type="button"
+            variant="secondary"
+            size="lg"
+            className="w-full !mt-4"
+            disabled={loading}
+            onClick={() => setView('')}
+          >
+            <ArrowLeftIcon className="h-5 w-5 mr-2 -ml-2" />
+            Буцах
           </Button>
         </form>
       </Form>

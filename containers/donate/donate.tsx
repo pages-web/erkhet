@@ -2,7 +2,7 @@
 
 import ChooseProducts from '@/components/choose-products/choose-products';
 import { onError } from '@/lib/utils';
-import { mutations, queries, subscriptions } from '@/sdk/graphql/order';
+import { mutations, queries } from '@/sdk/graphql/order';
 import {
   donateItemAtom,
   donateOrderIdAtom,
@@ -30,9 +30,10 @@ import {
 import { Loading } from '@/components/ui/loading';
 import PaymentMethods from '../payment/payment-methods';
 import PaymentDetail from '../payment/payment-detail';
-import { ORDER_STATUSES } from '@/lib/constants';
 import Steps from '@/components/choose-products/steps';
 import { toast } from 'sonner';
+import { ArrowLeftIcon, CheckIcon } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 type DonateProps = React.PropsWithChildren & {
   loading: boolean;
@@ -48,6 +49,7 @@ type DonateProps = React.PropsWithChildren & {
   ) => void;
   variables?: OperationVariables | undefined;
   detail?: any;
+  refetch: () => void;
 };
 
 type ContextProps = DonateProps;
@@ -77,43 +79,20 @@ const Donate = ({ products }: { products: IProduct[] }) => {
   const unitProduct = products.find(
     (product) => product.unitPrice === 1
   ) as IProduct;
-  const { data, loading, refetch, subscribeToMore } = useQuery(
-    queries.donateOrderDetail,
-    {
-      skip: !Boolean(donateOrderId),
-      variables: {
-        id: donateOrderId,
-        customerId: 'visitor',
-      },
-      onCompleted({ orderDetail }) {
-        const { items, deliveryInfo } = orderDetail;
-        const { _id, productId, count, unitPrice } = items[0] || {};
-        setDonateItem({ _id, productId, count, unitPrice });
-        !!deliveryInfo && setDeliveryInfo(deliveryInfo);
-      },
-    }
-  );
 
-  useEffect(() => {
-    if (donateOrderId) {
-      subscribeToMore({
-        document: subscriptions.ordersOrdered,
-        variables: {
-          token: process.env.NEXT_PUBLIC_POS_TOKEN,
-          statuses: ORDER_STATUSES.ALL,
-          customerId: 'visitor',
-        },
-        updateQuery: (prev, { subscriptionData }) => {
-          const { ordersOrdered } = subscriptionData.data || {};
-          if (!ordersOrdered) return prev;
-          if (ordersOrdered._id === donateOrderId) {
-            refetch();
-          }
-          return prev;
-        },
-      });
-    }
-  }, [donateOrderId]);
+  const { data, loading, refetch } = useQuery(queries.donateOrderDetail, {
+    skip: !Boolean(donateOrderId),
+    variables: {
+      id: donateOrderId,
+      customerId: 'visitor',
+    },
+    onCompleted({ orderDetail }) {
+      const { items, deliveryInfo } = orderDetail;
+      const { _id, productId, count, unitPrice } = items[0] || {};
+      setDonateItem({ _id, productId, count, unitPrice });
+      !!deliveryInfo && setDeliveryInfo(deliveryInfo);
+    },
+  });
 
   const onCompleted = (_id: string) => {
     setDonateOrderId(_id);
@@ -146,10 +125,6 @@ const Donate = ({ products }: { products: IProduct[] }) => {
     },
   });
 
-  if (loading) {
-    return <></>;
-  }
-
   if (data?.orderDetail.paidDate) return <div>Thank you!</div>;
 
   const validateProduct: ValidateProduct = (func, params) => {
@@ -170,21 +145,21 @@ const Donate = ({ products }: { products: IProduct[] }) => {
     return func(params);
   };
 
+  const { orderDetail } = data || {};
+
   return (
     <DonateContext.Provider
       value={{
         loading: orderAdd.loading || orderEdit.loading,
         action: donateOrderId ? edit : add,
         variables,
-        detail: data?.orderDetail,
+        detail: orderDetail,
+        refetch,
       }}
     >
       <CardHeader className="flex items-center justify-between flex-row ">
         <CardTitle>Хандив өгөх</CardTitle>
-        <Steps
-          description={data?.orderDetail?.description}
-          validateProduct={validateProduct}
-        />
+        <Steps validateProduct={validateProduct} />
       </CardHeader>
       {loading ? (
         <>
@@ -209,7 +184,54 @@ const Donate = ({ products }: { products: IProduct[] }) => {
                 <PaymentMethods />
               </CardContent>
               <CardFooter className="flex-col">
-                <PaymentDetail />
+                <PaymentDetail refetch={refetch} />
+                <Button
+                  type="button"
+                  variant="secondary"
+                  size="lg"
+                  className="w-full !mt-4"
+                  disabled={loading}
+                  onClick={() => setView('')}
+                >
+                  <ArrowLeftIcon className="h-5 w-5 mr-2 -ml-2" />
+                  Буцах
+                </Button>
+              </CardFooter>
+            </>
+          )}
+          {view === 'success' && (
+            <>
+              <CardContent>
+                <div className="flex flex-col items-center">
+                  <div className="h-16 w-16 rounded-full bg-green-200 flex items-center justify-center">
+                    <CheckIcon className="h-10 w-10 stroke-green-700 " />
+                  </div>
+                  <div className="text-xl font-semibold pt-6 text-center">
+                    Таны хандивыг амжилттай <br /> хүлээн авлаа.
+                  </div>
+                  <div className="text-neutral-500 pt-2">
+                    Биднийг дэмжиж хандив өгсөн танд баярлалаа
+                  </div>
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Button
+                  size="lg"
+                  className="w-full"
+                  onClick={() => {
+                    setView('');
+                    setDonateOrderId('');
+                    setDonateItem(null);
+                    setDeliveryInfo({
+                      name: '',
+                      phone: '',
+                      eb_id: '',
+                      source: '',
+                    });
+                  }}
+                >
+                  Эхлэл рүү буцах
+                </Button>
               </CardFooter>
             </>
           )}

@@ -24,13 +24,13 @@ const DefaultLayout = async ({ children }: React.PropsWithChildren) => {
           />
         </div>
         <div className="container">
-          <div className="flex flex-col-reverse lg:flex-row gap-6 -mt-16">
+          <div className="flex flex-col-reverse lg:flex-row gap-6 -mt-16 pb-12">
             <Card className="flex-auto bg-white relative">
               <CardContent className="pt-2">
                 <Tabs defaultValue="account">
                   <TabsList className="grid w-full grid-cols-2">
-                    <TabsTrigger value="account">Details</TabsTrigger>
-                    <TabsTrigger value="password">Updates</TabsTrigger>
+                    <TabsTrigger value="account">Тайлбар</TabsTrigger>
+                    <TabsTrigger value="password">Шинэчлэлтүүд</TabsTrigger>
                   </TabsList>
                   <TabsContent value="account">
                     {article?.content && (

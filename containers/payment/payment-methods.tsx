@@ -20,7 +20,7 @@ const PaymentMethods = () => {
         </span>
       </h2>
       {loading ? (
-        <Loading className="pt-32" />
+        <Loading className="pt-32 pb-24" />
       ) : (
         <RadioGroup
           value={selectedPayment}
