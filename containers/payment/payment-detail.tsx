@@ -42,6 +42,7 @@ const PaymentDetail = () => {
       skip: !_id,
       onData(options) {
         const { invoiceUpdated } = (options.data as any) || {};
+        console.log(options);
         if (invoiceUpdated?.status === 'paid') {
           refetch();
         }
@@ -96,5 +97,27 @@ const PaymentDetail = () => {
     </>
   );
 };
+
+// id
+// :
+// "058002c0-9066-45c9-9791-b6938ad39a3b"
+// payload
+// :
+// {data: {invoiceUpdated: {_id: "auP-XYnisvmz9Tk6RqFTu", status: "paid"}}}
+// data
+// :
+// {invoiceUpdated: {_id: "auP-XYnisvmz9Tk6RqFTu", status: "paid"}}
+// invoiceUpdated
+// :
+// {_id: "auP-XYnisvmz9Tk6RqFTu", status: "paid"}
+// status
+// :
+// "paid"
+// _id
+// :
+// "auP-XYnisvmz9Tk6RqFTu"
+// type
+// :
+// "next"
 
 export default PaymentDetail;
