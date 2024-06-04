@@ -125,8 +125,6 @@ const Donate = ({ products }: { products: IProduct[] }) => {
     },
   });
 
-  if (data?.orderDetail.paidDate) return <div>Thank you!</div>;
-
   const validateProduct: ValidateProduct = (func, params) => {
     if (!donateItem) {
       setView('');
