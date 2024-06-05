@@ -143,6 +143,19 @@ const Donate = ({ products }: { products: IProduct[] }) => {
     return func(params);
   };
 
+  const reset = () => {
+    setView('');
+    setDonateOrderId('');
+    setDonateItem(null);
+    setDeliveryInfo({
+      name: '',
+      phone: '',
+      eb_id: '',
+      source: '',
+      description: '',
+    });
+  };
+
   const { orderDetail } = data || {};
 
   return (
@@ -213,22 +226,7 @@ const Donate = ({ products }: { products: IProduct[] }) => {
                 </div>
               </CardContent>
               <CardFooter>
-                <Button
-                  size="lg"
-                  className="w-full"
-                  onClick={() => {
-                    setView('');
-                    setDonateOrderId('');
-                    setDonateItem(null);
-                    setDeliveryInfo({
-                      name: '',
-                      phone: '',
-                      eb_id: '',
-                      source: '',
-                      description: '',
-                    });
-                  }}
-                >
+                <Button size="lg" className="w-full" onClick={reset}>
                   Эхлэл рүү буцах
                 </Button>
               </CardFooter>

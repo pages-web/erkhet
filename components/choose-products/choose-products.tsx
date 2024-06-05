@@ -3,7 +3,6 @@ import { IProduct } from '@/types/product.types';
 import { CardContent, CardFooter } from '../ui/card';
 import { Label } from '../ui/label';
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
-import { useState } from 'react';
 import { useAtom } from 'jotai';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
@@ -23,18 +22,13 @@ const ChooseProducts = ({
   const { loading, action } = useDonate();
 
   const [item, setItem] = useAtom(donateItemAtom);
-  const [customAmount, setCustomAmount] = useState<undefined | number | string>(
-    undefined
-  );
 
   const radioValue =
-    item?.productId !== unitProduct?._id ? item?.productId || '' : undefined;
+    item?.productId !== unitProduct?._id ? item?.productId || '' : '';
 
   const radioValueChange = (value: string) => {
     const { _id, unitPrice } =
       products.find((product) => product._id === value) || ({} as IProduct);
-
-    setCustomAmount('');
 
     setItem({
       _id: Math.random().toString(),
@@ -43,7 +37,6 @@ const ChooseProducts = ({
       unitPrice,
     });
   };
-
   const handleCustomValueChange = (value: string) => {
     if (Number(value) < 0) return null;
     !!unitProduct &&
@@ -96,7 +89,7 @@ const ChooseProducts = ({
             <Label className="pb-2 block">Өөр дүн</Label>
             <Input
               type="number"
-              value={customAmount}
+              value={unitProduct._id === item?.productId ? item.count : ''}
               className="font-bold"
               placeholder="Өөр дүн ₮"
               min={1}

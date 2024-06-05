@@ -5,11 +5,18 @@ import { Loading } from '@/components/ui/loading';
 import { useAtom } from 'jotai';
 import { handleMethodAtom } from '@/store/payment.store';
 import { useDonate } from '../donate/donate';
+import { useEffect } from 'react';
 
 const PaymentMethods = () => {
   const { loading, payments } = usePaymentConfig();
   const [selectedPayment, setSelectedPayment] = useAtom(handleMethodAtom);
   const { detail } = useDonate();
+
+  useEffect(() => {
+    if (payments.length === 1) {
+      setSelectedPayment(payments[0]._id);
+    }
+  }, [loading, payments]);
 
   return (
     <>
@@ -21,7 +28,7 @@ const PaymentMethods = () => {
       </h2>
       {loading ? (
         <Loading className="pt-32 pb-24" />
-      ) : (
+      ) : payments.length === 1 ? null : (
         <RadioGroup
           value={selectedPayment}
           onValueChange={(value) => setSelectedPayment(value)}
