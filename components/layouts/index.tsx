@@ -1,15 +1,25 @@
-import { NavbarTop } from './navbar-top';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import Image from '@/components/ui/image';
-import { Card, CardContent } from '@/components/ui/card';
-import { getKbArticleDetail } from '@/sdk/queries/kb';
+import { NavbarTop } from "./navbar-top";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Image from "@/components/ui/image";
+import { Card, CardContent } from "@/components/ui/card";
+import { getKbArticleDetail } from "@/sdk/queries/kb";
+import { log } from "console";
+
+export const revalidate = 300;
 
 const DefaultLayout = async ({ children }: React.PropsWithChildren) => {
   const { article } = await getKbArticleDetail({
     variables: {
-      id: 'donate',
+      id: "donate",
     },
   });
+  const { article: greeting } = await getKbArticleDetail({
+    variables: {
+      id: "greeting",
+    },
+  });
+  console.log(greeting);
+
   return (
     <>
       <NavbarTop />
@@ -29,8 +39,8 @@ const DefaultLayout = async ({ children }: React.PropsWithChildren) => {
               <CardContent className="pt-2">
                 <Tabs defaultValue="account">
                   <TabsList className="grid w-full grid-cols-2">
-                    <TabsTrigger value="account">Тайлбар</TabsTrigger>
-                    <TabsTrigger value="password">Шинэчлэлтүүд</TabsTrigger>
+                    <TabsTrigger value="account">Мэндчилгээ</TabsTrigger>
+                    <TabsTrigger value="password">Товч танилцуулга</TabsTrigger>
                   </TabsList>
                   <TabsContent value="account">
                     {article?.content && (
@@ -40,7 +50,14 @@ const DefaultLayout = async ({ children }: React.PropsWithChildren) => {
                       />
                     )}
                   </TabsContent>
-                  <TabsContent value="password"></TabsContent>
+                  <TabsContent value="password">
+                    {greeting?.content && (
+                      <div
+                        dangerouslySetInnerHTML={{ __html: greeting.content }}
+                        className="space-y-4 py-4"
+                      />
+                    )}
+                  </TabsContent>
                 </Tabs>
               </CardContent>
             </Card>
