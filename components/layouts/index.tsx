@@ -3,6 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Image from "@/components/ui/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { getKbArticleDetail } from "@/sdk/queries/kb";
+import { log } from "console";
 
 export const revalidate = 300;
 
@@ -12,6 +13,13 @@ const DefaultLayout = async ({ children }: React.PropsWithChildren) => {
       id: "donate",
     },
   });
+  const { article: greeting } = await getKbArticleDetail({
+    variables: {
+      id: "greeting",
+    },
+  });
+  console.log(greeting);
+
   return (
     <>
       <NavbarTop />
@@ -42,7 +50,14 @@ const DefaultLayout = async ({ children }: React.PropsWithChildren) => {
                       />
                     )}
                   </TabsContent>
-                  <TabsContent value="password"></TabsContent>
+                  <TabsContent value="password">
+                    {greeting?.content && (
+                      <div
+                        dangerouslySetInnerHTML={{ __html: greeting.content }}
+                        className="space-y-4 py-4"
+                      />
+                    )}
+                  </TabsContent>
                 </Tabs>
               </CardContent>
             </Card>
