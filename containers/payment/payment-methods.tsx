@@ -20,7 +20,7 @@ const PaymentMethods = () => {
 
   return (
     <>
-      <h2 className="font-medium text-black/80 mb-4 flex justify-between items-center">
+      <h2 className="font-medium text-foreground mb-4 flex justify-between items-center">
         Төлбөрийн төрлөө сонгоно уу{' '}
         <span className="font-bold">
           {detail?.totalAmount.toLocaleString()}₮

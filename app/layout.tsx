@@ -62,9 +62,6 @@ export default async function RootLayout({ children }: RootLayoutProps) {
                ? `--primary: ${hexToHsl(colors?.primary)};
               --accent: ${hexToHsl(
                 getSimilarColorWithOpacity(colors?.primary, 0.2)
-              )}; 
-              --secondary: ${hexToHsl(
-                getSimilarColorWithOpacity(colors?.primary, 0.1)
               )};`
                : ''
            }
@@ -77,7 +74,9 @@ export default async function RootLayout({ children }: RootLayoutProps) {
              colors?.third
                ? `--background: ${hexToHsl(colors?.third)}; --card: ${hexToHsl(
                    colors?.third
-                 )};`
+                 )};
+                  --
+                 `
                : ''
            }
           }

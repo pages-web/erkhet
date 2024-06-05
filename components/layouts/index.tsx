@@ -1,21 +1,21 @@
-import { NavbarTop } from "./navbar-top";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Image from "@/components/ui/image";
-import { Card, CardContent } from "@/components/ui/card";
-import { getKbArticleDetail } from "@/sdk/queries/kb";
-import { log } from "console";
+import { NavbarTop } from './navbar-top';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import Image from '@/components/ui/image';
+import { Card, CardContent } from '@/components/ui/card';
+import { getKbArticleDetail } from '@/sdk/queries/kb';
+import { log } from 'console';
 
 export const revalidate = 300;
 
 const DefaultLayout = async ({ children }: React.PropsWithChildren) => {
   const { article } = await getKbArticleDetail({
     variables: {
-      id: "donate",
+      id: 'donate',
     },
   });
   const { article: greeting } = await getKbArticleDetail({
     variables: {
-      id: "greeting",
+      id: 'greeting',
     },
   });
   console.log(greeting);
@@ -28,25 +28,25 @@ const DefaultLayout = async ({ children }: React.PropsWithChildren) => {
           <Image
             sizes="100vw"
             src={article?.image?.url}
-            quality={99}
+            quality={100}
             priority
             className="object-left md:object-center"
           />
         </div>
         <div className="container">
           <div className="flex flex-col-reverse lg:flex-row gap-6 -mt-16 pb-12">
-            <Card className="flex-auto bg-white relative">
+            <Card className="flex-auto bg-background relative">
               <CardContent className="pt-2">
                 <Tabs defaultValue="account">
                   <TabsList className="grid w-full grid-cols-2">
-                    <TabsTrigger value="account">Мэндчилгээ</TabsTrigger>
-                    <TabsTrigger value="password">Товч танилцуулга</TabsTrigger>
+                    <TabsTrigger value="account">Танилцуулга</TabsTrigger>
+                    <TabsTrigger value="password">Тайлбар</TabsTrigger>
                   </TabsList>
                   <TabsContent value="account">
                     {article?.content && (
                       <div
                         dangerouslySetInnerHTML={{ __html: article.content }}
-                        className="space-y-4 py-4"
+                        className="inner-html [&_*]:text-lg [&_*]:leading-snug"
                       />
                     )}
                   </TabsContent>
@@ -54,7 +54,7 @@ const DefaultLayout = async ({ children }: React.PropsWithChildren) => {
                     {greeting?.content && (
                       <div
                         dangerouslySetInnerHTML={{ __html: greeting.content }}
-                        className="space-y-4 py-4"
+                        className="inner-html"
                       />
                     )}
                   </TabsContent>
@@ -62,7 +62,7 @@ const DefaultLayout = async ({ children }: React.PropsWithChildren) => {
               </CardContent>
             </Card>
             <div>
-              <Card className="lg:w-[500px] bg-white flex-none relative">
+              <Card className="lg:w-[500px] bg-background flex-none relative">
                 {children}
               </Card>
             </div>

@@ -150,8 +150,6 @@ const Donate = ({ products }: { products: IProduct[] }) => {
     setDeliveryInfo({
       name: '',
       phone: '',
-      eb_id: '',
-      source: '',
       description: '',
     });
   };
@@ -202,7 +200,7 @@ const Donate = ({ products }: { products: IProduct[] }) => {
                   size="lg"
                   className="w-full !mt-4"
                   disabled={loading}
-                  onClick={() => setView('')}
+                  onClick={() => setView('info')}
                 >
                   <ArrowLeftIcon className="h-5 w-5 mr-2 -ml-2" />
                   Буцах

@@ -10,7 +10,7 @@ export async function NavbarTop({
   const { logo } = config?.uiOptions || {};
   return (
     <header
-      className=" z-50 sticky w-full top-0 left-0 md:shadow-sm py-4 bg-white"
+      className=" z-50 sticky w-full top-0 left-0 md:shadow-sm py-4 bg-background border-b"
       {...rest}
     >
       <div className="flex gap-[clamp(1rem,3vw,3rem)] items-center w-full md:h-[60px] container pt-1 md:pt-0">

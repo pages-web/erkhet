@@ -7,9 +7,9 @@ export async function generateMetadata(): Promise<Metadata> {
   const { config } = await getConfig();
 
   return {
-    title: config.name + ' - Нүүр хуудас',
+    title: config.name + ' - Хандив өгөх',
     openGraph: {
-      title: config.name + ' - Нүүр хуудас',
+      title: config.name + ' - Хандив өгөх',
     },
   };
 }

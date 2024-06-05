@@ -11,7 +11,5 @@ export const donateItemAtom = atom<OrderItem | null>(null);
 export const deliveryInfoAtom = atom<{
   name: string;
   phone: string;
-  source: string;
-  eb_id: string;
   description: string;
-}>({ name: '', phone: '', eb_id: '', source: '', description: '' });
+}>({ name: '', phone: '', description: '' });

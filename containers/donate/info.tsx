@@ -28,12 +28,6 @@ const formSchema = z.object({
     message: 'Нэрээ бүтнээр нь оруулана уу',
   }),
   phone: phoneZod,
-  source: z.string().min(4, {
-    message: 'Эx үүсвэрийн мэдээлэл ээ 4-өөс дээш үсгээр илэрхийлнэ үү',
-  }),
-  eb_id: z.string().length(12, {
-    message: 'Иргэний бүртгэлийн дугаараа зөв оруулана уу',
-  }),
 });
 
 const DonateInfo = () => {
@@ -49,7 +43,7 @@ const DonateInfo = () => {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    const description = `${values.name} ${values.phone} ${values.source} ${values.eb_id}`;
+    const description = `${values.name} ${values.phone}`;
 
     setDeliveryInfo({ ...values, description });
 
@@ -95,35 +89,7 @@ const DonateInfo = () => {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="source"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Xандивын эх үүсвэр</FormLabel>
-                <FormControl>
-                  <Input placeholder="цалин, халамж гэх мэт" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="eb_id"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Иргэний бүртгэлийн дугаар</FormLabel>
-                <FormControl>
-                  <Input placeholder="0000 0000 0000" {...field} />
-                </FormControl>
-                <FormDescription>
-                  Ибаримт дээр харагддаг 12 оронтой тоо.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+
           <Button type="submit" size="lg" className="w-full" disabled={loading}>
             {loading && <LoadingIcon />}
             Үргэлжлүүлэх
