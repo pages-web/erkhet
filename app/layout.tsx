@@ -33,7 +33,7 @@ export async function generateMetadata(): Promise<Metadata> {
       description,
       images: [
         {
-          url: uiOptions?.logo,
+          url: uiOptions?.favIcon,
           width: 800,
           height: 600,
           alt: name,
