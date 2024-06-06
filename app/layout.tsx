@@ -8,6 +8,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { getConfig } from "@/sdk/queries/auth";
 import ConfigProvider from "@/components/layouts/config";
 import { Metadata } from "next/types";
+import Image from "next/image";
 
 export const fontSans = FontSans({
   subsets: ["latin"],
