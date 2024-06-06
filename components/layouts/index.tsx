@@ -1,22 +1,22 @@
-import { NavbarTop } from "./navbar-top";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Image from "@/components/ui/image";
-import { Card, CardContent } from "@/components/ui/card";
-import { getKbArticleDetail } from "@/sdk/queries/kb";
-import { log } from "console";
-import Footer from "./footer";
+import { NavbarTop } from './navbar-top';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import Image from '@/components/ui/image';
+import { Card, CardContent } from '@/components/ui/card';
+import { getKbArticleDetail } from '@/sdk/queries/kb';
+import { log } from 'console';
+import Footer from './footer';
 
 export const revalidate = 300;
 
 const DefaultLayout = async ({ children }: React.PropsWithChildren) => {
   const { article } = await getKbArticleDetail({
     variables: {
-      id: "donate",
+      id: 'donate',
     },
   });
   const { article: greeting } = await getKbArticleDetail({
     variables: {
-      id: "greeting",
+      id: 'greeting',
     },
   });
   console.log(greeting);
@@ -24,7 +24,6 @@ const DefaultLayout = async ({ children }: React.PropsWithChildren) => {
   return (
     <>
       <NavbarTop />
-
       <div className="min-h-screen">
         <div className="aspect-square md:aspect-[14/6] max-h-[700px] relative w-full">
           <Image
