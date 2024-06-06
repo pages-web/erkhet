@@ -4,6 +4,7 @@ import Image from "@/components/ui/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { getKbArticleDetail } from "@/sdk/queries/kb";
 import { log } from "console";
+import Footer from "./footer";
 
 export const revalidate = 300;
 
@@ -23,6 +24,7 @@ const DefaultLayout = async ({ children }: React.PropsWithChildren) => {
   return (
     <>
       <NavbarTop />
+
       <div className="min-h-screen">
         <div className="aspect-square md:aspect-[14/6] max-h-[700px] relative w-full">
           <Image
@@ -69,6 +71,7 @@ const DefaultLayout = async ({ children }: React.PropsWithChildren) => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };
