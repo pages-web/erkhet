@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 const currentUser = gql`
   query clientPortalCurrentUser {
@@ -39,6 +39,7 @@ const currentConfig = gql`
         logo
         colors
         favIcon
+        bgImage
       }
     }
   }
