@@ -1,21 +1,21 @@
-import { NavbarTop } from './navbar-top';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import Image from '@/components/ui/image';
-import { Card, CardContent } from '@/components/ui/card';
-import { getKbArticleDetail } from '@/sdk/queries/kb';
-import { log } from 'console';
+import { NavbarTop } from "./navbar-top";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Image from "@/components/ui/image";
+import { Card, CardContent } from "@/components/ui/card";
+import { getKbArticleDetail } from "@/sdk/queries/kb";
+import { log } from "console";
 
 export const revalidate = 300;
 
 const DefaultLayout = async ({ children }: React.PropsWithChildren) => {
   const { article } = await getKbArticleDetail({
     variables: {
-      id: 'donate',
+      id: "donate",
     },
   });
   const { article: greeting } = await getKbArticleDetail({
     variables: {
-      id: 'greeting',
+      id: "greeting",
     },
   });
   console.log(greeting);
@@ -38,10 +38,10 @@ const DefaultLayout = async ({ children }: React.PropsWithChildren) => {
             <Card className="flex-auto bg-background relative">
               <CardContent className="pt-2">
                 <Tabs defaultValue="account">
-                  <TabsList className="grid w-full grid-cols-2">
+                  {/* <TabsList className="grid w-full grid-cols-2">
                     <TabsTrigger value="account">Танилцуулга</TabsTrigger>
                     <TabsTrigger value="password">Тайлбар</TabsTrigger>
-                  </TabsList>
+                  </TabsList> */}
                   <TabsContent value="account">
                     {article?.content && (
                       <div
