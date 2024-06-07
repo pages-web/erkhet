@@ -20,15 +20,15 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Home() {
   const { products } = await getProducts();
   return (
-    <Tabs defaultValue="account">
+    <Tabs defaultValue="qpay">
       <TabsList className="grid grid-cols-2 mx-4 mt-4">
+        <TabsTrigger value="qpay">Цахимаар</TabsTrigger>
         <TabsTrigger value="account">Хандивын данс</TabsTrigger>
-        <TabsTrigger value="soon">Qpay</TabsTrigger>
       </TabsList>
       <TabsContent value="account" className="p-4 space-y-4 pb-8">
         <Copy />
       </TabsContent>
-      <TabsContent value="soon">
+      <TabsContent value="qpay">
         <Donate products={products} />
       </TabsContent>
     </Tabs>
