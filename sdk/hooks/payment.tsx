@@ -5,30 +5,44 @@ import { selectedMethodAtom } from '@/store/payment.store';
 import { onError } from '@/lib/utils';
 import { useDonate } from '@/containers/donate/donate';
 import { deliveryInfoAtom } from '@/store/donate.store';
+import { configAtom } from '@/store/auth.store';
 
 const useCreateInvoice = ({
   appToken,
-  posName,
+  posName
 }: {
   appToken: string;
   posName: string;
 }) => {
   const context = {
     headers: {
-      'erxes-app-token': appToken,
-    },
+      'erxes-app-token': appToken
+    }
   };
 
   const deliveryInfo = useAtomValue(deliveryInfoAtom);
-
+  const { paymentIds } = useAtomValue(configAtom) || {};
   const selectedPaymentId = useAtomValue(selectedMethodAtom);
   const { detail } = useDonate();
+  const [
+    addTransaction,
+    { loading: addingTransaction, reset: resetTransaction, data }
+  ] = useMutation(mutations.addTransaction);
 
-  const [createInvoice, { reset, data, loading }] = useMutation(
+  const [createInvoice, { reset, loading }] = useMutation(
     mutations.createInvoice,
     {
       context,
       onError,
+      onCompleted({ invoiceCreate }) {
+        addTransaction({
+          variables: {
+            invoiceId: invoiceCreate._id,
+            paymentId: selectedPaymentId,
+            amount: detail?.totalAmount
+          }
+        });
+      }
     }
   );
 
@@ -43,15 +57,23 @@ const useCreateInvoice = ({
           detail?._id
         }`,
         data: { posToken: process.env.NEXT_PUBLIC_POS_TOKEN },
-        selectedPaymentId: selectedPaymentId,
+        paymentIds,
         phone: deliveryInfo?.phone,
-        ...variables,
-      },
+        ...variables
+      }
     });
 
-  const { invoiceCreate } = data || {};
+  const { paymentTransactionsAdd } = data || {};
 
-  return { loading, reset, data: invoiceCreate, handleCreateInvoice };
+  return {
+    loading: addingTransaction || loading,
+    reset: () => {
+      reset();
+      resetTransaction();
+    },
+    data: paymentTransactionsAdd,
+    handleCreateInvoice
+  };
 };
 
 export const useCheckInvoice = () => {

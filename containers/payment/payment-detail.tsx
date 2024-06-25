@@ -22,14 +22,13 @@ const PaymentDetail = () => {
     handleCreateInvoice,
     loading: loadingAction,
     reset,
-    data,
+    data
   } = useCreateInvoice({
     posName: name || '',
-    appToken: erxesAppToken || '',
+    appToken: erxesAppToken || ''
   });
 
-  const { errorDescription, status, apiResponse, idOfProvider, _id } =
-    data || {};
+  const { errorDescription, status, response, _id } = data || {};
 
   useSubscription(
     gql`
@@ -45,7 +44,7 @@ const PaymentDetail = () => {
         if (invoiceUpdated?.status === 'paid') {
           refetch();
         }
-      },
+      }
     }
   );
 
@@ -73,13 +72,13 @@ const PaymentDetail = () => {
         (loadingAction ? (
           <Loading className="pt-32 pb-24" />
         ) : (
-          (!!apiResponse?.qrData ||
-            (isQr && (errorDescription || apiResponse?.error))) && (
+          (!!response?.qrData ||
+            (isQr && (errorDescription || response?.error))) && (
             <QrDetail
-              errorDescription={errorDescription || apiResponse?.error}
+              errorDescription={errorDescription || response?.error}
               status={status}
-              qrCode={apiResponse?.qrData}
-              urls={apiResponse?.urls}
+              qrCode={response?.qrData}
+              urls={response?.urls}
               id={_id}
             />
           )

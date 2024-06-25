@@ -11,15 +11,14 @@ export const revalidate = 300;
 const DefaultLayout = async ({ children }: React.PropsWithChildren) => {
   const { article } = await getKbArticleDetail({
     variables: {
-      id: 'donate',
-    },
+      id: 'donate'
+    }
   });
   const { article: greeting } = await getKbArticleDetail({
     variables: {
-      id: 'greeting',
-    },
+      id: 'greeting'
+    }
   });
-  console.log(greeting);
 
   return (
     <>
