@@ -1,18 +1,18 @@
-import { Inter as FontSans } from 'next/font/google';
-import './globals.css';
-import { SpeedInsights } from '@vercel/speed-insights/next';
-import { cn, getSimilarColorWithOpacity, hexToHsl } from '@/lib/utils';
-import DefaultLayout from '@/components/layouts';
-import Providers from '@/store';
-import { Toaster } from '@/components/ui/sonner';
-import { getConfig } from '@/sdk/queries/auth';
-import ConfigProvider from '@/components/layouts/config';
-import { Metadata } from 'next/types';
-import Image from 'next/image';
+import { Inter as FontSans } from "next/font/google";
+import "./globals.css";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { cn, getSimilarColorWithOpacity, hexToHsl } from "@/lib/utils";
+import DefaultLayout from "@/components/layouts";
+import Providers from "@/store";
+import { Toaster } from "@/components/ui/sonner";
+import { getConfig } from "@/sdk/queries/auth";
+import ConfigProvider from "@/components/layouts/config";
+import { Metadata } from "next/types";
+import Image from "next/image";
 
 export const fontSans = FontSans({
-  subsets: ['latin'],
-  variable: '--font-sans'
+  subsets: ["latin"],
+  variable: "--font-sans",
 });
 
 interface RootLayoutProps {
@@ -26,7 +26,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const { pdomain, name, description, uiOptions } = config || {};
 
   return {
-    metadataBase: new URL(pdomain || 'https://www.erxes.io'),
+    metadataBase: new URL(pdomain || "https://www.erxes.io"),
     title: name,
     description,
     openGraph: {
@@ -37,12 +37,12 @@ export async function generateMetadata(): Promise<Metadata> {
           url: uiOptions?.bgImage,
           width: 600,
           height: 600,
-          alt: name
-        }
+          alt: name,
+        },
       ],
       url: pdomain,
-      type: 'website'
-    }
+      type: "website",
+    },
   };
 }
 
@@ -53,7 +53,6 @@ export default async function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="icon" href={uiOptions?.favIcon} />
         {!!colors && (
           <style>{`
          :root {
@@ -63,12 +62,12 @@ export default async function RootLayout({ children }: RootLayoutProps) {
               --accent: ${hexToHsl(
                 getSimilarColorWithOpacity(colors?.primary, 0.2)
               )};`
-               : ''
+               : ""
            }
            ${
              colors?.secondary
                ? `--active: ${hexToHsl(colors?.secondary)};`
-               : ''
+               : ""
            }
            ${
              colors?.third
@@ -77,7 +76,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
                  )};
                   --
                  `
-               : ''
+               : ""
            }
           }
         `}</style>
@@ -85,7 +84,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
       </head>
       <body
         className={cn(
-          'min-h-screen bg-background font-sans antialiased',
+          "min-h-screen bg-gray-50 font-sans antialiased",
           fontSans.variable
         )}
       >

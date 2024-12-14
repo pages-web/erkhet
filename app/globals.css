@@ -34,7 +34,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
   }
 }
 
@@ -53,7 +53,7 @@
   }
   .inner-html * {
     font-family: inherit !important;
-    background: hsl(var(--background)) !important;
+
     color: hsl(var(--foreground)) !important;
   }
 }

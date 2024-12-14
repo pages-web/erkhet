@@ -1,75 +1,41 @@
-import { NavbarTop } from './navbar-top';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import Image from '@/components/ui/image';
-import { Card, CardContent } from '@/components/ui/card';
-import { getKbArticleDetail } from '@/sdk/queries/kb';
-import { log } from 'console';
-import Footer from './footer';
+import { Card, CardContent } from "@/components/ui/card";
+
+import { Button } from "../ui/button";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export const revalidate = 300;
 
 const DefaultLayout = async ({ children }: React.PropsWithChildren) => {
-  const { article } = await getKbArticleDetail({
-    variables: {
-      id: 'donate'
-    }
-  });
-  const { article: greeting } = await getKbArticleDetail({
-    variables: {
-      id: 'greeting'
-    }
-  });
-
   return (
     <>
-      <NavbarTop />
-      <div className="min-h-screen">
-        <div className="aspect-square md:aspect-[14/6] max-h-[700px] relative w-full">
-          <Image
-            sizes="100vw"
-            src={article?.image?.url}
-            quality={100}
-            priority
-            className="object-left md:object-center"
-          />
-        </div>
+      <div className="">
         <div className="container">
-          <div className="flex flex-col-reverse lg:flex-row gap-6 -mt-16 pb-12">
-            <Card className="flex-auto bg-background relative">
-              <CardContent className="pt-2">
-                <Tabs defaultValue="account">
-                  {/* <TabsList className="grid w-full grid-cols-2">
-                    <TabsTrigger value="account">Танилцуулга</TabsTrigger>
-                    <TabsTrigger value="password">Тайлбар</TabsTrigger>
-                  </TabsList> */}
-                  <TabsContent value="account">
-                    {article?.content && (
-                      <div
-                        dangerouslySetInnerHTML={{ __html: article.content }}
-                        className="inner-html [&_*]:text-lg [&_*]:leading-snug"
-                      />
-                    )}
-                  </TabsContent>
-                  <TabsContent value="password">
-                    {greeting?.content && (
-                      <div
-                        dangerouslySetInnerHTML={{ __html: greeting.content }}
-                        className="inner-html"
-                      />
-                    )}
-                  </TabsContent>
-                </Tabs>
-              </CardContent>
-            </Card>
+          <div className="flex flex-col lg:flex-row gap-6  pb-12 mt-20">
             <div>
-              <Card className="lg:w-[500px] bg-background flex-none relative">
+              <Card className="lg:w-[600px] bg-white flex-none relative">
                 {children}
               </Card>
+            </div>
+            <div className="flex-auto bg-background ">
+              <Button className="flex w-full items-center justify-start px-5 py-6 border border-gray-400 bg-white hover:bg-white font-medium text-base rounded-xl">
+                1. Бүртгэл
+              </Button>
+              <Button className="flex items-center w-full  justify-start px-5 py-6 border border-gray-400 bg-white mt-5 hover:bg-white font-medium text-base rounded-xl">
+                2. Нэхэмжлэх
+              </Button>
+              <Button className="flex items-center w-full  justify-start px-5 py-6 border border-gray-400 bg-white mt-5 hover:bg-white font-medium text-base rounded-xl">
+                3. Төлбөр төлөх
+              </Button>
+              <Link href={"/"}>
+                <Button className="flex items-center w-full  justify-start px-5 py-6 border border-gray-400 bg-white mt-5 hover:bg-white font-medium text-base rounded-xl">
+                  4. Үндсэн нүүрлүү үсрэх
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 };

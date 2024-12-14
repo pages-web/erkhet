@@ -1,15 +1,15 @@
-'use client';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { toast } from 'sonner';
-import { CopyIcon } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+"use client";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import { toast } from "sonner";
+import { CopyIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 const Copy = () => {
   return (
     <>
-      <div className="space-y-1">
+      <div className="space-y-1 text-black">
         <Label>Дансны дугаар</Label>
         <div className="relative">
           <Input
@@ -19,7 +19,7 @@ const Copy = () => {
           />
           <CopyToClipboard
             text="821008606"
-            onCopy={() => toast.success('Данс хуулагдлаа.')}
+            onCopy={() => toast.success("Данс хуулагдлаа.")}
           >
             <Button
               variant="outline"
@@ -64,7 +64,7 @@ const Copy = () => {
           </div>
           <CopyToClipboard
             text="НООРОГ КРЕАТИВ СТУДИО ХХК"
-            onCopy={() => toast.success('Дансны эзэмшигчийн нэр хуулагдлаа.')}
+            onCopy={() => toast.success("Дансны эзэмшигчийн нэр хуулагдлаа.")}
           >
             <Button
               variant="outline"
