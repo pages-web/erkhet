@@ -1,18 +1,15 @@
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { BanIcon, InfoIcon } from 'lucide-react';
-import Image from '@/components/ui/image';
-import { DialogFooter } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { useSetAtom } from 'jotai';
-import { handleMethodAtom } from '@/store/payment.store';
-import BackButton from './back-button';
-import CheckPayment from './check-payment';
-import Link from 'next/link';
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { BanIcon, InfoIcon } from "lucide-react";
+import Image from "@/components/ui/image";
+
+import { Button } from "@/components/ui/button";
+
+import Link from "next/link";
 
 const getName = (name: string) => {
-  if (name === 'Trade and Development bank') return 'TDB';
-  if (name === 'National investment bank') return 'NIB';
-  if (name === 'Chinggis khaan bank') return 'CKHB';
+  if (name === "Trade and Development bank") return "TDB";
+  if (name === "National investment bank") return "NIB";
+  if (name === "Chinggis khaan bank") return "CKHB";
   return name;
 };
 
@@ -31,15 +28,15 @@ const QrDetail = ({
 }) => {
   return (
     <div className="relative w-full">
-      <div className="max-h-[60vh] overflow-auto pb-14">
+      <div className="max-h-[60vh] overflow-auto ">
         <QrContainer error={errorDescription}>
           {qrCode ? (
             <img
               src={qrCode}
               className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2"
-              height={256}
-              width={256}
-              alt=""
+              height={300}
+              width={300}
+              alt="QR Code"
             />
           ) : (
             <BanIcon
@@ -50,10 +47,11 @@ const QrDetail = ({
         </QrContainer>
         {!!urls?.length && (
           <div className="pt-4 grid grid-cols-3 gap-4 md:hidden">
-            {urls.map((url) => (
+            {urls.map((url, index) => (
               <Button
+                key={index}
                 className="text-xs flex flex-col gap-1 items-center justify-center px-2 py-3 shadow border border-border/10 h-auto rounded-md"
-                variant={'ghost'}
+                variant={"ghost"}
                 size="sm"
                 asChild
               >
@@ -73,9 +71,6 @@ const QrDetail = ({
             ))}
           </div>
         )}
-        <div className="pt-4">
-          <CheckPayment id={id} />
-        </div>
       </div>
     </div>
   );
@@ -87,9 +82,8 @@ export const QrContainer = ({
   error,
 }: React.PropsWithChildren & { loading?: boolean; error?: string }) => (
   <>
-    <div className="p-4">
+    <div className="">
       <div className="relative aspect-square mx-auto max-w-80">
-        <div className="border rounded-lg absolute inset-0"></div>
         <div className="w-full h-full bg-background rounded-3xl absolute inset-0">
           {children}
         </div>
@@ -101,14 +95,6 @@ export const QrContainer = ({
         <AlertTitle>Алдаа гарлаа</AlertTitle>
         <AlertDescription className="text-xs">{error}</AlertDescription>
       </Alert>
-    )}
-    {loading && (
-      <div className="pt-4">
-        {/* <BackButton disabled /> */}
-        <Button size="lg" className="flex-1 w-full" disabled>
-          Төлбөр шалгах
-        </Button>
-      </div>
     )}
   </>
 );

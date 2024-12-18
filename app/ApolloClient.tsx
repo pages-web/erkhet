@@ -25,6 +25,7 @@ const authLink = setContext((_, { headers }) => {
       ...headers,
       cookie,
       'Access-Control-Allow-Origin': `${process.env.NEXT_PUBLIC_MAIN_API_DOMAIN}/graphql`,
+      "Cache-Control": "no-cache",
       authorization: token ? `Bearer ${token}` : ''
     }
   };

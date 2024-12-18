@@ -34,7 +34,7 @@ const ChooseProducts = ({
       unitPrice: product.unitPrice,
     });
 
-    // Call validateProduct after updating the item
+    // validateProduct-д action функцийг зөв дамжуулсан эсэхийг шалгах
     validateProduct(action, {});
   };
 
@@ -81,7 +81,6 @@ const ChooseProducts = ({
               </div>
             ))}
         </RadioGroup>
-        <PaymentDetail></PaymentDetail>
       </CardContent>
     </>
   );

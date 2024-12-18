@@ -1,17 +1,17 @@
-import { handleMethodAtom } from '@/store/payment.store';
-import { useAtomValue } from 'jotai';
-import { usePaymentConfig } from '@/sdk/queries/payment';
-import useCreateInvoice from '@/sdk/hooks/payment';
-import { IPayment } from '@/types/payment.types';
-import { Loading } from '@/components/ui/loading';
-import { useEffect } from 'react';
-import QrDetail from './qr-detail';
-import PhoneDetail from './phone-detail';
-import { gql, useSubscription } from '@apollo/client';
-import { useDonate } from '../donate/donate';
+import { handleMethodAtom } from "@/store/payment.store";
+import { useAtomValue } from "jotai";
+import { usePaymentConfig } from "@/sdk/queries/payment";
+import useCreateInvoice from "@/sdk/hooks/payment";
+import { IPayment } from "@/types/payment.types";
+import { Loading } from "@/components/ui/loading";
+import { useEffect } from "react";
+import QrDetail from "./qr-detail";
+import PhoneDetail from "./phone-detail";
+import { gql, useSubscription } from "@apollo/client";
+import { useDonate } from "../donate/donate";
 
-const QR_PAYMENTS = ['qpay', 'monpay', 'pocket', 'qpayQuickqr'];
-const PHONE_PAYMENTS = ['socialpay', 'storepay'];
+const QR_PAYMENTS = ["qpay", "monpay", "pocket", "qpayQuickqr"];
+const PHONE_PAYMENTS = ["socialpay", "storepay"];
 
 const PaymentDetail = () => {
   const selectedMethod = useAtomValue(handleMethodAtom);
@@ -22,10 +22,9 @@ const PaymentDetail = () => {
     handleCreateInvoice,
     loading: loadingAction,
     reset,
-    data
+    data,
   } = useCreateInvoice({
-    posName: name || '',
-    appToken: erxesAppToken || ''
+    appToken: erxesAppToken || "",
   });
 
   const { errorDescription, status, response, _id } = data || {};
@@ -41,26 +40,25 @@ const PaymentDetail = () => {
       skip: !_id,
       onData(options) {
         const { invoiceUpdated } = options.data.data || {};
-        if (invoiceUpdated?.status === 'paid') {
+        if (invoiceUpdated?.status === "paid") {
           refetch();
         }
-      }
+      },
     }
   );
 
-  const kind = payments?.find((p: IPayment) => p._id === selectedMethod)?.kind;
+  const kind = payments?.[0]?.kind;
 
-  const isQr = QR_PAYMENTS.includes(kind || '');
-  const isPhone = PHONE_PAYMENTS.includes(kind || '');
+  const isQr = QR_PAYMENTS.includes(kind || "");
+  const isPhone = PHONE_PAYMENTS.includes(kind || "");
 
   useEffect(() => {
-    if (selectedMethod) {
-      reset();
-    }
+    if (!kind) return; // kind байхгүй тохиолдолд ямар ч үйлдэл хийхгүй
+    reset(); // эхлээд өмнөх төлөвийг цэвэрлэх
     if (isQr) {
-      handleCreateInvoice();
+      handleCreateInvoice(); // QR төлбөр бол инвойсыг үүсгэх
     }
-  }, [selectedMethod]);
+  }, [kind, isQr]); // kind болон isQr солигдоход л дахин ажиллана
 
   if (loading) return null;
 

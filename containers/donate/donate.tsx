@@ -7,7 +7,6 @@ import {
   donateItemAtom,
   donateOrderIdAtom,
   donateViewAtom,
-  deliveryInfoAtom,
 } from "@/store/donate.store";
 import { IProduct } from "@/types/product.types";
 import {
@@ -20,20 +19,6 @@ import {
 } from "@apollo/client";
 import { useAtom, useSetAtom } from "jotai";
 import { createContext, useContext } from "react";
-import DonateInfo from "./info";
-import {
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Loading } from "@/components/ui/loading";
-import PaymentMethods from "../payment/payment-methods";
-import PaymentDetail from "../payment/payment-detail";
-import Steps from "@/components/choose-products/steps";
-import { toast } from "sonner";
-import { ArrowLeftIcon, CheckIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 type DonateProps = React.PropsWithChildren & {
   loading: boolean;
@@ -72,12 +57,10 @@ export type ValidateProduct = (
 ) => void;
 
 const Donate = ({ products }: { products: IProduct[] }) => {
-  
   const [view, setView] = useAtom(donateViewAtom);
   const [donateOrderId, setDonateOrderId] = useAtom(donateOrderIdAtom);
   const [donateItem, setDonateItem] = useAtom(donateItemAtom);
-  const setDeliveryInfo = useSetAtom(deliveryInfoAtom);
-  const unitProduct = products.find(
+  const unitProduct = products?.find(
     (product) => product.unitPrice === 1
   ) as IProduct;
 
@@ -88,18 +71,15 @@ const Donate = ({ products }: { products: IProduct[] }) => {
       customerId: "visitor",
     },
     onCompleted({ orderDetail }) {
-      const { items, deliveryInfo } = orderDetail;
+      const { items } = orderDetail;
       const { _id, productId, count, unitPrice } = items[0] || {};
       setDonateItem({ _id, productId, count, unitPrice });
-      !!deliveryInfo && setDeliveryInfo(deliveryInfo);
     },
   });
 
   const onCompleted = (_id: string) => {
     setDonateOrderId(_id);
     donateOrderId && refetch();
-    view === "" && setView("info");
-    view === "info" && setView("payment");
   };
 
   const variables = {
@@ -126,15 +106,8 @@ const Donate = ({ products }: { products: IProduct[] }) => {
     },
   });
 
-  const reset = () => {
-    setView("");
-    setDonateOrderId("");
-    setDonateItem(null);
-    setDeliveryInfo({
-      name: "",
-      phone: "",
-      description: "",
-    });
+  const validateProduct: ValidateProduct = (func, params) => {
+    return func(params);
   };
 
   const { orderDetail } = data || {};
@@ -149,67 +122,15 @@ const Donate = ({ products }: { products: IProduct[] }) => {
         refetch,
       }}
     >
-      <CardHeader className="flex items-center justify-between flex-row ">
-        <CardTitle>Хандив өгөх</CardTitle>
-      </CardHeader>
-      {loading ? (
-        <>
-          <CardContent>
-            <Loading />
-          </CardContent>
-          <CardFooter />
-        </>
-      ) : (
-        <>
-          {view === "" && (
-            <ChooseProducts products={products} unitProduct={unitProduct} />
-          )}
-          {view === "info" && <DonateInfo />}
-          {view === "payment" && (
-            <>
-              <CardContent className="py-0 md:py-0">
-                <PaymentMethods />
-              </CardContent>
-              <CardFooter className="flex-col">
-                <PaymentDetail />
-                <Button
-                  type="button"
-                  variant="secondary"
-                  size="lg"
-                  className="w-full !mt-4"
-                  disabled={loading}
-                  onClick={() => setView("info")}
-                >
-                  <ArrowLeftIcon className="h-5 w-5 mr-2 -ml-2" />
-                  Буцах
-                </Button>
-              </CardFooter>
-            </>
-          )}
-          {view === "success" && (
-            <>
-              <CardContent>
-                <div className="flex flex-col items-center">
-                  <div className="h-16 w-16 rounded-full bg-green-200 flex items-center justify-center">
-                    <CheckIcon className="h-10 w-10 stroke-green-700 " />
-                  </div>
-                  <div className="text-xl font-semibold pt-6 text-center">
-                    Таны хандивыг амжилттай <br /> хүлээн авлаа.
-                  </div>
-                  <div className="text-neutral-500 pt-2">
-                    Биднийг дэмжиж хандив өгсөн танд баярлалаа
-                  </div>
-                </div>
-              </CardContent>
-              <CardFooter>
-                <Button size="lg" className="w-full" onClick={reset}>
-                  Эхлэл рүү буцах
-                </Button>
-              </CardFooter>
-            </>
-          )}
-        </>
-      )}
+      <>
+        {view === "" && (
+          <ChooseProducts
+            products={products}
+            unitProduct={unitProduct}
+            validateProduct={validateProduct}
+          />
+        )}
+      </>
     </DonateContext.Provider>
   );
 };

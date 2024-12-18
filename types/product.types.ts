@@ -17,6 +17,7 @@ export interface Group {
 }
 
 export interface IProduct extends IProductBase {
+  category?: { name: string } | null;
   categoryId?: string | null;
   type?: string | null;
   description?: string | null;
