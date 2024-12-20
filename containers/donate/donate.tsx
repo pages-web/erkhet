@@ -1,6 +1,11 @@
 "use client";
 
-import ChooseProducts from "@/components/choose-products/choose-products";
+import { createContext, useContext, useEffect, useState } from "react";
+import { useAtom } from "jotai";
+import { useMutation, useQuery } from "@apollo/client";
+import { CardContent } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { onError } from "@/lib/utils";
 import { mutations, queries } from "@/sdk/graphql/order";
 import {
@@ -8,17 +13,16 @@ import {
   donateOrderIdAtom,
   donateViewAtom,
 } from "@/store/donate.store";
+
 import { IProduct } from "@/types/product.types";
 import {
   ApolloCache,
   DefaultContext,
   MutationFunctionOptions,
   OperationVariables,
-  useMutation,
-  useQuery,
 } from "@apollo/client";
-import { useAtom, useSetAtom } from "jotai";
-import { createContext, useContext } from "react";
+import PaymentDetail from "../payment/payment-detail";
+import { error } from "console";
 
 type DonateProps = React.PropsWithChildren & {
   loading: boolean;
@@ -41,7 +45,7 @@ type ContextProps = DonateProps;
 
 const DonateContext = createContext<ContextProps | null>(null);
 
-export function useDonate() {
+export const useDonate = () => {
   const context = useContext(DonateContext);
 
   if (!context) {
@@ -49,38 +53,35 @@ export function useDonate() {
   }
 
   return context;
-}
+};
 
 export type ValidateProduct = (
   func: (params: any) => void,
   params?: any
 ) => void;
-
-const Donate = ({ products }: { products: IProduct[] }) => {
-  const [view, setView] = useAtom(donateViewAtom);
+export default function Donate({ products }: { products: IProduct[] }) {
+  const [view] = useAtom(donateViewAtom);
   const [donateOrderId, setDonateOrderId] = useAtom(donateOrderIdAtom);
   const [donateItem, setDonateItem] = useAtom(donateItemAtom);
+  const [selectedProduct, setSelectedProduct] = useState<IProduct | null>(null);
+  const [isUpdating, setIsUpdating] = useState(false);
+
   const unitProduct = products?.find(
     (product) => product.unitPrice === 1
   ) as IProduct;
 
   const { data, loading, refetch } = useQuery(queries.donateOrderDetail, {
-    skip: !Boolean(donateOrderId),
+    skip: !donateOrderId,
     variables: {
       id: donateOrderId,
       customerId: "visitor",
     },
     onCompleted({ orderDetail }) {
-      const { items } = orderDetail;
-      const { _id, productId, count, unitPrice } = items[0] || {};
+      if (!orderDetail?.items?.[0]) return;
+      const { _id, productId, count, unitPrice } = orderDetail.items[0];
       setDonateItem({ _id, productId, count, unitPrice });
     },
   });
-
-  const onCompleted = (_id: string) => {
-    setDonateOrderId(_id);
-    donateOrderId && refetch();
-  };
 
   const variables = {
     items: [donateItem],
@@ -90,49 +91,136 @@ const Donate = ({ products }: { products: IProduct[] }) => {
     _id: donateOrderId,
   };
 
-  const [add, orderAdd] = useMutation(mutations.ordersAdd, {
-    onError,
-    variables,
-    onCompleted(data) {
-      onCompleted(data?.ordersAdd?._id);
-    },
-  });
-
-  const [edit, orderEdit] = useMutation(mutations.ordersEdit, {
-    onError,
-    variables,
-    onCompleted(data) {
-      onCompleted(data?.ordersEdit?._id);
-    },
-  });
-
-  const validateProduct: ValidateProduct = (func, params) => {
-    return func(params);
+  const handleOrderCompleted = (_id: string) => {
+    setDonateOrderId(_id);
+    if (donateOrderId) refetch();
   };
 
+  const [add, { loading: addLoading }] = useMutation(mutations.ordersAdd, {
+    onError,
+    variables,
+    onCompleted(data) {
+      handleOrderCompleted(data?.ordersAdd?._id);
+    },
+  });
+
+  const [edit, { loading: editLoading }] = useMutation(mutations.ordersEdit, {
+    onError,
+    variables,
+    onCompleted(data) {
+      handleOrderCompleted(data?.ordersEdit?._id);
+    },
+  });
+
+  const validateProduct: ValidateProduct = (func, params) => func(params);
+
+  const handleProductChange = async (productId: string) => {
+    setIsUpdating(true);
+    try {
+      const product = products.find((p) => p._id === productId);
+      if (!product) {
+        console.warn("Selected product not found");
+        return;
+      }
+
+      const newItem = {
+        _id: crypto.randomUUID(),
+        productId: product._id,
+        count: 1,
+        unitPrice: product.unitPrice,
+      };
+
+      setSelectedProduct(product);
+      await setDonateItem(newItem);
+
+      const mutation = donateOrderId ? edit : add;
+      await validateProduct(mutation, {
+        variables: { ...variables, items: [newItem] },
+      });
+    } catch (error) {
+      console.error("Error selecting product:", error);
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
+  useEffect(() => {
+    setSelectedProduct(null);
+    setDonateItem(null);
+  }, [setDonateItem]);
+
   const { orderDetail } = data || {};
+  const radioValue =
+    donateItem?.productId !== unitProduct?._id
+      ? donateItem?.productId || ""
+      : "";
+
+  if (view !== "") {
+    return null;
+  }
 
   return (
     <DonateContext.Provider
       value={{
-        loading: orderAdd.loading || orderEdit.loading,
+        loading: addLoading || editLoading,
         action: donateOrderId ? edit : add,
         variables,
         detail: orderDetail,
         refetch,
       }}
     >
-      <>
-        {view === "" && (
-          <ChooseProducts
-            products={products}
-            unitProduct={unitProduct}
-            validateProduct={validateProduct}
-          />
-        )}
-      </>
+      <CardContent className="py-4 text-black">
+        <RadioGroup
+          onValueChange={handleProductChange}
+          value={radioValue}
+          className="grid grid-cols-1 gap-4"
+          disabled={isUpdating}
+        >
+          {products
+            .filter((product) => product.unitPrice !== 1)
+            .sort((a, b) => a.unitPrice - b.unitPrice)
+            .map((product) => {
+              const isSelected = radioValue === product._id;
+
+              return (
+                <div
+                  key={product._id}
+                  className={`
+                    relative rounded-lg border p-4 
+                    cursor-pointer transition-shadow duration-200
+                    ${
+                      isSelected
+                        ? "border-primary shadow-lg"
+                        : "border-gray-300 hover:shadow-md"
+                    }
+                  `}
+                >
+                  <Label
+                    htmlFor={product._id}
+                    className="flex items-center gap-4 w-full cursor-pointer"
+                  >
+                    <RadioGroupItem
+                      value={product._id}
+                      id={product._id}
+                      className="peer hidden"
+                      disabled={isUpdating}
+                    />
+                    <div className="flex-1 flex flex-col">
+                      <span className="text-xl font-semibold text-gray-800">
+                        {product.unitPrice.toLocaleString()}₮
+                      </span>
+                      <span className="text-gray-600">{product.name}</span>
+                    </div>
+                  </Label>
+                  {isSelected && (
+                    <span className="absolute inset-0 rounded-lg border-1 border-primary pointer-events-none" />
+                  )}
+                </div>
+              );
+            })}
+        </RadioGroup>
+   
+      </CardContent>
     </DonateContext.Provider>
   );
-};
-
-export default Donate;
+}

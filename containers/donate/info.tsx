@@ -18,6 +18,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { LoadingIcon } from "@/components/ui/loading";
+import PaymentDetail from "../payment/payment-detail";
 
 const Huwihun = z
   .string()

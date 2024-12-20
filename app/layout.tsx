@@ -2,13 +2,12 @@ import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { cn, getSimilarColorWithOpacity, hexToHsl } from "@/lib/utils";
-import DefaultLayout from "@/components/layouts";
+
 import Providers from "@/store";
 import { Toaster } from "@/components/ui/sonner";
 import { getConfig } from "@/sdk/queries/auth";
 import ConfigProvider from "@/components/layouts/config";
 import { Metadata } from "next/types";
-import Image from "next/image";
 
 export const fontSans = FontSans({
   subsets: ["latin"],
@@ -89,9 +88,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         )}
       >
         <Providers>
-          <ConfigProvider config={config}>
-            <DefaultLayout>{children}</DefaultLayout>
-          </ConfigProvider>
+          <ConfigProvider config={config}>{children}</ConfigProvider>
         </Providers>
         <Toaster richColors closeButton />
         <SpeedInsights />

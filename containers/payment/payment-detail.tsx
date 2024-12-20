@@ -1,22 +1,22 @@
-import { handleMethodAtom } from "@/store/payment.store";
-import { useAtomValue } from "jotai";
-import { usePaymentConfig } from "@/sdk/queries/payment";
-import useCreateInvoice from "@/sdk/hooks/payment";
-import { IPayment } from "@/types/payment.types";
-import { Loading } from "@/components/ui/loading";
 import { useEffect } from "react";
-import QrDetail from "./qr-detail";
-import PhoneDetail from "./phone-detail";
 import { gql, useSubscription } from "@apollo/client";
 import { useDonate } from "../donate/donate";
+import { usePaymentConfig } from "@/sdk/queries/payment";
+import useCreateInvoice from "@/sdk/hooks/payment";
+import { Loading } from "@/components/ui/loading";
+import QrDetail from "./qr-detail";
+import PhoneDetail from "./phone-detail";
 
 const QR_PAYMENTS = ["qpay", "monpay", "pocket", "qpayQuickqr"];
 const PHONE_PAYMENTS = ["socialpay", "storepay"];
 
 const PaymentDetail = () => {
-  const selectedMethod = useAtomValue(handleMethodAtom);
-  const { name, payments, erxesAppToken, loading } = usePaymentConfig();
-  const { refetch } = useDonate();
+  const { detail, refetch } = useDonate();
+  const {
+    payments,
+    erxesAppToken,
+    loading: loadingConfig,
+  } = usePaymentConfig();
 
   const {
     handleCreateInvoice,
@@ -32,7 +32,9 @@ const PaymentDetail = () => {
   useSubscription(
     gql`
       subscription invoiceUpdated($invoiceId: String!) {
-        invoiceUpdated(_id: $invoiceId)
+        invoiceUpdated(_id: $invoiceId) {
+          status
+        }
       }
     `,
     {
@@ -48,21 +50,40 @@ const PaymentDetail = () => {
   );
 
   const kind = payments?.[0]?.kind;
-
   const isQr = QR_PAYMENTS.includes(kind || "");
   const isPhone = PHONE_PAYMENTS.includes(kind || "");
 
+  const selectedProduct = detail?.items?.[0];
+  const selectedPrice = selectedProduct?.unitPrice;
+
   useEffect(() => {
-    if (!kind) return; // kind байхгүй тохиолдолд ямар ч үйлдэл хийхгүй
-    reset(); // эхлээд өмнөх төлөвийг цэвэрлэх
-    if (isQr) {
-      handleCreateInvoice(); // QR төлбөр бол инвойсыг үүсгэх
-    }
-  }, [kind, isQr]); // kind болон isQr солигдоход л дахин ажиллана
+    const createInvoice = async () => {
+      if (!kind || !selectedProduct || !selectedPrice) return;
 
-  if (loading) return null;
+      try {
+        reset();
+        if (isQr) {
+          await handleCreateInvoice({
+            items: [
+              {
+                _id: Math.random().toString(),
+                productId: selectedProduct.productId,
+                count: 1,
+                unitPrice: selectedPrice,
+              },
+            ],
+            totalAmount: selectedPrice,
+          });
+        }
+      } catch (error) {
+        console.error("Error creating invoice:", error);
+      }
+    };
 
-  if (loading || !kind) return null;
+    createInvoice();
+  }, [selectedProduct, selectedPrice]);
+
+  if (loadingConfig || !kind) return null;
 
   return (
     <>
@@ -81,10 +102,11 @@ const PaymentDetail = () => {
             />
           )
         ))}
+
       {isPhone && (
         <PhoneDetail
           kind={kind}
-          loading={loading}
+          loading={loadingConfig}
           handleCreate={handleCreateInvoice}
           data={data}
           errorDescription={errorDescription}
@@ -93,27 +115,5 @@ const PaymentDetail = () => {
     </>
   );
 };
-
-// id
-// :
-// "058002c0-9066-45c9-9791-b6938ad39a3b"
-// payload
-// :
-// {data: {invoiceUpdated: {_id: "auP-XYnisvmz9Tk6RqFTu", status: "paid"}}}
-// data
-// :
-// {invoiceUpdated: {_id: "auP-XYnisvmz9Tk6RqFTu", status: "paid"}}
-// invoiceUpdated
-// :
-// {_id: "auP-XYnisvmz9Tk6RqFTu", status: "paid"}
-// status
-// :
-// "paid"
-// _id
-// :
-// "auP-XYnisvmz9Tk6RqFTu"
-// type
-// :
-// "next"
 
 export default PaymentDetail;

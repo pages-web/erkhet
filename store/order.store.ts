@@ -1,14 +1,14 @@
-import { IDeliveryInfo, IOrder, IBillType } from '@/types/order.types';
-import { atom } from 'jotai';
-import { focusAtom } from 'jotai-optics';
-import { splitAtom } from 'jotai/utils';
-import { cartAtom, cartTotalAtom } from './cart.store';
-import { currentUserAtom, deliveryItemIdAtom } from './auth.store';
+import { IDeliveryInfo, IOrder, IBillType } from "@/types/order.types";
+import { atom } from "jotai";
+import { focusAtom } from "jotai-optics";
+import { splitAtom } from "jotai/utils";
+import { cartAtom, cartTotalAtom } from "./cart.store";
+import { currentUserAtom, deliveryItemIdAtom } from "./auth.store";
 
 export const defaultOrderItem = {
   items: [],
   deliveryInfo: null,
-  description: '',
+  description: "",
 };
 export const activeOrderAtom = atom<
   | IOrder
@@ -22,9 +22,9 @@ export const activeOrderAtom = atom<
 >({
   items: [],
   deliveryInfo: null,
-  description: '',
-  billType: '1',
-  registerNumber: '',
+  description: "a",
+  billType: "1",
+  registerNumber: "",
 });
 
 export const orderParamsAtom = atom((get) => {
@@ -53,12 +53,12 @@ export const orderParamsAtom = atom((get) => {
         unitPrice,
       })),
     totalAmount,
-    type: 'delivery',
+    type: "delivery",
     customerId,
-    customerType: 'visitor',
+    customerType: "visitor",
     registerNumber,
     billType,
-    origin: 'kiosk',
+    origin: "kiosk",
     deliveryInfo,
     description,
     branchId,
@@ -70,18 +70,18 @@ export const initialLoadingOrderAtom = atom<boolean>(true);
 export const loadingOrderAtom = atom<boolean>(false);
 
 export const cudOrderAtom = atom<boolean>(false);
-export const activeOrderIdAtom = atom<string>('');
+export const activeOrderIdAtom = atom<string>("");
 export const itemsAtom = focusAtom(activeOrderAtom, (optic) =>
-  optic.prop('items')
+  optic.prop("items")
 );
 
 export const filterDeliveryProduct = (
-  items: IOrder['items'],
+  items: IOrder["items"],
   deliveryProductId?: string
 ) => items.filter((item) => item.productId !== deliveryProductId);
 
 export const getDeliveryProduct = (
-  items: IOrder['items'],
+  items: IOrder["items"],
   deliveryProductId?: string
 ) => items.find((item) => item.productId === deliveryProductId);
 
@@ -94,19 +94,19 @@ export const deliveryItemAtom = atom((get) =>
 );
 
 export const billTypeAtom = focusAtom(activeOrderAtom, (optic) =>
-  optic.prop('billType')
+  optic.prop("billType")
 );
 
 export const registerNumberAtom = focusAtom(activeOrderAtom, (optic) =>
-  optic.prop('registerNumber')
+  optic.prop("registerNumber")
 );
 
 export const deliveryInfoAtom = focusAtom(activeOrderAtom, (optic) =>
-  optic.prop('deliveryInfo')
+  optic.prop("deliveryInfo")
 );
 
 export const descriptionAtom = focusAtom(activeOrderAtom, (optic) =>
-  optic.prop('description')
+  optic.prop("description")
 );
 
 export const changeDeliveryInfoAtom = atom(
@@ -129,14 +129,14 @@ export const changeDeliveryInfoAtom = atom(
         Хороо: ${v.street},
         Дэлгэрэнгүй: ${v.detail},
         Нэмэлт Анхааруулга: ${
-          (v.haveBaby ? 'Нялх хүүхэдтэй, ' : '') +
-          (v.callBefore ? 'Хүргэхийн өмнө заавал залгах, ' : '') +
-          (v.onlyAfternoon ? 'Зөвхөн оройн цагаар хүргэх' : '')
+          (v.haveBaby ? "Нялх хүүхэдтэй, " : "") +
+          (v.callBefore ? "Хүргэхийн өмнө заавал залгах, " : "") +
+          (v.onlyAfternoon ? "Зөвхөн оройн цагаар хүргэх" : "")
         }
       `,
       deliveryInfo: v,
       billType,
-      registerNumber: billType === '3' ? registerNumber : '',
+      registerNumber: billType === "3" ? registerNumber : "",
     };
 
     if (
