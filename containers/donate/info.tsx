@@ -13,42 +13,45 @@ import {
   Form,
   FormField,
   FormItem,
-  FormLabel,
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
-import { LoadingIcon } from "@/components/ui/loading";
-import PaymentDetail from "../payment/payment-detail";
 
-const Huwihun = z
+// Define Zod schemas for validation
+const HuwihunSchema = z
   .string()
   .regex(/^\d{8}$/, "Регистрийн дугаар 8 оронтой байх ёстой.");
 
-const Baiguullaga = z
+const BaiguullagaSchema = z
   .string()
   .regex(/^\d{6}$/, "Регистрийн дугаар 6 оронтой байх ёстой.");
 
+// Dynamically set the validation schema based on the selected type
 const dynamicSchema = (activeType: "huwiHun" | "baiguullaga") =>
   z.object({
-    value: activeType === "huwiHun" ? Huwihun : Baiguullaga,
+    value: activeType === "huwiHun" ? HuwihunSchema : BaiguullagaSchema,
   });
 
 export default function DonateInfo() {
   const [activeType, setActiveType] = useState<"huwiHun" | "baiguullaga">(
     "huwiHun"
   );
-  const [loading, setLoading] = useState(false);
 
-  const formSchema = dynamicSchema(activeType);
-
+  // Use react-hook-form with Zod resolver
   const form = useForm({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(dynamicSchema(activeType)),
     defaultValues: { value: "" },
+    mode: "onChange", // Trigger validation on input change
   });
 
-  const onSubmit = async (data: any) => {
-    setLoading(true);
+  const onSubmit = (data: any) => {
+    console.log("Form Data:", data);
   };
+
+  const placeholderText =
+    activeType === "huwiHun"
+      ? "Хувь хүний регистрийн дугаар оруулна уу"
+      : "Байгууллагын регистрийн дугаар оруулна уу";
 
   return (
     <div className="">
@@ -61,33 +64,23 @@ export default function DonateInfo() {
         }
         className="flex gap-4 mb-6"
       >
-        <Label
-          htmlFor="huwiHun"
-          className={`flex w-full text-black items-center justify-start px-4 py-4 border bg-white hover:bg-gray-50 font-medium text-base rounded-lg cursor-pointer ${
-            activeType === "huwiHun"
-              ? "border-black shadow-lg"
-              : "border-gray-300"
-          }`}
-        >
-          <RadioGroupItem value="huwiHun" id="huwiHun" className="mr-2" />
-          Хувь хүн
-        </Label>
-
-        <Label
-          htmlFor="baiguullaga"
-          className={`flex w-full text-black items-center justify-start px-4 py-4 border bg-white hover:bg-gray-50 font-medium text-base rounded-lg cursor-pointer ${
-            activeType === "baiguullaga"
-              ? "border-black shadow-lg"
-              : "border-gray-300"
-          }`}
-        >
-          <RadioGroupItem
-            value="baiguullaga"
-            id="baiguullaga"
-            className="mr-2"
-          />
-          Байгууллага
-        </Label>
+        {[
+          { label: "Хувь хүн", value: "huwiHun" },
+          { label: "Байгууллага", value: "baiguullaga" },
+        ].map(({ label, value }) => (
+          <Label
+            key={value}
+            htmlFor={value}
+            className={`flex w-full text-black items-center justify-start px-4 py-4 border bg-white hover:bg-gray-50 font-medium text-base rounded-lg cursor-pointer ${
+              activeType === value
+                ? "border-black shadow-lg"
+                : "border-gray-300"
+            }`}
+          >
+            <RadioGroupItem value={value} id={value} className="mr-2" />
+            {label}
+          </Label>
+        ))}
       </RadioGroup>
 
       {/* Form */}
@@ -100,13 +93,10 @@ export default function DonateInfo() {
               <FormItem>
                 <FormControl>
                   <Input
-                    placeholder={
-                      activeType === "huwiHun"
-                        ? "Регистрийн дугаар оруулна уу"
-                        : "Регистрийн дугаар оруулна уу"
-                    }
-                    type="text"
+                    type="tel" // Use tel to ensure numeric input only
+                    placeholder={placeholderText}
                     {...field}
+                    maxLength={activeType === "huwiHun" ? 10 : 6}
                   />
                 </FormControl>
                 <FormMessage />

@@ -184,10 +184,25 @@ export default function Donate({ products }: { products: IProduct[] }) {
       <div className="container flex gap-10 mt-16">
         <Card className="lg:w-[600px] bg-white flex-none relative">
           <Tabs defaultValue="price-1">
-            <TabsList className="grid grid-cols-3 mx-3 mt-3 gap-3">
-              <TabsTrigger value="price-1">ААН</TabsTrigger>
-              <TabsTrigger value="price-2">ТГБ</TabsTrigger>
-              <TabsTrigger value="price-3">Бусад</TabsTrigger>
+            <TabsList className="grid grid-cols-3 mx-3 mt-3 gap-3 mb-4">
+              <TabsTrigger
+                value="price-1"
+                className="border border-gray-300 rounded-lg p-2 hover:border-gray-400 aria-selected:border-black"
+              >
+                ААН
+              </TabsTrigger>
+              <TabsTrigger
+                value="price-2"
+                className="border border-gray-300 rounded-lg p-2 hover:border-gray-400 aria-selected:border-black"
+              >
+                ТГБ
+              </TabsTrigger>
+              <TabsTrigger
+                value="price-3"
+                className="border border-gray-300 rounded-lg p-2 hover:border-gray-400 aria-selected:border-black"
+              >
+                Бусад
+              </TabsTrigger>
             </TabsList>
 
             {Object.entries(categories).map(
