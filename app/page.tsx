@@ -12,9 +12,9 @@ export async function generateMetadata(): Promise<Metadata> {
   const { config } = await getConfig();
 
   return {
-    title: `${config.name} - Хандив өгөх`,
+    title: `${config.name} - төлбөр төлөх`,
     openGraph: {
-      title: `${config.name} - Хандив өгөх`,
+      title: `${config.name} - төлбөр төлөх`,
     },
   };
 }
