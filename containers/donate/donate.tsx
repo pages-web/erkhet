@@ -3,17 +3,19 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useAtom } from "jotai";
 import { useMutation, useQuery } from "@apollo/client";
-import { CardContent } from "@/components/ui/card";
+import { CardContent, Card, CardFooter } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { onError } from "@/lib/utils";
 import { mutations, queries } from "@/sdk/graphql/order";
+import DonateInfo from "@/containers/donate/info";
+
+import Hello from "@/components/title/Hello";
 import {
   donateItemAtom,
   donateOrderIdAtom,
   donateViewAtom,
 } from "@/store/donate.store";
-
 import { IProduct } from "@/types/product.types";
 import {
   ApolloCache,
@@ -21,8 +23,8 @@ import {
   MutationFunctionOptions,
   OperationVariables,
 } from "@apollo/client";
-import PaymentDetail from "../payment/payment-detail";
-import { error } from "console";
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 type DonateProps = React.PropsWithChildren & {
   loading: boolean;
@@ -159,6 +161,16 @@ export default function Donate({ products }: { products: IProduct[] }) {
     return null;
   }
 
+  const categories = {
+    AAN: products.filter(
+      (product) => product.category?.name === "Аж ахуй нэгж байгууллага"
+    ),
+    TGB: products.filter(
+      (product) => product.category?.name === "Тайлан гаргадаг байгууллага"
+    ),
+    Busad: products.filter((product) => product.category?.name === "Бусад"),
+  };
+
   return (
     <DonateContext.Provider
       value={{
@@ -169,58 +181,84 @@ export default function Donate({ products }: { products: IProduct[] }) {
         refetch,
       }}
     >
-      <CardContent className="py-4 text-black">
-        <RadioGroup
-          onValueChange={handleProductChange}
-          value={radioValue}
-          className="grid grid-cols-1 gap-4"
-          disabled={isUpdating}
-        >
-          {products
-            .filter((product) => product.unitPrice !== 1)
-            .sort((a, b) => a.unitPrice - b.unitPrice)
-            .map((product) => {
-              const isSelected = radioValue === product._id;
+      <div className="container flex gap-10 mt-16">
+        <Card className="lg:w-[600px] bg-white flex-none relative">
+          <Tabs defaultValue="price-1">
+            <TabsList className="grid grid-cols-3 mx-3 mt-3 gap-3">
+              <TabsTrigger value="price-1">ААН</TabsTrigger>
+              <TabsTrigger value="price-2">ТГБ</TabsTrigger>
+              <TabsTrigger value="price-3">Бусад</TabsTrigger>
+            </TabsList>
 
-              return (
-                <div
-                  key={product._id}
-                  className={`
-                    relative rounded-lg border p-4 
-                    cursor-pointer transition-shadow duration-200
-                    ${
-                      isSelected
-                        ? "border-primary shadow-lg"
-                        : "border-gray-300 hover:shadow-md"
-                    }
-                  `}
+            {Object.entries(categories).map(
+              ([key, categoryProducts], index) => (
+                <TabsContent
+                  key={key}
+                  value={`price-${index + 1}`}
+                  className="p-4 space-y-4 pb-8"
                 >
-                  <Label
-                    htmlFor={product._id}
-                    className="flex items-center gap-4 w-full cursor-pointer"
-                  >
-                    <RadioGroupItem
-                      value={product._id}
-                      id={product._id}
-                      className="peer hidden"
+                  <CardContent>
+                    <RadioGroup
+                      onValueChange={handleProductChange}
+                      value={donateItem?.productId || ""}
+                      className="space-y-4 grid grid-cols-1 "
                       disabled={isUpdating}
-                    />
-                    <div className="flex-1 flex flex-col">
-                      <span className="text-xl font-semibold text-gray-800">
-                        {product.unitPrice.toLocaleString()}₮
-                      </span>
-                      <span className="text-gray-600">{product.name}</span>
-                    </div>
-                  </Label>
-                  {isSelected && (
-                    <span className="absolute inset-0 rounded-lg border-1 border-primary pointer-events-none" />
-                  )}
-                </div>
-              );
-            })}
-        </RadioGroup>
-   
-      </CardContent>
+                    >
+                      {categoryProducts
+                        .filter((product) => product.unitPrice !== 1)
+                        .sort((a, b) => a.unitPrice - b.unitPrice)
+                        .map((product) => {
+                          const isSelected = radioValue === product._id;
+                          return (
+                            <div
+                              key={product._id}
+                              className={`
+                            relative rounded-lg border p-4 
+                            cursor-pointer transition-shadow duration-200
+                            ${
+                              isSelected
+                                ? "border-primary shadow-lg"
+                                : "border-gray-300 hover:shadow-md"
+                            }
+                          `}
+                            >
+                              <Label
+                                htmlFor={product._id}
+                                className="flex items-center gap-4 w-full cursor-pointer"
+                              >
+                                <RadioGroupItem
+                                  value={product._id}
+                                  id={product._id}
+                                  className="peer hidden"
+                                  disabled={isUpdating}
+                                />
+                                <div className="flex-1 flex flex-col">
+                                  <span className="text-xl font-semibold text-gray-800">
+                                    {product.unitPrice.toLocaleString()}₮
+                                  </span>
+                                  <span className="text-gray-600">
+                                    {product.name}
+                                  </span>
+                                </div>
+                              </Label>
+                            </div>
+                          );
+                        })}
+                    </RadioGroup>
+                  </CardContent>
+                </TabsContent>
+              )
+            )}
+
+            <div className="px-4 flex flex-col gap-3">
+              <DonateInfo />
+            </div>
+
+            <CardFooter />
+          </Tabs>
+        </Card>
+        <Hello />
+      </div>
     </DonateContext.Provider>
   );
 }

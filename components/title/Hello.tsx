@@ -24,7 +24,7 @@ const Hello = () => {
       >
         3. Төлбөр төлөх
       </Button>
-
+      <PaymentDetail />
       <Button
         variant="outline"
         className="flex items-center justify-start px-5 py-6 bg-white font-medium text-base rounded-lg mt-5"
